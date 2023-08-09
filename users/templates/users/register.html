@@ -1,4 +1,5 @@
-{% extends "airport/base-fullscreen.html" %}
+{% extends "dashboard/base-fullscreen.html" %}
+{% load widget_tweaks %}
 
 {% block title %} Register {% endblock %}
 
@@ -93,20 +94,38 @@
 
                                             <span class="text-danger">{{ form.password2.errors }}</span>
                                         </div>
+
+
+
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Department</label>
-                                                {{ form.department }}
+                                                <label for="departmentFormControl">Department</label>
+                                                {% render_field form.department class+="form-control" %}
+
                                             </div>
                                             <span class="text-danger">{{ form.department.errors }}</span>
                                         </div>
+
+
+
                                          <div class="col-md-12 px-md-1">
                                             <div class="form-group">
                                                 <label>Job position</label>
-                                                {{ form.job_position }}
+                                                <label for="job_positionFormControl">Job position</label>
+                                                 <select class="form-control" id="job_positionFormControl" name ="job_position">
+
+                                                    {% for value, label in form.fields.job_position.choices %}
+                                                        <option value="{{ value }}" {% if value == form.initial.job_position %}selected{% endif %}>
+                                                            {{ label }}
+                                                        </option>
+                                                    {% endfor %}
+
+                                                 </select>
                                             </div>
                                             <span class="text-danger">{{ form.job_position.errors }}</span>
                                         </div>
+
+                                          <div class="form-group">
 
                                     </div>
 

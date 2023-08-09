@@ -1,10 +1,14 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    UserChangeForm,
+    AuthenticationForm,
+)
 from django import forms
 from .models import CustomUser
 from organization.models import Department
 
 
-class UserLoginForm(UserChangeForm):
+class UserLoginForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={"placeholder": "Username", "class": "form-control"}
@@ -18,7 +22,7 @@ class UserLoginForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email")
+        fields = ("username", "password")
 
 
 class UserRegisterForm(UserCreationForm):
@@ -54,17 +58,19 @@ class UserRegisterForm(UserCreationForm):
 
     department = (
         forms.ChoiceField(
+            choices=Department.DEPARTAMENT,
             widget=forms.Select(
                 attrs={"placeholder": "Department", "class": "form-control"}
-            )
+            ),
         ),
     )
 
     job_position = (
         forms.ChoiceField(
+            choices=Department.JOB_TITLES,
             widget=forms.Select(
                 attrs={"placeholder": "Job Position", "class": "form-control"}
-            )
+            ),
         ),
     )
 
