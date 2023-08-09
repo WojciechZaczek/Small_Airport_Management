@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "airport.apps.AirportConfig",
+    "organization.apps.OrganizationConfig",
+    "users.apps.UsersConfig",
     "django_extensions",
     "rest_framework",
     "django.contrib.admin",
@@ -124,3 +126,4 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "users.CustomUser"
