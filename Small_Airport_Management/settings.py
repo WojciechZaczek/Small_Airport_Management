@@ -31,6 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "airport.apps.AirportConfig",
+    "aircraft.apps.AircraftConfig",
+    "airport_facilities.apps.AirportFacilitiesConfig",
+    "clients.apps.ClientsConfig",
+    "dashboard.apps.DashboardConfig",
+    "organization.apps.OrganizationConfig",
+    "offer.apps.OfferConfig",
+    "users.apps.UsersConfig",
     "django_extensions",
     "rest_framework",
     "django.contrib.admin",
@@ -39,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
@@ -123,3 +132,4 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "users.CustomUser"
