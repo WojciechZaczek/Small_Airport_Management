@@ -1,5 +1,22 @@
 from django.db import models
-from airport.models import Airport
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=100, help_text="Name of Company")
+    address = models.TextField(
+        max_length=200, help_text="Companies head office address"
+    )
+    telephone = models.TextField(max_length=100, help_text="Companies contact phone no")
+    email_domain = models.TextField(max_length=50, help_text="Companies email_domina")
+    description = models.TextField(
+        max_length=500,
+        null=True,
+        blank=True,
+        help_text="Other important informaitions about Company",
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Department(models.Model):
@@ -29,17 +46,6 @@ class Department(models.Model):
     description = models.TextField(
         max_length=200, help_text="information about department"
     )
-    Airport_ID = models.ForeignKey(
-        Airport, on_delete=models.CASCADE, help_text="Airport ID"
+    company_id = models.ForeignKey(
+        Company, on_delete=models.CASCADE, help_text="Airport ID"
     )
-
-
-class Company(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.TextField(max_length=200)
-    telephone = models.TextField(max_length=100)
-    email_domain = models.TextField(max_length=50)
-    description = models.TextField(max_length=500, null=True, blank=True)
-
-    def __str__(self):
-        return self.name

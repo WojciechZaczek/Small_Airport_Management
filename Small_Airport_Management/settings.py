@@ -32,7 +32,12 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "airport.apps.AirportConfig",
+    "aircraft.apps.AircraftConfig",
+    "airport_facilities.apps.AirportFacilitiesConfig",
+    "clients.apps.ClientsConfig",
+    "dashboard.apps.DashboardConfig",
     "organization.apps.OrganizationConfig",
+    "offer.apps.OfferConfig",
     "users.apps.UsersConfig",
     "django_extensions",
     "rest_framework",
@@ -42,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [

@@ -16,11 +16,11 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")  # TOD0 redirect to main page
+                return redirect("home")
             else:
                 msg = "Invalid credentials"
         else:
-            msg = "Error validating the form"  # sprawdzic co to
+            msg = "Error validating the form"
 
     return render(request, "users/login.html", {"form": form, "msg": msg})
 

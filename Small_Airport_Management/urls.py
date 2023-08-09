@@ -19,4 +19,10 @@ from django.urls import path, include
 from users import views as user_views
 from django.contrib.auth import views as auth_views
 
-urlpatterns = [path("admin/", admin.site.urls), path("", include("users.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("users.urls")),
+    path("", include("airport.urls")),
+    path("", include("organization.urls")),
+    path("", include("dashboard.urls")),
+]

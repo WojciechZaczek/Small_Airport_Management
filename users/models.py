@@ -23,5 +23,5 @@ class Worker(models.Model):
     worker = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
-        help_text="Every User is worker, howe ver not evry worker is a user",
+        help_text="Every User is worker, however not every worker is a user",
     )
