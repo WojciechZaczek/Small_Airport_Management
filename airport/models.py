@@ -29,6 +29,9 @@ class Airport(models.Model):
         null=True,
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Runway(models.Model):
     name = models.CharField(max_length=30, help_text="Name of the Runway")
@@ -81,6 +84,9 @@ class OutsideAircraftStand(models.Model):
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Hangar(models.Model):
     name = models.CharField(max_length=30, help_text="Name of the hangar")
@@ -97,3 +103,6 @@ class Hangar(models.Model):
     airport_id = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
+
+    def __str__(self):
+        return self.name

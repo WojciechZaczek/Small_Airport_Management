@@ -77,11 +77,3 @@ class AircraftHangared(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
-
-    #
-
-    @property
-    def get_client_id(self):
-        client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
-        if not self.airport_property:
-            return client_id
