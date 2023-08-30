@@ -1,0 +1,73 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Runway {{ object.name }} details {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+    <h3 class="card-title">Runway {{ object.name }} details:</h3>
+    <div class="row">
+
+            <div class="col-6">
+            <div class="card card-nav-tabs">
+              <div class="card-body">
+                  <h3 class="card-title">Basic information:</h3>
+                  <br>
+                        <h4 class="card-text"> Number:  {{ object.id }}</h4>
+                      <h4 class="card-text"> Length:  {{ object.length }} meters</h4>
+                      <h4 class="card-text"> Width:  {{ object.width }} meters</h4>
+                      <h4 class="card-text"> Surface:  {{ object.surface }}</h4>
+
+              </div>
+            </div>
+            </div>
+    </div>
+    <div class="row">
+            <div class="col-6">
+            <div class="card card-nav-tabs">
+              <div class="card-body">
+                  <h3 class="card-title">Markings:</h3>
+                  <br>
+                  <h4 class="card-text"> Lights: {% if object.light %} OK {% else %} NO {% endif %} </h4>
+                  <h4 class="card-text"> Marks:  {% if object.markings %} OK {% else %} NO {% endif %}</h4>
+
+              </div>
+            </div>
+            </div>
+    </div>
+
+        <div class="row">
+
+            <div class="col-6">
+            <div class="card card-nav-tabs">
+              <div class="card-body">
+                  <h3 class="card-title">Details:</h3>
+                  <br>
+                  <h4 class="card-text"> TORA:  {{ object.TORA }} meters</h4>
+                  <h4 class="card-text"> LDA:  {{ object.LDA }} meters</h4>
+                  <h4 class="card-text"> CWY:  {{ object.CWY }} meters</h4>
+                  <h4 class="card-text"> SWY:  {{ object.SWY }} meters</h4>
+                  <h4 class="card-text"> TODA:  {{ object.TODA }} meters</h4>
+                  <h4 class="card-text"> ASDA:  {{ object.ASDA }} meters</h4>
+
+              </div>
+            </div>
+            </div>
+    </div>
+        <div class="row">
+            <div class="col-6">
+            <div class="text-right">
+          <a href="{% url 'runways'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Back</a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

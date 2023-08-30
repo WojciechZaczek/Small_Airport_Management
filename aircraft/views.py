@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def aircraft(request):
+    return render(request, "aircraft/aircraft.html", {"title": "Aircraft"})

@@ -1,9 +1,11 @@
 from django.db import models
 from .constants import SURFACE, AIRCRAFT_STAND_SIZE, TYPES_OF_TRAFFIC_PERMISSION
+from django.urls import reverse
 
 
 class Airport(models.Model):
     name = models.CharField(max_length=30, help_text="Name of the airport")
+    city = models.CharField(max_length=30, help_text="Airport city")
     address = models.TextField(max_length=200, help_text="Airport address")
     contact = models.TextField(max_length=200, help_text="Phone no.")
     types_of_traffic_permitted = models.CharField(
@@ -35,8 +37,8 @@ class Airport(models.Model):
 
 class Runway(models.Model):
     name = models.CharField(max_length=30, help_text="Name of the Runway")
-    length = models.IntegerField(help_text="Runway length in meters")
-    width = models.IntegerField(help_text="Runway width in meters")
+    length = models.FloatField(help_text="Runway length in meters")
+    width = models.FloatField(help_text="Runway width in meters")
     surface = models.CharField(
         choices=SURFACE,
         help_text="Runway type of surface. From tuple SURFACE",
@@ -44,10 +46,10 @@ class Runway(models.Model):
     )
     light = models.BooleanField(help_text="Installed lighting on a Runway - Yes/No")
     markings = models.BooleanField(help_text="Marks on a Runway - Yes/No")
-    TORA = models.IntegerField(help_text="Take-off run available in meters")
-    LDA = models.IntegerField(help_text="Landing distance available in meters")
-    CWY = models.IntegerField(help_text="Clearway in meters")
-    SWY = models.IntegerField(help_text="Stopway in meters")
+    TORA = models.FloatField(help_text="Take-off run available in meters")
+    LDA = models.FloatField(help_text="Landing distance available in meters")
+    CWY = models.FloatField(help_text="Clearway in meters")
+    SWY = models.FloatField(help_text="Stopway in meters")
     airport_id = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
@@ -65,6 +67,9 @@ class Runway(models.Model):
             return self.TORA
         else:
             return self.TORA + self.SWY
+
+    def get_absolute_url(self):
+        return reverse("runways_detail", kwargs={"pk": self.pk})
 
 
 class OutsideAircraftStand(models.Model):

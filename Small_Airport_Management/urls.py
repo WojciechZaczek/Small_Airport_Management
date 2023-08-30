@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,4 +28,10 @@ urlpatterns = [
     path("", include("airport.urls")),
     path("", include("organization.urls")),
     path("", include("dashboard.urls")),
-]
+    path("", include("clients.urls")),
+    path("", include("aircraft.urls")),
+    path("", include("notifications.urls")),
+    path("", include("offer.urls")),
+    path("", include("airport_facilities.urls")),
+    path("", include("management.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

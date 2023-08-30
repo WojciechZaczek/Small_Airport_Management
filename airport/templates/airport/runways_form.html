@@ -1,0 +1,166 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} New Runway {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                New Runway
+                            </h4>
+                            <h6 class="card-category">
+                                {% if msg %}
+                                    <span class="text-danger">{{ msg | safe }}</span>
+                                {% else %}
+                                    <span>
+                                        Add runway details
+                                    </span>
+                                {% endif %}
+                            </h6>
+
+                        </div>
+
+                        {% if success %}
+
+
+
+                        {% else %}
+
+                            <form role="form" method="post" action="">
+
+                                {% csrf_token %}
+
+                                <div class="card-body px-5 py-3">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway Name</label>
+                                                {{ form.name }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.name.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway Length</label>
+                                                {{ form.length }}
+                                            </div>
+                                            <span class="text-danger">{{ form.lenght.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway Width</label>
+                                                {{ form.width }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.width.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway Surface</label>
+
+                                                {{ form.surface }}
+
+
+                                            </div>
+                                            <span class="text-danger">{{ form.surface.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway Lights</label>
+                                                {{ form.light }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.light.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway Marking</label>
+                                                {{ form.markings }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.markings.errors }}</span>
+                                        </div>
+                                                                                <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway TORA</label>
+                                                {{ form.TORA }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.TORA.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway LDA</label>
+                                                {{ form.LDA }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.LDA.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway CWY</label>
+                                                {{ form.CWY }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.CWY.errors }}</span>
+                                        </div>
+
+                                                                                <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway SWY</label>
+                                                {{ form.SWY }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.SWY.errors }}</span>
+                                        </div>
+                                                                                <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Runway's Airport</label>
+                                                {{ form.airport_id }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.airport_id.errors }}</span>
+                                        </div>
+
+                                        </div>
+                                          <div class="form-group">
+                                    </div>
+
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
+
+
+                                </div>
+                            </form>
+
+
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

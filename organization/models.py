@@ -12,7 +12,7 @@ class Company(models.Model):
         max_length=500,
         null=True,
         blank=True,
-        help_text="Other important informaitions about Company",
+        help_text="Other important information about Company",
     )
 
     def __str__(self):

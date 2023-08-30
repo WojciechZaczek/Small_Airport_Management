@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.cache import never_cache
 
 
 def login_view(request):
@@ -39,3 +40,7 @@ def register(request):
         form = UserRegisterForm()
 
     return render(request, "users/register.html", {"form": form})
+
+
+def worker(request):
+    return render(request, "users/workers.html", {"title": "Workers"})

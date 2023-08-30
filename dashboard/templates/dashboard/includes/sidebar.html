@@ -13,73 +13,85 @@
             <ul class="nav">
                 <li class="{% if 'home' in segment %} active {% endif %} ">
                     <a href="{% url 'home' %}">
-                        <i class="tim-icons icon-attach-87"></i>
+                        <i class="tim-icons icon-triangle-right-17"></i>
                         <p>Home</p>
                     </a>
                 </li>
 
-                <li class="{% if 'index' in segment %} active {% endif %} ">
-                    <a href="{% url 'organization' %}">
-                        <i class="tim-icons icon-attach-87"></i>
+                <li class="{% if 'organiztions' in segment %} active {% endif %} ">
+                    <a href="{% url 'organizations' %}">
+                        <i class="tim-icons icon-bank"></i>
                         <p>Company</p>
                     </a>
                 </li>
-                <li class="{% if 'index' in segment %} active {% endif %} ">
-                    <a href="/static">
-                        <i class="tim-icons icon-chart-pie-36"></i>
+                <li class="{% if 'airports' in segment %} active {% endif %} ">
+                    <a href="{% url 'airports' %}">
+                        <i class="tim-icons icon-square-pin"></i>
                         <p>Airport</p>
                     </a>
                 </li>
-                <li class="{% if 'icons' in segment %} active {% endif %}">
-                    <a href="/icons.html">
-                        <i class="tim-icons icon-atom"></i>
+                <li class="{% if 'runways' in segment %} active {% endif %}">
+                    <a href="{% url 'runways' %}">
+                        <i class="tim-icons icon-simple-delete"></i>
                         <p>Runways</p>
                     </a>
                 </li>
-                <li class="{% if 'map' in segment %} active {% endif %}">
-                    <a href="/map.html">
-                        <i class="tim-icons icon-pin"></i>
+                <li class="{% if 'aircrafts' in segment %} active {% endif %}">
+                    <a href="{% url 'aircrafts' %}">
+                        <i class="tim-icons icon-send"></i>
                         <p>Aircraft</p>
                     </a>
                 </li>
-                <li class="{% if 'notifications' in segment %} active {% endif %}">
-                    <a href="/notifications.html">
-                        <i class="tim-icons icon-bell-55"></i>
+                <li class="{% if 'clients' in segment %} active {% endif %}">
+                    <a href="{% url 'clients' %}">
+                        <i class="tim-icons icon-single-02"></i>
                         <p>Clients/Members</p>
                     </a>
                 </li>
-                <li class="{% if 'user' in segment %} active {% endif %}">
-                    <a href="/user.html">
-                        <i class="tim-icons icon-single-02"></i>
+                <li class="{% if 'trainings' in segment %} active {% endif %}">
+                    <a href={% url 'trainings' %}>
+                        <i class="tim-icons icon-notes"></i>
                         <p>Trainings</p>
                     </a>
                 </li>
-                <li class="{% if 'tables' in segment %} active {% endif %}">
-                    <a href="/tables.html">
-                        <i class="tim-icons icon-puzzle-10"></i>
+                <li class="{% if 'offers' in segment %} active {% endif %}">
+                    <a href="{% url 'offers' %}">
+                        <i class="tim-icons icon-wallet-43"></i>
                         <p>Offer</p>
                     </a>
                 </li>
-                <li class="{% if 'typography' in segment %} active {% endif %}">
-                    <a href="/typography.html">
-                        <i class="tim-icons icon-align-center"></i>
+                <li class="{% if 'workers' in segment %} active {% endif %}">
+                    <a href="{% url 'workers' %}">
+                        <i class="tim-icons icon-badge"></i>
                         <p>Workers</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/rtl.html">
-                        <i class="tim-icons icon-world"></i>
+                <li class="{% if 'buildings' in segment %} active {% endif %}">
+                    <a href="{% url 'buildings' %}">
+                        <i class="tim-icons icon-app"></i>
                         <p>Buildings</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/rtl.html">
-                        <i class="tim-icons icon-world"></i>
+                <li class="{% if 'other_facilities' in segment %} active {% endif %}">
+                    <a href="{% url 'other_facilities' %}">
+                        <i class="tim-icons icon-bus-front-12"></i>
+                        <p>Other facilities</p>
+                    </a>
+                </li>
+                <li class="{% if 'notifications' in segment %} active {% endif %}">
+                    <a href={% url 'notifications' %}>
+                        <i class="tim-icons icon-time-alarm"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+                <li class="{% if 'management' in segment %} active {% endif %}">
+                    <a href="{% url 'management' %}">
+                        <i class="tim-icons icon-single-copy-04"></i>
                         <p>Management</p>
                     </a>
                 </li>
-                <li>
-                    <a href="{% url 'login' %}">
+                <li class="{% if 'logout' in segment %} active {% endif %}">
+                    <a href="{% url 'logout' %}">
                         <i class="tim-icons icon-button-power"></i>
                         <p>Logout</p>
                     </a>

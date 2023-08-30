@@ -10,7 +10,7 @@ class Notification(models.Model):
     author = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, help_text="Author of notification"
     )
-    view_date = models.DateTimeField(
+    view_date = models.DateField(
         help_text="date when notification will appear on dashboard"
     )
 
