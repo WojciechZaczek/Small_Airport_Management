@@ -1,0 +1,138 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} New Hangar {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                New Hangar
+                            </h4>
+                            <h6 class="card-category">
+                                {% if msg %}
+                                    <span class="text-danger">{{ msg | safe }}</span>
+                                {% else %}
+                                    <span>
+                                        Add hangar details
+                                    </span>
+                                {% endif %}
+                            </h6>
+
+                        </div>
+
+                        {% if success %}
+
+
+
+                        {% else %}
+
+                            <form role="form" method="post" action="">
+
+                                {% csrf_token %}
+
+                                <div class="card-body px-5 py-3">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar Name</label>
+                                                {{ form.name }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.name.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar Height</label>
+                                                {{ form.hangar_height }}
+                                            </div>
+                                            <span class="text-danger">{{ form.hangar_height.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar Width</label>
+                                                {{ form.hangar_wight }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.hangar_wight.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar doors height</label>
+
+                                                {{ form.doors_height }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.doors_height.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar doors wight</label>
+                                                {{ form.doors_wight }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.doors_wight.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar small stands total no</label>
+                                                {{ form.small_stands_no }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.small_stands_no.errors }}</span>
+                                        </div>
+                                                                                <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Hangar small stands taken</label>
+                                                {{ form.small_stands_taken }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.small_stands_taken.errors }}</span>
+                                        </div>
+
+
+
+
+
+
+
+                                        </div>
+                                          <div class="form-group">
+                                    </div>
+
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
+
+
+                                </div>
+                            </form>
+
+
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

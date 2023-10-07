@@ -15,6 +15,10 @@ class CustomUser(AbstractUser):
         help_text="Users work job title, model worker in organization app",
     )
 
+    company_id = models.ForeignKey(
+        Company, on_delete=models.CASCADE, help_text="Company ID"
+    )
+
     def __str__(self):
         return self.username
 

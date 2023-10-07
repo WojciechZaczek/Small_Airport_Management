@@ -9,6 +9,11 @@ import requests
 @login_required()
 def home(request):
     todays_notification = Notification.objects.filter(view_date=timezone.localdate())
+    users_airport = Airport.objects.filter(company_id=request.user.company_id)
+
+    airport_ids = users_airport.values_list("id", flat=True)
+
+    runways = Runway.objects.filter(airport_id__in=airport_ids)
 
     response = requests.get(
         f"https://api.openweathermap.org/data/2.5/weather?q=Gdańsk&appid=0d18d8cccd158b10da75c1fbfa3e3fba&units=metric"
@@ -19,8 +24,8 @@ def home(request):
         "dashboard/dashboard.html",
         {
             "title": "Home",
-            "airports": Airport.objects.all(),
-            "runways": Runway.objects.all(),
+            "airports": users_airport,
+            "runways": runways,
             "notifications": todays_notification,
             "weather": response,
         },

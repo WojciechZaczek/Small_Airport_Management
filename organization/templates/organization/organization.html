@@ -118,7 +118,7 @@
                   <h3 class="title">{{ user.first_name }} {{ user.last_name }}</h3>
 
                 <h4 class="text">
-                    Job position:  {{ user.job_position }}
+                    Job position:  {{ user.get_job_position_display }}
                 </h4>
               <h4 class="text">
                   Department: {{ user.get_department_display }}

@@ -42,6 +42,12 @@
                         <p>Aircraft</p>
                     </a>
                 </li>
+                <li class="{% if 'aircraft_stands' in segment %} active {% endif %}">
+                    <a href="{% url 'aircraft_stands' %}">
+                        <i class="tim-icons icon-tablet-2"></i>
+                        <p>Aircraft Stands</p>
+                    </a>
+                </li>
                 <li class="{% if 'clients' in segment %} active {% endif %}">
                     <a href="{% url 'clients' %}">
                         <i class="tim-icons icon-single-02"></i>

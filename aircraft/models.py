@@ -1,17 +1,26 @@
 from django.db import models
 from airport.constants import SURFACE
-from airport.models import Hangar, OutsideAircraftStand
+from airport.models import Hangar, OutsideAircraftStand, Airport
 from clients.models import Client
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 
 class Aircraft(models.Model):
-    AIRCRAFT_TYPES = []
+    AIRCRAFT_TYPES = (
+        ("A", "Airplane"),
+        ("H", "Helicopter"),
+        ("AS", "Airship"),
+        ("G", "Glider"),
+        ("P", "Paramotor"),
+        ("B", "Balloon"),
+        ("UAV", "Unmanned Aerial Vehicle"),
+    )
     manufacture = models.CharField(max_length=50, help_text="Name op aircraft producer")
     name = models.CharField(max_length=50, help_text="Aircraft name or no")
     type = models.CharField(max_length=50, help_text="Type of Aircraft, from list")
     take_off_ground = models.IntegerField(
-        help_text="Take off first part, where aircraft is on the ground"
+        help_text="Take off first part, where aircraft is on the ground meters"
     )
     take_off_over_50ft_distance = models.IntegerField(
         help_text="Take off second part, from where the vehicle leaves the ground to until it reaches 50 ft"
@@ -30,6 +39,12 @@ class Aircraft(models.Model):
     @property
     def take_off_distance(self):
         return self.take_off_ground + self.take_off_over_50ft_distance
+
+    def can_land_at_airport(self, runways):
+        return any(self.landing_groundroll <= runway.LDA for runway in runways)
+
+    def get_absolute_url(self):
+        return reverse("aircrafts_details", kwargs={"pk": self.pk})
 
 
 class AircraftHangared(models.Model):
@@ -53,7 +68,12 @@ class AircraftHangared(models.Model):
         null=True,
         blank=True,
     )
-    client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
+    airport_id = models.ForeignKey(
+        Airport, on_delete=models.CASCADE, help_text="Aiport ID", null=True, blank=True
+    )
+    client_id = models.ForeignKey(
+        Client, on_delete=models.CASCADE, help_text="Client ID", null=True, blank=True
+    )
 
     def clean(self):
         if not self.hangar_id and not self.outside_stand_id:
@@ -77,3 +97,6 @@ class AircraftHangared(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("aircrafts_hangared_details", kwargs={"pk": self.pk})

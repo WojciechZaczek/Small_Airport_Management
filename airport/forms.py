@@ -1,6 +1,7 @@
 from django import forms
-from .models import Runway, Airport
-from .constants import SURFACE, TYPES_OF_TRAFFIC_PERMISSION
+from .models import Runway, Airport, Hangar, OutsideAircraftStand
+from .constants import SURFACE, TYPES_OF_TRAFFIC_PERMISSION, AIRCRAFT_STAND_SIZE
+from organization.models import Company
 
 
 class CreatAirport(forms.ModelForm):
@@ -67,6 +68,13 @@ class CreatAirport(forms.ModelForm):
 
     API = forms.FileField(
         widget=forms.FileInput(attrs={"placeholder": "API", "class": "form-control"})
+    )
+
+    company_id = forms.ModelChoiceField(
+        queryset=Company.objects.all(),
+        widget=forms.TextInput(
+            attrs={"placeholder": "Company ID", "class": "form-control"}
+        ),
     )
 
     class Meta:
@@ -155,3 +163,94 @@ class CreatRunway(forms.ModelForm):
             "SWY",
             "airport_id",
         ]
+
+
+class CreatHangar(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar Name", "class": "form-control"}
+        )
+    )
+
+    hangar_height = forms.FloatField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar Height", "class": "form-control"}
+        )
+    )
+
+    hangar_wight = forms.FloatField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar Wight", "class": "form-control"}
+        )
+    )
+
+    doors_height = forms.FloatField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar Doors Height", "class": "form-control"}
+        )
+    )
+
+    doors_wight = forms.FloatField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar Doors Wight", "class": "form-control"}
+        )
+    )
+
+    small_stands_no = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar small stands total", "class": "form-control"}
+        )
+    )
+
+    small_stands_taken = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Hangar small stands taken", "class": "form-control"}
+        )
+    )
+
+    class Meta:
+        model = Hangar
+        fields = [
+            "name",
+            "hangar_height",
+            "hangar_wight",
+            "doors_height",
+            "doors_wight",
+            "small_stands_no",
+            "small_stands_taken",
+        ]
+
+
+class CreatOutsideStand(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Outside Aircraft Stand Name",
+                "class": "form-control",
+            }
+        )
+    )
+
+    surface = forms.ChoiceField(
+        choices=SURFACE,
+        widget=forms.Select(
+            attrs={
+                "placeholder": "Outside Aircraft Stand Surface",
+                "class": "form-control",
+            }
+        ),
+    )
+    size = forms.ChoiceField(
+        choices=AIRCRAFT_STAND_SIZE,
+        widget=forms.Select(
+            attrs={
+                "placeholder": "Outside Aircraft Stand Size",
+                "class": "form-control",
+            }
+        ),
+    )
+    taken = forms.BooleanField(required=False)
+
+    class Meta:
+        model = OutsideAircraftStand
+        fields = ["name", "surface", "size", "taken"]

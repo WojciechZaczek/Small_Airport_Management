@@ -1,0 +1,122 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Aircraft stationed at the airport Update {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                Edit Aircraft stationed Details
+                            </h4>
+                            <h6 class="card-category">
+                                {% if msg %}
+                                    <span class="text-danger">{{ msg | safe }}</span>
+                                {% else %}
+
+                                {% endif %}
+                            </h6>
+
+                        </div>
+
+                        {% if success %}
+
+
+
+                        {% else %}
+
+                            <form role="form" method="post" action="">
+
+                                {% csrf_token %}
+
+                                <div class="card-body px-5 py-3">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft </label>
+                                                {{ form.aircraft_id }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.aircraft_id.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft registration no</label>
+                                                {{ form.aircraft_registration_no }}
+                                            </div>
+                                            <span class="text-danger">{{ form.aircraft_registration_no.errors }}</span>
+                                        </div>
+                                         <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Airport property</label>
+                                                {{ form.airport_property }}
+                                            </div>
+                                            <span class="text-danger">{{ form.airport_property.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft hangar</label>
+                                                {{ form.hangar_id }}
+                                            </div>
+                                            <span class="text-danger">{{ form.hangar_id.errors }}</span>
+                                        </div>
+
+                                           <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft outside stand id</label>
+                                                {{ form.outside_stand_id }}
+                                            </div>
+                                            <span class="text-danger">{{ form.outside_stand_id.errors }}</span>
+                                        </div>
+
+
+                                         <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft client</label>
+                                                {{ form.client_id }}
+                                            </div>
+                                            <span class="text-danger">{{ form.client_id.errors }}</span>
+                                        </div>
+
+
+
+
+                                        </div>
+                                          <div class="form-group">
+                                    </div>
+
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
+
+
+                                </div>
+                            </form>
+
+
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

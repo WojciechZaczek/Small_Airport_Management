@@ -1,0 +1,151 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Aircraft Base Update {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                Edit Aircraft Details
+                            </h4>
+                            <h6 class="card-category">
+                                {% if msg %}
+                                    <span class="text-danger">{{ msg | safe }}</span>
+                                {% else %}
+
+                                {% endif %}
+                            </h6>
+
+                        </div>
+
+                        {% if success %}
+
+
+
+                        {% else %}
+
+                            <form role="form" method="post" action="">
+
+                                {% csrf_token %}
+
+                                <div class="card-body px-5 py-3">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft type</label>
+                                                {{ form.type }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.type.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft Name</label>
+                                                {{ form.name }}
+                                            </div>
+                                            <span class="text-danger">{{ form.name.errors }}</span>
+                                        </div>
+                                         <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft Manufacture</label>
+                                                {{ form.manufacture }}
+                                            </div>
+                                            <span class="text-danger">{{ form.manufacture.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft take off ground</label>
+                                                {{ form.take_off_ground }}
+                                            </div>
+                                            <span class="text-danger">{{ form.take_off_ground.errors }}</span>
+                                        </div>
+
+                                           <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft take off over 50ft distance</label>
+                                                {{ form.take_off_over_50ft_distance }}
+                                            </div>
+                                            <span class="text-danger">{{ form.take_off_over_50ft_distance.errors }}</span>
+                                        </div>
+                                           <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft landing groundroll</label>
+                                                {{ form.landing_groundroll }}
+                                            </div>
+                                            <span class="text-danger">{{ form.landing_groundroll.errors }}</span>
+                                        </div>
+
+                                         <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft fuel_capacity</label>
+                                                {{ form.fuel_capacity }}
+                                            </div>
+                                            <span class="text-danger">{{ form.fuel_capacity.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft Description</label>
+                                                {{ form.description }}
+                                            </div>
+                                            <span class="text-danger">{{ form.description.errors }}</span>
+                                        </div>
+
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Aircraft runway surface type</label>
+                                                {{ form.runway_surface_type }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.runway_surface_type.errors }}</span>
+                                        </div>
+
+
+
+
+
+
+
+
+
+                                        </div>
+                                          <div class="form-group">
+                                    </div>
+
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
+
+
+                                </div>
+                            </form>
+
+
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

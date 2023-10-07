@@ -11,7 +11,10 @@ class CustomUserAdmin(UserAdmin):
 
     fieldsets = (
         *UserAdmin.fieldsets,
-        ("Additional information", {"fields": ("department", "job_position")}),
+        (
+            "Additional information",
+            {"fields": ("department", "job_position", "company_id")},
+        ),
     )
 
 

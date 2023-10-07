@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Delete Aircraft  {{ object.manufacture }}{{ object.name }} {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+       <div class="content">
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                Delete Aircraft
+                            </h4>
+                <form role="form" method="post" action="">
+
+                                {% csrf_token %}
+                    <h5>Are you sure you want to delete {{ object.manufacture }}{{ object.name }} from aircraft base?</h5>
+
+        <div class="from-group">
+            <button class="btn btn-danger animation-on-hover" type="submit">Yes</button>
+          <a class="btn btn-success animation-on-hover" href="{% url 'aircrafts' %}">Cancel</a>
+        </div>
+                </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+       </div>
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

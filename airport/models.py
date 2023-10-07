@@ -1,6 +1,8 @@
 from django.db import models
 from .constants import SURFACE, AIRCRAFT_STAND_SIZE, TYPES_OF_TRAFFIC_PERMISSION
+from django.core.exceptions import ValidationError
 from django.urls import reverse
+from organization.models import Company
 
 
 class Airport(models.Model):
@@ -29,6 +31,10 @@ class Airport(models.Model):
         help_text="AIP – Aeronautical Information Publication",
         blank=True,
         null=True,
+    )
+
+    company_id = models.ForeignKey(
+        Company, on_delete=models.CASCADE, help_text="Company ID"
     )
 
     def __str__(self):
@@ -81,16 +87,20 @@ class OutsideAircraftStand(models.Model):
     )
     size = models.CharField(
         choices=AIRCRAFT_STAND_SIZE,
-        help_text="Runway type of surface. From tuple AIRCRAFT_STAND_SIZE",
+        help_text="Stand size. From tuple AIRCRAFT_STAND_SIZE",
         max_length=100,
     )
     taken = models.BooleanField(help_text="Information if this stand is taken")
+
     airport_id = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("outside_stands_details", kwargs={"pk": self.pk})
 
 
 class Hangar(models.Model):
@@ -105,9 +115,23 @@ class Hangar(models.Model):
     small_stands_taken = models.IntegerField(
         help_text="How many small stands are in Hangar are taken"
     )
+
     airport_id = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
+
+    def clean(self):
+        if self.small_stands_no < self.small_stands_taken:
+            raise ValidationError("Not enough free stands")
+
+        super().clean()
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("hangars_details", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.name

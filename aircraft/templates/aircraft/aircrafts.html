@@ -1,0 +1,145 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Aircrafts {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> Aircraft Base</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>Manufacture</th>
+                    <th>Model</th>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">Can land at the airport</th>
+                      <th class="text-center">Action </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for aircraft in aircrafts %}
+                  <tr>
+                      <td>{{ aircraft.manufacture }}</td>
+                      <td>{{ aircraft.name }}</td>
+                      <td class="text-center">{{ aircraft.type }}</td>
+                      <td class="text-center">{% if aircraft.can_land  %} Yes {% else %} No {% endif %} </td>
+
+
+                  <td class="text-center">
+                            <a href="{% url "aircrafts_details" aircraft.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Details</a>
+                            <a href="{% url "aircrafts_update" aircraft.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Edit</a>
+                            <a href="{% url "aircrafts_delete" aircraft.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Delete</a>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  <div class="row">
+                      <div class="col-10">
+            <div class="text-right">
+          <a href="{% url 'aircrafts_add'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Add new Aircraft</a>
+            </div><br>
+                      </div>
+
+  </div>
+      <div class="row">
+      <div class="col-md-10">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> Aircraft stationed at the airport</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      Manufacture
+                    </th>
+                    <th>
+                      Model
+                    </th>
+                    <th class="text-center">
+                      Type
+                    </th>
+                    <th class="text-center">
+                      Standing slot
+                    </th>
+                    <th class="text-center">
+                      Client
+                    </th>
+                      <th class="text-center">Action </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for aircraft_hangared in aircrafts_hangared %}
+                  <tr>
+                    <td>
+                        {{ aircraft_hangared.aircraft_id.manufacture }}
+                    </td>
+                    <td>
+                      {{ aircraft_hangared.aircraft_id.name }}
+                    </td>
+                    <td class="text-center">
+                      {{ aircraft_hangared.aircraft_id.type }}
+                    </td>
+                      <td class="text-center">
+                      {{ aircraft_hangared.hangar_id.name }}
+                    </td>
+                    <td class="text-center">
+                        {{ aircraft_hangared.client_id.name}} {{ aircraft_hangared.client_id.last_name }}
+                    </td>
+
+
+                  <td class="text-center">
+                            <a href="{% url "aircrafts_hangared_details" aircraft_hangared.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Details</a>
+                            <a href="{% url "aircrafts_hangared_update" aircraft_hangared.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Edit</a>
+                            <a href="{% url "aircrafts_hangared_delete" aircraft_hangared.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Delete</a>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  <div class="row">
+                      <div class="col-10">
+            <div class="text-right">
+          <a href="{% url 'aircrafts_hangared_add'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Add new  Aircraft hangared</a>
+            </div><br>
+                      </div>
+
+  </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

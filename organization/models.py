@@ -15,6 +15,11 @@ class Company(models.Model):
         help_text="Other important information about Company",
     )
 
+    @property
+    def employees(self):
+        ...
+        # return self.worker.all() + self.
+
     def __str__(self):
         return self.name
 
@@ -47,5 +52,5 @@ class Department(models.Model):
         max_length=200, help_text="information about department"
     )
     company_id = models.ForeignKey(
-        Company, on_delete=models.CASCADE, help_text="Airport ID"
+        Company, on_delete=models.CASCADE, help_text="Company ID"
     )

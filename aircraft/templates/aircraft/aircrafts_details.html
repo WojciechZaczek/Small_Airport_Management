@@ -1,0 +1,70 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Aircraft {{ object.name }} details {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+    <h3 class="card-title">Aircraft {{ object.manufacture }} {{ object.name }} details:</h3>
+    <div class="row">
+
+            <div class="col-6">
+            <div class="card card-nav-tabs">
+              <div class="card-body">
+                  <h3 class="card-title">Basic information:</h3>
+                  <br>
+                        <h4 class="card-text"> Type:  {{ object.type }}</h4>
+                      <h4 class="card-text"> Description  {{ object.description }}</h4>
+                      <h4 class="card-text"> Fuel capacity:  {{ object.fuel_capacity }} liters</h4>
+
+
+              </div>
+            </div>
+            </div>
+    </div>
+    <div class="row">
+            <div class="col-6">
+            <div class="card card-nav-tabs">
+              <div class="card-body">
+                  <h3 class="card-title">Landing details:</h3>
+                  <br>
+                  <h4 class="card-text"> Landing groundroll: {{ object.landing_groundroll }} </h4>
+                  <h4 class="card-text"> Surface can land:  {{ object.runway_surface_type }}</h4>
+
+              </div>
+            </div>
+            </div>
+    </div>
+
+        <div class="row">
+
+            <div class="col-6">
+            <div class="card card-nav-tabs">
+              <div class="card-body">
+                  <h3 class="card-title">Take off details:</h3>
+                  <br>
+                  <h4 class="card-text"> Take off ground:  {{ object.take_off_ground }} meters</h4>
+                  <h4 class="card-text"> Take off over 50ft distance:  {{ object.take_off_over_50ft_distance }} meters</h4>
+                  <h4 class="card-text"> Total take off distance:  {{ object.take_off_distance }} meters</h4>
+
+              </div>
+            </div>
+            </div>
+    </div>
+        <div class="row">
+            <div class="col-6">
+            <div class="text-right">
+          <a href="{% url 'aircrafts'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Back</a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

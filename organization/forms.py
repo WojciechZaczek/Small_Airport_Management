@@ -51,7 +51,7 @@ class CreatDepartment(forms.ModelForm):
     company_id = forms.ModelChoiceField(
         queryset=Company.objects.all(),
         widget=forms.TextInput(
-            attrs={"placeholder": "Airport ID", "class": "form-control"}
+            attrs={"placeholder": "Company ID", "class": "form-control"}
         ),
     )
 

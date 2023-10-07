@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (
 )
 from django import forms
 from .models import CustomUser
+from organization.models import Company
 from organization.models import Department
 
 
@@ -74,6 +75,13 @@ class UserRegisterForm(UserCreationForm):
         ),
     )
 
+    company_id = forms.ModelChoiceField(
+        queryset=Company.objects.all(),
+        widget=forms.TextInput(
+            attrs={"placeholder": "Company ID", "class": "form-control"}
+        ),
+    )
+
     class Meta:
         model = CustomUser
         fields = [
@@ -85,4 +93,5 @@ class UserRegisterForm(UserCreationForm):
             "last_name",
             "department",
             "job_position",
+            "company_id",
         ]

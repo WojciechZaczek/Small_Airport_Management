@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %} Edit Company Details {% endblock %}
+{% block title %} New Outside Aircraft Stand {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -14,13 +14,15 @@
                     <div class="card">
                         <div class="card-header text-center py-4">
                             <h4 class="title">
-                                Edit Company details
+                                New Outside Aircraft Stand
                             </h4>
                             <h6 class="card-category">
                                 {% if msg %}
                                     <span class="text-danger">{{ msg | safe }}</span>
                                 {% else %}
-
+                                    <span>
+                                        Add Outside Aircraft Stand details
+                                    </span>
                                 {% endif %}
                             </h6>
 
@@ -42,7 +44,7 @@
                                     <div class="row">
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Company Name</label>
+                                                <label>Outside Stand Name</label>
                                                 {{ form.name }}
 
                                             </div>
@@ -51,25 +53,45 @@
 
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Department description</label>
-                                                {{ form.description }}
+                                                <label>Outside Aircraft Stand Surface</label>
+                                                {{ form.surface }}
                                             </div>
-                                            <span class="text-danger">{{ form.description.errors }}</span>
+                                            <span class="text-danger">{{ form.surface.errors }}</span>
                                         </div>
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Company</label>
-                                                {{ form.company_id }}
+                                                <label>Outside Aircraft Stand Size</label>
+                                                {{ form.size }}
 
                                             </div>
-                                            <span class="text-danger">{{ form.company_id.errors }}</span>
+                                            <span class="text-danger">{{ form.size.errors }}</span>
                                         </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Is Outside Aircraft Stand taken?</label>
+
+                                                {{ form.taken }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.taken.errors }}</span>
+                                        </div>
+
+
+
+
+
+
+
+                                        </div>
+                                          <div class="form-group">
+                                    </div>
 
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
 
-                                </div>
+
                                 </div>
                             </form>
 

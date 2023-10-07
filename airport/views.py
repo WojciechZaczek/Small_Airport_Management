@@ -4,43 +4,60 @@ from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Runway, Airport
-from .forms import CreatRunway, CreatAirport
+
+from .models import Runway, Airport, Hangar, OutsideAircraftStand
+from aircraft.models import AircraftHangared
+from .forms import CreatRunway, CreatAirport, CreatHangar, CreatOutsideStand
 
 
-class AirportListView(ListView):
+# @method_decorator(login_required, name='dispatch')
+class AirportListView(LoginRequiredMixin, ListView):
     model = Airport
     template_name = "airport/airport.html"
     context_object_name = "airport"
 
+    def get_queryset(self):
+        user = self.request.user
+        airports = Airport.objects.filter(company_id=user.company_id)
+        return airports
 
-class AirportUpdateView(UpdateView):
+
+class AirportUpdateView(LoginRequiredMixin, UpdateView):
     model = Airport
     template_name = "airport/airport_form.html"
 
     form_class = CreatAirport
 
 
-class RunwaysListView(ListView):
+class RunwaysListView(LoginRequiredMixin, ListView):
     model = Runway
     template_name = "airport/runways.html"
     context_object_name = "runways"
 
+    def get_queryset(self):
+        user = self.request.user
+        airports = Airport.objects.filter(company_id=user.company_id)
+        runways = Runway.objects.filter(airport_id__in=airports)
 
-class RunwaysDetailView(DetailView):
+        return runways
+
+
+class RunwaysDetailView(LoginRequiredMixin, DetailView):
     model = Runway
     template_name = "airport/runways_detail.html"
 
 
-class RunwaysCreateView(CreateView):
+class RunwaysCreateView(LoginRequiredMixin, CreateView):
     model = Runway
     template_name = "airport/runways_form.html"
 
     form_class = CreatRunway
 
 
-class RunwaysUpdateView(UpdateView):
+class RunwaysUpdateView(LoginRequiredMixin, UpdateView):
     model = Runway
     template_name = "airport/runways_form.html"
 
@@ -51,3 +68,97 @@ class RunwaysDeleteView(DeleteView):
     model = Runway
     template_name = "airport/runways_delete.html"
     success_url = reverse_lazy("runways")
+
+
+@login_required()
+def aircraft_stands(request):
+    user = request.user
+    airports = Airport.objects.filter(company_id=user.company_id)
+    return render(
+        request,
+        "airport/aircraft_stands.html",
+        {
+            "title": "Aircraft stands",
+            "hangars": Hangar.objects.filter(airport_id__in=airports),
+            "outside_stands": OutsideAircraftStand.objects.filter(
+                airport_id__in=airports
+            ),
+        },
+    )
+
+
+class HangarsDetailView(LoginRequiredMixin, DetailView):
+    model = Hangar
+
+    template_name = "airport/hangars_details.html"
+    extra_context = {"aircrafts": AircraftHangared.objects.all()}
+
+
+LoginRequiredMixin
+
+
+class HangarsCreateView(LoginRequiredMixin, CreateView):
+    model = Hangar
+    template_name = "airport/hangars_form.html"
+    form_class = CreatHangar
+
+    def form_valid(self, form):
+        user = self.request.user
+        user_company = user.company_id
+        try:
+            airport = Airport.objects.get(company_id=user_company)
+        except Airport.DoesNotExist:
+            pass
+        else:
+            form.instance.airport_id = airport
+        return super().form_valid(form)
+
+
+class HangarsUpdateView(LoginRequiredMixin, UpdateView):
+    model = Hangar
+    template_name = "airport/hangars_form.html"
+
+    form_class = CreatHangar
+
+
+class HangarsDeleteView(LoginRequiredMixin, DeleteView):
+    model = Hangar
+    template_name = "airport/hangars_delete.html"
+    success_url = reverse_lazy("aircraft_stands")
+
+
+class OutsideStandsDetailView(LoginRequiredMixin, DetailView):
+    model = OutsideAircraftStand
+
+    template_name = "airport/outside_stands_details.html"
+    extra_context = {"aircrafts": AircraftHangared.objects.all()}
+
+
+class OutsideStandsCreateView(LoginRequiredMixin, CreateView):
+    model = OutsideAircraftStand
+    template_name = "airport/outside_stands_form.html"
+    form_class = CreatOutsideStand
+
+    def form_valid(self, form):
+        user = self.request.user
+        user_company = user.company_id
+        try:
+            airport = Airport.objects.get(company_id=user_company)
+        except Airport.DoesNotExist:
+            pass
+        else:
+            form.instance.airport_id = airport
+        return super().form_valid(form)
+
+
+class OutsideStandsUpdateView(LoginRequiredMixin, UpdateView):
+    model = OutsideAircraftStand
+    template_name = "airport/outside_stands_form.html"
+
+    form_class = CreatOutsideStand
+
+
+class OutsideStandsDeleteView(LoginRequiredMixin, DeleteView):
+    model = OutsideAircraftStand
+    template_name = "airport/outside_stands_delete.html"
+    success_url = reverse_lazy("aircraft_stands")

@@ -13,7 +13,7 @@ def company(request):
         request,
         "organization/organization.html",
         {
-            "organization": Company.objects.all(),
+            "organization": Company.objects.filter(name=request.user.company_id),
             "department": Department.objects.filter(company_id=request.user.company_id),
         },
     )
