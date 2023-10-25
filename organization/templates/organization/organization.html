@@ -13,9 +13,11 @@
       <div class="col-8">
           <div class="card">
               {% for org in organization %}
-            <div id="accordion" role="tablist" aria-multiselectable="true" class="card-collapse">
+              <p>{{ org.name }}</p>
+
+            <div id="according" role="tablist" aria-multiselectable="true" class="card-collapse">
             <div class="card card-plain">
-                <div class="card-header" role="tab" id="headingOne">
+                <div class="card-header" role="tab" >
                 <a data-toggle="collapse" data-parent="#accordion" href="#company_name" aria-expanded="true" aria-controls="collapseOne">
                     Name
                     <i class="tim-icons icon-minimal-down"></i>
@@ -124,7 +126,7 @@
                   Department: {{ user.get_department_display }}
               </h4>
               </div>
-            </p>
+
 
           </div>
 
@@ -181,6 +183,7 @@
 
   </div>
       </div>
+  </div>
 
 {% endblock content %}
 

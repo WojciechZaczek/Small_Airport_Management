@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import UserLoginForm, UserRegisterForm
-from .models import CustomUser, Worker
+from .models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
@@ -13,10 +13,9 @@ class CustomUserAdmin(UserAdmin):
         *UserAdmin.fieldsets,
         (
             "Additional information",
-            {"fields": ("department", "job_position", "company_id")},
+            {"fields": ("department", "job_position", "company")},
         ),
     )
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Worker)

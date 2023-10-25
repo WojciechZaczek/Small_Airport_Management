@@ -19,7 +19,7 @@ class ClientsListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        clients = Client.objects.filter(company_id=user.company_id)
+        clients = Client.objects.filter(company_id=user.company)
         return clients
 
 
@@ -35,7 +35,7 @@ class ClientsCreateView(CreateView):
     form_class = CreatClients
 
     def form_valid(self, form):
-        company_id = self.request.user.company_id
+        company_id = self.request.user.company
         form.instance.company_id = company_id
         return super().form_valid(form)
 

@@ -18,7 +18,7 @@ def aircraft(request):
     aircrafts = Aircraft.objects.all()
 
     user = request.user
-    airports = Airport.objects.filter(company_id=user.company_id)
+    airports = Airport.objects.filter(company_id=user.company)
     runways = Runway.objects.filter(airport_id__in=airports)
 
     for aircraft in aircrafts:

@@ -21,7 +21,7 @@ class AirportListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company_id)
+        airports = Airport.objects.filter(company_id=user.company)
         return airports
 
 
@@ -39,7 +39,7 @@ class RunwaysListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company_id)
+        airports = Airport.objects.filter(company_id=user.company)
         runways = Runway.objects.filter(airport_id__in=airports)
 
         return runways
@@ -73,7 +73,7 @@ class RunwaysDeleteView(DeleteView):
 @login_required()
 def aircraft_stands(request):
     user = request.user
-    airports = Airport.objects.filter(company_id=user.company_id)
+    airports = Airport.objects.filter(company_id=user.company)
     return render(
         request,
         "airport/aircraft_stands.html",
@@ -92,9 +92,6 @@ class HangarsDetailView(LoginRequiredMixin, DetailView):
 
     template_name = "airport/hangars_details.html"
     extra_context = {"aircrafts": AircraftHangared.objects.all()}
-
-
-LoginRequiredMixin
 
 
 class HangarsCreateView(LoginRequiredMixin, CreateView):

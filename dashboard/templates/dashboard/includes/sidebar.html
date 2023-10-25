@@ -51,11 +51,11 @@
                 <li class="{% if 'clients' in segment %} active {% endif %}">
                     <a href="{% url 'clients' %}">
                         <i class="tim-icons icon-single-02"></i>
-                        <p>Clients/Members</p>
+                        <p>Clients</p>
                     </a>
                 </li>
                 <li class="{% if 'trainings' in segment %} active {% endif %}">
-                    <a href={% url 'trainings' %}>
+                    <a href="{% url 'trainings' %}">
                         <i class="tim-icons icon-notes"></i>
                         <p>Trainings</p>
                     </a>
@@ -85,15 +85,9 @@
                     </a>
                 </li>
                 <li class="{% if 'notifications' in segment %} active {% endif %}">
-                    <a href={% url 'notifications' %}>
+                    <a href="{% url 'notifications' %}">
                         <i class="tim-icons icon-time-alarm"></i>
                         <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="{% if 'management' in segment %} active {% endif %}">
-                    <a href="{% url 'management' %}">
-                        <i class="tim-icons icon-single-copy-04"></i>
-                        <p>Management</p>
                     </a>
                 </li>
                 <li class="{% if 'logout' in segment %} active {% endif %}">

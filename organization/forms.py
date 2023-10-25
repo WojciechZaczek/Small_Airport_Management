@@ -1,5 +1,5 @@
 from django import forms
-from .models import Department, Company
+from .models import Department, Company, Worker
 
 
 class CreatCompany(forms.ModelForm):
@@ -58,3 +58,59 @@ class CreatDepartment(forms.ModelForm):
     class Meta:
         model = Department
         fields = ["name", "description", "company_id"]
+
+
+class CreatWorker(forms.ModelForm):
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Workers first name", "class": "form-control"}
+        )
+    )
+
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Workers last name", "class": "form-control"}
+        )
+    )
+
+    department = forms.ChoiceField(
+        choices=Department.DEPARTAMENT,
+        widget=forms.Select(
+            attrs={"placeholder": "Workers department", "class": "form-control"}
+        ),
+    )
+
+    job_position = forms.ChoiceField(
+        choices=Department.JOB_TITLES,
+        widget=forms.Select(
+            attrs={"placeholder": "Workers job position", "class": "form-control"}
+        ),
+    )
+    address = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Workers address", "class": "form-control"}
+        )
+    )
+    phone_no = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Workers telephone number", "class": "form-control"}
+        )
+    )
+
+    information = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Information about worker", "class": "form-control"}
+        )
+    )
+
+    class Meta:
+        model = Worker
+        fields = [
+            "first_name",
+            "last_name",
+            "department",
+            "job_position",
+            "address",
+            "phone_no",
+            "information",
+        ]

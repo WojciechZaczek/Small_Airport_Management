@@ -33,5 +33,4 @@ urlpatterns = [
     path("", include("notifications.urls")),
     path("", include("offer.urls")),
     path("", include("airport_facilities.urls")),
-    path("", include("management.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,10 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "dashboard/base.html" %}
 
-</body>
-</html>
+{% block title %} New Other object {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                New Other
+                            </h4>
+                            <h6 class="card-category">
+                                {% if msg %}
+                                    <span class="text-danger">{{ msg | safe }}</span>
+                                {% else %}
+                                    <span>
+                                        Add other details
+                                    </span>
+                                {% endif %}
+                            </h6>
+
+                        </div>
+
+                        {% if success %}
+
+
+
+                        {% else %}
+
+                            <form role="form" method="post" action="">
+
+                                {% csrf_token %}
+
+                                <div class="card-body px-5 py-3">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Other Name</label>
+                                                {{ form.name }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.name.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Other Department</label>
+                                                {{ form.department }}
+                                            </div>
+                                            <span class="text-danger">{{ form.department.errors }}</span>
+                                        </div>
+
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Other description</label>
+
+                                                {{ form.description }}
+
+
+                                            </div>
+                                            <span class="text-danger">{{ form.description.errors }}</span>
+                                        </div>
+                                        <div class="col-md-12 px-md-1">
+
+
+
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
+
+
+                                </div>
+                                </div>
+                                </div>
+
+                            </form>
+
+
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

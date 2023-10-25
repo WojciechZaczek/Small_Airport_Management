@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "airport_facilities.apps.AirportFacilitiesConfig",
     "clients.apps.ClientsConfig",
     "dashboard.apps.DashboardConfig",
-    "management.apps.ManagementConfig",
     "notifications.apps.NotificationsConfig",
     "organization.apps.OrganizationConfig",
     "offer.apps.OfferConfig",

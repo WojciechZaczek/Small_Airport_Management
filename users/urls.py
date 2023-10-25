@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
-from .views import register, login_view, worker
+from .views import register, login_view
 
 
 urlpatterns = [
@@ -13,5 +13,4 @@ urlpatterns = [
         auth_views.LogoutView.as_view(template_name="users/logout.html"),
         name="logout",
     ),
-    path("workers/", worker, name="workers"),
 ]

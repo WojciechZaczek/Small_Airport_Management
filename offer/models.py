@@ -1,6 +1,7 @@
 from django.db import models
-from users.models import Worker
+from django.urls import reverse
 from airport.models import Airport
+from organization.models import Worker
 
 
 class Offer(models.Model):
@@ -10,6 +11,9 @@ class Offer(models.Model):
     airport = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
+
+    def get_absolute_url(self):
+        return reverse("offers_details", kwargs={"pk": self.pk})
 
 
 class Training(models.Model):
@@ -23,3 +27,6 @@ class Training(models.Model):
     airport = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
+
+    def get_absolute_url(self):
+        return reverse("trainings_detail", kwargs={"pk": self.pk})

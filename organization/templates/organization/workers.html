@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %} Trainings {% endblock %}
+{% block title %} Workers {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -9,38 +9,41 @@
 
   <div class="content">
     <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-8">
         <div class="card ">
           <div class="card-header">
-            <h3 class="card-title"> Trainings:</h3>
+            <h3 class="card-title"> Workers:</h3>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table tablesorter " id="">
                 <thead class=" text-primary">
                     <tr><th>Name</th>
-                    <th class="text-center">Hours</th>
-
-                    <th class="text-center">Price</th>
+                    <th>Last Name</th>
+                    <th>Department</th>
+                    <th class="text-center">Job Position</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                {% for training in trainings  %}
+                {% for worker in workers  %}
 
                     <tr>
 
 
-                        <td>{{ training.name }} </td>
-                        <td class="text-center">{{ training.hours }} hours</td>
-                        <td class="text-center">{{ training.price }} PLN</td>
+                        <td>{{ worker.first_name }}</td>
+                        <td>{{ worker.last_name }} </td>
+                        <td>{{ worker.get_department_display }} </td>
+
+                        <td class="text-center">{{ worker.get_job_position_display }}</td>
+
                         <td class="text-center">
-                            <a href="{% url 'trainings_detail' training.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'workers_details' worker.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Details</a>
-                            <a href="{% url 'trainings_update' training.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'workers_update' worker.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Edit</a>
-                            <a href="{% url 'trainings_delete' training.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'workers_delete' worker.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Delete</a>
 
                         </td>
@@ -55,10 +58,10 @@
 
     </div>
       <div class="row">
-                      <div class="col-10">
+                      <div class="col-8">
             <div class="text-right">
-          <a href="{% url 'trainings_add'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Add new Training</a>
+          <a href="{% url 'workers_add'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Add new Worker</a>
             </div>
 
       </div>

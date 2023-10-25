@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Company(models.Model):
@@ -14,11 +15,6 @@ class Company(models.Model):
         blank=True,
         help_text="Other important information about Company",
     )
-
-    @property
-    def employees(self):
-        ...
-        # return self.worker.all() + self.
 
     def __str__(self):
         return self.name
@@ -54,3 +50,31 @@ class Department(models.Model):
     company_id = models.ForeignKey(
         Company, on_delete=models.CASCADE, help_text="Company ID"
     )
+
+
+class Worker(models.Model):
+    first_name = models.CharField(max_length=50, help_text="Name of worker")
+    last_name = models.CharField(max_length=50, help_text="Name of worker")
+    department = models.CharField(
+        max_length=50,
+        choices=Department.DEPARTAMENT,
+        help_text=" Worker department, model department in organization app",
+    )
+    job_position = models.CharField(
+        max_length=20,
+        choices=Department.JOB_TITLES,
+        help_text="Worker  job title, model worker in organization app",
+    )
+
+    address = models.CharField(max_length=100, help_text="Worker address")
+
+    phone_no = models.CharField(max_length=50, help_text="Worker phone no.")
+
+    information = models.TextField(max_length=50, help_text="Information about worker")
+
+    company = models.ForeignKey(
+        Company, on_delete=models.CASCADE, help_text="Company ID"
+    )
+
+    def get_absolute_url(self):
+        return reverse("workers_details", kwargs={"pk": self.pk})

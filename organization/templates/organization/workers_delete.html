@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %} Delete Building {{ object.name }} details {% endblock %}
+{% block title %} Delete Worker {{ object.first_name }} {{ object.last_name }}{% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -14,16 +14,16 @@
                     <div class="card">
                         <div class="card-header text-center py-4">
                             <h4 class="title">
-                                Delete Building
+                                Delete Worker
                             </h4>
                 <form role="form" method="post" action="">
 
                                 {% csrf_token %}
-                    <h5>Are you sure you want to delete building {{ object.name }}?</h5>
+                    <h5>Are you sure you want to delete worker: {{ object.first_name }} {{ object.last_name }}?</h5>
 
         <div class="from-group">
             <button class="btn btn-danger animation-on-hover" type="submit">Yes</button>
-          <a class="btn btn-success animation-on-hover" href="{% url 'buildings' %}">Cancel</a>
+          <a class="btn btn-success animation-on-hover" href="{% url 'workers' %}">Cancel</a>
         </div>
                 </form>
                         </div>

@@ -9,7 +9,7 @@ import requests
 @login_required()
 def home(request):
     todays_notification = Notification.objects.filter(view_date=timezone.localdate())
-    users_airport = Airport.objects.filter(company_id=request.user.company_id)
+    users_airport = Airport.objects.filter(company_id=request.user.company)
 
     airport_ids = users_airport.values_list("id", flat=True)
 

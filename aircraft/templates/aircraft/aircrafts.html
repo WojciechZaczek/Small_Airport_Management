@@ -36,11 +36,11 @@
 
 
                   <td class="text-center">
-                            <a href="{% url "aircrafts_details" aircraft.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'aircrafts_details' aircraft.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Details</a>
-                            <a href="{% url "aircrafts_update" aircraft.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'aircrafts_update' aircraft.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Edit</a>
-                            <a href="{% url "aircrafts_delete" aircraft.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'aircrafts_delete' aircraft.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Delete</a>
                   </tr>
                 {% endfor %}
@@ -111,11 +111,11 @@
 
 
                   <td class="text-center">
-                            <a href="{% url "aircrafts_hangared_details" aircraft_hangared.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'aircrafts_hangared_details' aircraft_hangared.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Details</a>
-                            <a href="{% url "aircrafts_hangared_update" aircraft_hangared.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'aircrafts_hangared_update' aircraft_hangared.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Edit</a>
-                            <a href="{% url "aircrafts_hangared_delete" aircraft_hangared.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                            <a href="{% url 'aircrafts_hangared_delete' aircraft_hangared.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
                                aria-pressed="true">Delete</a>
                   </tr>
                 {% endfor %}

@@ -31,6 +31,9 @@ class Vehicle(models.Model):
         Airport, on_delete=models.CASCADE, help_text="Aiport ID", null=True, blank=True
     )
 
+    def get_absolute_url(self):
+        return reverse("vehicles_details", kwargs={"pk": self.pk})
+
 
 class Property(models.Model):
     name = models.CharField(max_length=50, help_text="Name or no.")
@@ -42,6 +45,9 @@ class Property(models.Model):
         Airport, on_delete=models.CASCADE, help_text="Aiport ID", null=True, blank=True
     )
 
+    def get_absolute_url(self):
+        return reverse("properties_details", kwargs={"pk": self.pk})
+
 
 class Others(models.Model):
     name = models.CharField(max_length=50, help_text="Name or no.")
@@ -52,3 +58,6 @@ class Others(models.Model):
     airport = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Aiport ID", null=True, blank=True
     )
+
+    def get_absolute_url(self):
+        return reverse("others_details", kwargs={"pk": self.pk})

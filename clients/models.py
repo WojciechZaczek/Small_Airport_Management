@@ -1,6 +1,5 @@
 from django.db import models
 from offer.models import Training, Offer
-from airport.models import Airport
 from organization.models import Company
 from django.core.exceptions import ValidationError
 from django.urls import reverse
@@ -34,11 +33,10 @@ class Client(models.Model):
     training = models.ManyToManyField(
         Training,
         blank=True,
-        null=True,
         help_text="If client was on training, training name",
     )
     offer = models.ManyToManyField(
-        Offer, blank=True, null=True, help_text="If client uses the offer, offer name"
+        Offer, blank=True, help_text="If client uses the offer, offer name"
     )
     aeroclub_meber = models.BooleanField(
         help_text="Information if client is a Aeroclub member"

@@ -15,7 +15,7 @@ from .views import (
 
 urlpatterns = [
     path("offers/", OffersListView.as_view(), name="offers"),
-    path("offers/<int:pk>/", OffersDetailView.as_view(), name="offers_detail"),
+    path("offers/<int:pk>/", OffersDetailView.as_view(), name="offers_details"),
     path("offers/new/", OffersCreateView.as_view(), name="offers_add"),
     path("offers/update/<int:pk>/", OffersUpdateView.as_view(), name="offers_update"),
     path("offers/delete/<int:pk>/", OffersDeleteView.as_view(), name="offers_delete"),

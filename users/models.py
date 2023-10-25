@@ -15,17 +15,9 @@ class CustomUser(AbstractUser):
         help_text="Users work job title, model worker in organization app",
     )
 
-    company_id = models.ForeignKey(
+    company = models.ForeignKey(
         Company, on_delete=models.CASCADE, help_text="Company ID"
     )
 
     def __str__(self):
         return self.username
-
-
-class Worker(models.Model):
-    worker = models.OneToOneField(
-        CustomUser,
-        on_delete=models.CASCADE,
-        help_text="Every User is worker, however not every worker is a user",
-    )

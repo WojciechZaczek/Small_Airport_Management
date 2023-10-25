@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %} New Property {% endblock %}
+{% block title %} New Worker {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -14,14 +14,14 @@
                     <div class="card">
                         <div class="card-header text-center py-4">
                             <h4 class="title">
-                                New Property
+                                New Worker
                             </h4>
                             <h6 class="card-category">
                                 {% if msg %}
                                     <span class="text-danger">{{ msg | safe }}</span>
                                 {% else %}
                                     <span>
-                                        Add property details
+                                        Add Worker details
                                     </span>
                                 {% endif %}
                             </h6>
@@ -44,43 +44,73 @@
                                     <div class="row">
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Property Name</label>
-                                                {{ form.name }}
+                                                <label>Worker Name</label>
+                                                {{ form.first_name }}
 
                                             </div>
-                                            <span class="text-danger">{{ form.name.errors }}</span>
+                                            <span class="text-danger">{{ form.first_name.errors }}</span>
                                         </div>
 
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Property Department</label>
+                                                <label>Worker Last Name</label>
+                                                {{ form.last_name }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.last_name.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Worker Department</label>
                                                 {{ form.department }}
+
                                             </div>
                                             <span class="text-danger">{{ form.department.errors }}</span>
                                         </div>
 
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Worker Job Position</label>
+                                                {{ form.job_position }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.job_position.errors }}</span>
+                                        </div>
 
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Property description</label>
-
-                                                {{ form.description }}
-
+                                                <label>Worker Address</label>
+                                                {{ form.address }}
 
                                             </div>
-                                            <span class="text-danger">{{ form.description.errors }}</span>
+                                            <span class="text-danger">{{ form.address.errors }}</span>
                                         </div>
-                                        <div class="col-md-12 px-md-1">
 
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Worker Phone number</label>
+                                                {{ form.phone_no }}
+
+                                            </div>
+                                            <span class="text-danger">{{ form.phone_no.errors }}</span>
+                                        </div>
+
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label>Information about worker</label>
+                                                {{ form.information }}
+                                            </div>
+                                            <span class="text-danger">{{ form.information.errors }}</span>
+                                        </div>
 
 
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
 
-
                                 </div>
-                                    </div>
                                 </div>
                             </form>
 
@@ -95,7 +125,7 @@
         </div>
 
 
-
+    </div>
 
 {% endblock content %}
 

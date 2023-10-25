@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %} Tables {% endblock %}
+{% block title %} Other Facilities: {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -9,268 +9,178 @@
 
   <div class="content">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-10">
         <div class="card ">
           <div class="card-header">
-            <h4 class="card-title"> Simple Table</h4>
+            <h3 class="card-title"> Vehicles:</h3>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table tablesorter " id="">
                 <thead class=" text-primary">
-                  <tr>
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Country
-                    </th>
-                    <th>
-                      City
-                    </th>
-                    <th class="text-center">
-                      Salary
-                    </th>
+                    <tr><th>Type</th>
+                    <th class="text-center">Registration no.</th>
+
+                    <th class="text-center">Department</th>
+                    <th class="text-center">Action</th>
                   </tr>
                 </thead>
+
                 <tbody>
-                  <tr>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-center">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-center">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-center">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td class="text-center">
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-center">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $78,615
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Jon Porter
-                    </td>
-                    <td>
-                      Portugal
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $98,615
-                    </td>
-                  </tr>
+                {% for vehicle in vehicles  %}
+
+                    <tr>
+
+
+                        <td>{{ vehicle.type }} </td>
+                        <td class="text-center">{{ vehicle.registration_no }} </td>
+                        <td class="text-center">{{ vehicle.department.name }} </td>
+                        <td class="text-center">
+                            <a href="{% url 'vehicles_details' vehicle.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Details</a>
+                            <a href="{% url 'vehicles_update' vehicle.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Edit</a>
+                            <a href="{% url 'vehicles_delete' vehicle.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Delete</a>
+
+                        </td>
+
+                    </tr>
+                {% endfor %}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-12">
-        <div class="card  card-plain">
-          <div class="card-header">
-            <h4 class="card-title"> Table on Plain Background</h4>
-            <p class="category"> Here is a subtitle for this table</p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                  <tr>
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Country
-                    </th>
-                    <th>
-                      City
-                    </th>
-                    <th class="text-center">
-                      Salary
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-center">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-center">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-center">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td class="text-center">
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-center">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $78,615
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Jon Porter
-                    </td>
-                    <td>
-                      Portugal
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $98,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
+      <div class="row">
+                      <div class="col-10">
+            <div class="text-right">
+          <a href="{% url 'vehicles_add'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Add new Vehicle</a>
+            </div><br>
+                      </div>
+
+      </div>
+
+          <div class="row">
+      <div class="col-md-10">
+        <div class="card ">
+          <div class="card-header">
+            <h3 class="card-title"> Properties:</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                    <tr><th>Name</th>
+
+
+                    <th class="text-center">Department</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                {% for property in properties  %}
+
+                    <tr>
+
+
+                        <td>{{ property.name }} </td>
+
+                        <td class="text-center">{{ property.department.name }} </td>
+                        <td class="text-center">
+                            <a href="{% url 'properties_details' property.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Details</a>
+                            <a href="{% url 'properties_update' property.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Edit</a>
+                            <a href="{% url 'properties_delete' property.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Delete</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+      <div class="row">
+                      <div class="col-10">
+            <div class="text-right">
+          <a href="{% url 'properties_add'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Add new Property</a>
+            </div><br>
+                      </div>
+      </div>
+
+          <div class="row">
+      <div class="col-md-10">
+        <div class="card ">
+          <div class="card-header">
+            <h3 class="card-title"> Others:</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                    <tr><th>Name</th>
+
+
+                    <th class="text-center">Department</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                {% for other in others  %}
+
+                    <tr>
+
+
+                        <td>{{ other.name }} </td>
+
+                        <td class="text-center">{{ other.department.name }} </td>
+                        <td class="text-center">
+                            <a href="{% url 'others_details' other.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Details</a>
+                            <a href="{% url 'others_update' other.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Edit</a>
+                            <a href="{% url 'others_delete' other.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
+                               aria-pressed="true">Delete</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+      <div class="row">
+                      <div class="col-10">
+            <div class="text-right">
+          <a href="{% url 'others_add'  %}"  class="btn btn-primary  " role="button"
+                               aria-pressed="true">Add new Other</a>
+            </div>
+
+      </div>
+
+
+  </div>
   </div>
 
+
+</div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

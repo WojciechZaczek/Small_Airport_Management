@@ -17,7 +17,7 @@ class BuildingsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company_id)
+        airports = Airport.objects.filter(company_id=user.company)
         trainings = Building.objects.filter(airport_id__in=airports)
 
         return trainings
@@ -34,6 +34,12 @@ class BuildingsCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreateBuilding
 
+    def form_valid(self, form):
+        user = self.request.user
+        airports = Airport.objects.filter(company_id=user.company)
+        form.instance.airport = airports
+        return super().form_valid(form)
+
 
 class BuildingsUpdateView(LoginRequiredMixin, UpdateView):
     model = Building
@@ -49,10 +55,16 @@ class BuildingsDeleteView(DeleteView):
 
 
 def other_facilities(request):
+    user = request.user
+    airports = Airport.objects.filter(company_id=user.company)
     return render(
         request,
         "airport_facilities/other_facilities.html",
-        {"title": "Other facilities"},
+        {
+            "vehicles": Vehicle.objects.filter(airport__in=airports),
+            "properties": Property.objects.filter(airport__in=airports),
+            "others": Others.objects.filter(airport__in=airports),
+        },
     )
 
 
@@ -66,6 +78,13 @@ class VehiclesCreateView(LoginRequiredMixin, CreateView):
     template_name = "airport_facilities/vehicles_form.html"
 
     form_class = CreateVehicle
+
+    def form_valid(self, form):
+        user = self.request.user
+        airports = Airport.objects.filter(company_id=user.company)
+        if airports.exists():
+            form.instance.airport = airports.first()
+        return super().form_valid(form)
 
 
 class VehiclesUpdateView(LoginRequiredMixin, UpdateView):
@@ -92,6 +111,13 @@ class PropertiesCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreateProperty
 
+    def form_valid(self, form):
+        user = self.request.user
+        airports = Airport.objects.filter(company_id=user.company)
+        if airports.exists():
+            form.instance.airport = airports.first()
+        return super().form_valid(form)
+
 
 class PropertiesUpdateView(LoginRequiredMixin, UpdateView):
     model = Property
@@ -116,6 +142,13 @@ class OthersCreateView(LoginRequiredMixin, CreateView):
     template_name = "airport_facilities/others_form.html"
 
     form_class = CreateOthers
+
+    def form_valid(self, form):
+        user = self.request.user
+        airports = Airport.objects.filter(company_id=user.company)
+        if airports.exists():
+            form.instance.airport = airports.first()
+        return super().form_valid(form)
 
 
 class OthersUpdateView(LoginRequiredMixin, UpdateView):
