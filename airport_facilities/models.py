@@ -17,6 +17,9 @@ class Building(models.Model):
     def get_absolute_url(self):
         return reverse("buildings_details", kwargs={"pk": self.pk})
 
+    def __str__(self):
+        return self.name
+
 
 class Vehicle(models.Model):
     type = models.CharField(max_length=50, help_text="Building name or no.")
@@ -34,6 +37,9 @@ class Vehicle(models.Model):
     def get_absolute_url(self):
         return reverse("vehicles_details", kwargs={"pk": self.pk})
 
+    def __str__(self):
+        return f"{self.type} {self.registration_no}"
+
 
 class Property(models.Model):
     name = models.CharField(max_length=50, help_text="Name or no.")
@@ -48,6 +54,9 @@ class Property(models.Model):
     def get_absolute_url(self):
         return reverse("properties_details", kwargs={"pk": self.pk})
 
+    def __str__(self):
+        return self.name
+
 
 class Others(models.Model):
     name = models.CharField(max_length=50, help_text="Name or no.")
@@ -61,3 +70,6 @@ class Others(models.Model):
 
     def get_absolute_url(self):
         return reverse("others_details", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.name

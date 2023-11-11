@@ -1,125 +1,129 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Tables {% endblock %}
-
+{% block title %}Tables{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
-
-  <div class="content">
-
-    <div class="row">
-      <div class="col-md-10">
-        <div class="card ">
-          <div class="card-header">
-            <h4 class="card-title"> Private Clients</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                  <tr><th>Name</th>
-                    <th class="text-center">Last Name</th>
-                    <th class="text-center">Club member</th>
-                      <th class="text-center">Action </th>
-                  </tr>
-                </thead>
-                <tbody>
-                {%  for client in clients %}{% if not client.corporate_client %}
-                  <tr>
-                    <td>
-                        {{ client.name }}
-                    </td>
-
-                    <td class="text-center">
-                      {{ client.last_name }}
-                    </td>
-                    <td class="text-center">
-                      {% if client.aeroclub_meber %} YES {% else %} NO {% endif %}
-                    </td>
-
-
-                  <td class="text-center">
-                            <a href="{% url 'clients_detail' client.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Details</a>
-                            <a href="{% url 'clients_update' client.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Edit</a>
-                            <a href="{% url 'clients_delete' client.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Delete</a>
-                  </tr>
-                    {% endif %}{% endfor %}
-                </tbody>
-              </table>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card ">
+                    <div class="card-header">
+                        <h4 class="card-title">Private Clients</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter " id="">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th class="text-center">Last Name</th>
+                                        <th class="text-center">Club member</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for client in clients %}
+                                        {% if not client.corporate_client %}
+                                            <tr>
+                                                <td>{{ client.name }}</td>
+                                                <td class="text-center">{{ client.last_name }}</td>
+                                                <td class="text-center">
+                                                    {% if client.aeroclub_meber %}
+                                                        YES
+                                                    {% else %}
+                                                        NO
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{% url 'clients_detail' client.id %}"
+                                                       class="btn btn-success animation-on-hover btn-sm"
+                                                       role="button"
+                                                       aria-pressed="true">Details</a>
+                                                    <a href="{% url 'clients_update' client.id %}"
+                                                       class="btn btn-info animation-on-hover btn-sm"
+                                                       role="button"
+                                                       aria-pressed="true">Edit</a>
+                                                    <a href="{% url 'clients_delete' client.id %}"
+                                                       class="btn btn-danger animation-on-hover btn-sm"
+                                                       role="button"
+                                                       aria-pressed="true">Delete</a>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4 class="card-title">Corporate Clients</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table tablesorter " id="">
+                                    <thead class=" text-primary">
+                                        <tr>
+                                            <th>Client Name</th>
+                                            <th class="text-center">Nip</th>
+                                            <th class="text-center">Club member</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for client in clients %}
+                                            {% if client.corporate_client %}
+                                                <tr>
+                                                    <td>{{ client.company_name }}</td>
+                                                    <td class="text-center">{{ client.nip }}</td>
+                                                    <td class="text-center">
+                                                        {% if client.aeroclub_meber %}
+                                                            YES
+                                                        {% else %}
+                                                            NO
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{% url 'clients_detail' client.id %}"
+                                                           class="btn btn-success animation-on-hover btn-sm"
+                                                           role="button"
+                                                           aria-pressed="true">Details</a>
+                                                        <a href="{% url 'clients_update' client.id %}"
+                                                           class="btn btn-info animation-on-hover btn-sm"
+                                                           role="button"
+                                                           aria-pressed="true">Edit</a>
+                                                        <a href="{% url 'clients_delete' client.id %}"
+                                                           class="btn btn-danger animation-on-hover btn-sm"
+                                                           role="button"
+                                                           aria-pressed="true">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10">
+                    <div class="text-right">
+                        <a href="{% url 'client_add' %}"
+                           class="btn btn-primary  "
+                           role="button"
+                           aria-pressed="true">Add new Client</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="col-md-10">
-        <div class="card ">
-          <div class="card-header">
-            <h4 class="card-title">Corporate Clients</h4>
-
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                  <tr><th>Client Name</th>
-                      <th class="text-center">Nip</th>
-                    <th class="text-center">Club member</th>
-                      <th class="text-center">Action </th>
-                  </tr>
-                </thead>
-                <tbody>
-                {%  for client in clients %}{% if client.corporate_client %}
-                  <tr>
-                    <td>{{ client.company_name }}</td>
-
-                    <td class="text-center">{{ client.nip }}</td>
-                    <td class="text-center">{% if client.aeroclub_meber %} YES {% else %} NO {% endif %}</td>
-                    <td class="text-center">
-                            <a href="{% url 'clients_detail' client.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Details</a>
-                            <a href="{% url 'clients_update' client.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Edit</a>
-                            <a href="{% url 'clients_delete' client.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Delete</a>
-                    </td>
-                  </tr>
-            {% endif %}{% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-</div>
-
-      <div class="row">
-                      <div class="col-10">
-            <div class="text-right">
-          <a href="{% url 'client_add'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Add new Client</a>
-
-            </div>
-      </div>
-      </div>
-  </div>
-
-
-{% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+    {% endblock content %}
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    {% endblock javascripts %}

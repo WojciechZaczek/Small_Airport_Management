@@ -1,25 +1,22 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.views.generic.list import ListView
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 
-
-from django.contrib.auth.decorators import login_required
-
-from airport.models import Airport, Hangar, OutsideAircraftStand, Runway
+from airport.models import Airport, Runway
 from .models import AircraftHangared, Aircraft
 from .forms import CreatAircraft, CreatAircraftHangared
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 @login_required()
 def aircraft(request):
     aircrafts = Aircraft.objects.all()
-
     user = request.user
-    airports = Airport.objects.filter(company_id=user.company)
-    runways = Runway.objects.filter(airport_id__in=airports)
+    airports = Airport.objects.filter(company=user.company)
+    runways = Runway.objects.filter(airport__in=airports)
 
     for aircraft in aircrafts:
         aircraft.can_land = aircraft.can_land_at_airport(runways)
@@ -30,48 +27,54 @@ def aircraft(request):
         {
             "title": "Aircrafts",
             "aircrafts": aircrafts,
-            "aircrafts_hangared": AircraftHangared.objects.filter(
-                airport_id__in=airports
-            ),
+            "aircrafts_hangared": AircraftHangared.objects.filter(airport__in=airports),
         },
     )
 
 
-class AircraftsDetailView(DetailView):
+class AircraftsDetailView(LoginRequiredMixin, DetailView):
     model = Aircraft
     template_name = "aircraft/aircrafts_details.html"
 
 
-class AircraftsUpdateView(UpdateView):
+class AircraftsUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    model = Aircraft
+    template_name = "aircraft/aircrafts_form.html"
+    form_class = CreatAircraft
+    permission_required = ("aircraft.view_aircraft", "aircraft.change_aircraft")
+
+
+class AircraftsCreateView(LoginRequiredMixin, CreateView):
     model = Aircraft
     template_name = "aircraft/aircrafts_form.html"
 
     form_class = CreatAircraft
 
 
-class AircraftsCreateView(CreateView):
-    model = Aircraft
-    template_name = "aircraft/aircrafts_form.html"
-
-    form_class = CreatAircraft
-
-
-class AircraftsDeleteView(DeleteView):
+class AircraftsDeleteView(LoginRequiredMixin, DeleteView):
     model = Aircraft
     template_name = "aircraft/aircraft_delete.html"
     success_url = reverse_lazy("aircrafts")
 
 
-class AircraftsHangaredDetailView(DetailView):
+class AircraftsHangaredDetailView(LoginRequiredMixin, DetailView):
     model = AircraftHangared
     template_name = "aircraft/aircrafts_hangared_details.html"
 
 
-class AircraftsHangaredUpdateView(UpdateView):
+class AircraftsHangaredUpdateView(LoginRequiredMixin, UpdateView):
     model = AircraftHangared
     template_name = "aircraft/aircrafts_hangared_form.html"
 
     form_class = CreatAircraftHangared
+
+    def get_form(self, form_class=None):
+        return super().get_form(form_class)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class AircraftsHangaredCreateView(LoginRequiredMixin, CreateView):
@@ -82,17 +85,22 @@ class AircraftsHangaredCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        user_company = user.company_id
+        user_company = user.company
         try:
-            airport = Airport.objects.get(company_id=user_company)
+            airport = Airport.objects.get(company=user_company)
         except Airport.DoesNotExist:
             pass
         else:
-            form.instance.airport_id = airport
+            form.instance.airport = airport
         return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class AircraftsHangaredDeleteView(DeleteView):
+
+class AircraftsHangaredDeleteView(LoginRequiredMixin, DeleteView):
     model = AircraftHangared
     template_name = "aircraft/aircrafts_hangared_delete.html"
     success_url = reverse_lazy("aircrafts")

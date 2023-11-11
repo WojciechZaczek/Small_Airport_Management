@@ -1,15 +1,13 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .models import Offer, Training
-from .forms import CreateTraining, CreateOffer
 from airport.models import Airport
+from .forms import CreateTraining, CreateOffer
+from .models import Offer, Training
 
 
 class TrainingsListView(LoginRequiredMixin, ListView):
@@ -19,7 +17,7 @@ class TrainingsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         trainings = Training.objects.filter(airport__in=airports)
 
         return trainings
@@ -38,10 +36,15 @@ class TrainingsCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         if airports.exists():
             form.instance.airport = airports.first()
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class TrainingsUpdateView(LoginRequiredMixin, UpdateView):
@@ -49,6 +52,11 @@ class TrainingsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "offer/trainings_form.html"
 
     form_class = CreateTraining
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class TrainingsDeleteView(LoginRequiredMixin, DeleteView):
@@ -64,7 +72,7 @@ class OffersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         offers = Offer.objects.filter(airport__in=airports)
 
         return offers
@@ -83,7 +91,7 @@ class OffersCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         if airports.exists():
             form.instance.airport = airports.first()
         return super().form_valid(form)

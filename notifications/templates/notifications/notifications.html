@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table tablesorter " id="">
-                                {% if todays_notifcations is empty %}
+                                {% if not todays_notifications %}
                                     <h4 class="card-text"> There is no todays notifications</h4>
                                 {% else %}
                                     <thead class=" text-primary">
@@ -108,7 +108,7 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table tablesorter " id="">
-                                         {% if not future_notifcations %}
+                                         {% if not future_notifications %}
                                     <h4 class="card-text"> There is no future notifications</h4>
                                     {% else %}
                                         <thead class=" text-primary">

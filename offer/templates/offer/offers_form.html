@@ -1,101 +1,62 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} New Offer {% endblock %}
-
+{% block title %}New Offer{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
     <div class="content">
-
-
-            <div class="row">
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header text-center py-4">
-                            <h4 class="title">
-                                New Offer
-                            </h4>
-                            <h6 class="card-category">
-                                {% if msg %}
-                                    <span class="text-danger">{{ msg | safe }}</span>
-                                {% else %}
-                                    <span>
-                                        Add offer details
-                                    </span>
-                                {% endif %}
-                            </h6>
-
-                        </div>
-
-                        {% if success %}
-
-
-
-                        {% else %}
-
-                            <form role="form" method="post" action="">
-
-                                {% csrf_token %}
-
-                                <div class="card-body px-5 py-3">
-
-
-                                    <div class="row">
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Offer Name</label>
-                                                {{ form.name }}
-
-                                            </div>
-                                            <span class="text-danger">{{ form.name.errors }}</span>
+        <div class="row">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header text-center py-4">
+                        <h4 class="title">New Offer</h4>
+                        <h6 class="card-category">
+                            {% if msg %}
+                                <span class="text-danger">{{ msg | safe }}</span>
+                            {% else %}
+                                <span>Add offer details</span>
+                            {% endif %}
+                        </h6>
+                    </div>
+                    {% if success %}
+                    {% else %}
+                        <form role="form" method="post" action="">
+                            {% csrf_token %}
+                            <div class="card-body px-5 py-3">
+                                <div class="row">
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Offer Name</label>
+                                            {{ form.name }}
                                         </div>
-
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Offer Price</label>
-                                                {{ form.price }}
-                                            </div>
-                                            <span class="text-danger">{{ form.price.errors }}</span>
+                                        <span class="text-danger">{{ form.name.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Offer Price</label>
+                                            {{ form.price }}
                                         </div>
-
-
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Offer description</label>
-
-                                                {{ form.description }}
-
-
-                                            </div>
-                                            <span class="text-danger">{{ form.description.errors }}</span>
+                                        <span class="text-danger">{{ form.price.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Offer description</label>
+                                            {{ form.description }}
                                         </div>
-
-
-
+                                        <span class="text-danger">{{ form.description.errors }}</span>
+                                    </div>
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
-
-
                                 </div>
-                                </div>
-                            </form>
-
-
-
-                        {% endif %}
-
-                    </div>
+                            </div>
+                        </form>
+                    {% endif %}
                 </div>
-
             </div>
         </div>
-
-
-
-
+    </div>
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

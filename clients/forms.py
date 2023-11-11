@@ -1,14 +1,12 @@
 from django import forms
 from offer.models import Offer
 from offer.models import Training
-from organization.models import Company
+
 
 from .models import Client
 
 
 class CreatClients(forms.ModelForm):
-    corporate_client = forms.BooleanField(required=False)
-
     name = forms.CharField(
         required=False,
         widget=forms.TextInput(
@@ -77,7 +75,6 @@ class CreatClients(forms.ModelForm):
     class Meta:
         model = Client
         fields = [
-            "corporate_client",
             "name",
             "last_name",
             "pesel",

@@ -1,10 +1,10 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Building, Others, Property, Vehicle
 from .forms import CreateBuilding, CreateVehicle, CreateProperty, CreateOthers
 from airport.models import Airport
@@ -17,8 +17,8 @@ class BuildingsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
-        trainings = Building.objects.filter(airport_id__in=airports)
+        airports = Airport.objects.filter(company=user.company)
+        trainings = Building.objects.filter(airport__in=airports)
 
         return trainings
 
@@ -36,9 +36,14 @@ class BuildingsCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         form.instance.airport = airports
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class BuildingsUpdateView(LoginRequiredMixin, UpdateView):
@@ -47,16 +52,22 @@ class BuildingsUpdateView(LoginRequiredMixin, UpdateView):
 
     form_class = CreateBuilding
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class BuildingsDeleteView(DeleteView):
+
+class BuildingsDeleteView(LoginRequiredMixin, DeleteView):
     model = Building
     template_name = "airport_facilities/buildings_delete.html"
     success_url = reverse_lazy("buildings")
 
 
+@login_required()
 def other_facilities(request):
     user = request.user
-    airports = Airport.objects.filter(company_id=user.company)
+    airports = Airport.objects.filter(company=user.company)
     return render(
         request,
         "airport_facilities/other_facilities.html",
@@ -81,10 +92,15 @@ class VehiclesCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         if airports.exists():
             form.instance.airport = airports.first()
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class VehiclesUpdateView(LoginRequiredMixin, UpdateView):
@@ -93,8 +109,13 @@ class VehiclesUpdateView(LoginRequiredMixin, UpdateView):
 
     form_class = CreateVehicle
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class VehiclesDeleteView(DeleteView):
+
+class VehiclesDeleteView(LoginRequiredMixin, DeleteView):
     model = Vehicle
     template_name = "airport_facilities/vehicles_delete.html"
     success_url = reverse_lazy("other_facilities")
@@ -113,10 +134,15 @@ class PropertiesCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         if airports.exists():
             form.instance.airport = airports.first()
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class PropertiesUpdateView(LoginRequiredMixin, UpdateView):
@@ -125,8 +151,13 @@ class PropertiesUpdateView(LoginRequiredMixin, UpdateView):
 
     form_class = CreateProperty
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class PropertiesDeleteView(DeleteView):
+
+class PropertiesDeleteView(LoginRequiredMixin, DeleteView):
     model = Property
     template_name = "airport_facilities/properties_delete.html"
     success_url = reverse_lazy("other_facilities")
@@ -145,10 +176,15 @@ class OthersCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         if airports.exists():
             form.instance.airport = airports.first()
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class OthersUpdateView(LoginRequiredMixin, UpdateView):
@@ -157,8 +193,13 @@ class OthersUpdateView(LoginRequiredMixin, UpdateView):
 
     form_class = CreateOthers
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class OthersDeleteView(DeleteView):
+
+class OthersDeleteView(LoginRequiredMixin, DeleteView):
     model = Others
     template_name = "airport_facilities/others_delete.html"
     success_url = reverse_lazy("other_facilities")

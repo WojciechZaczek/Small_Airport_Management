@@ -141,12 +141,6 @@ class CreatRunway(forms.ModelForm):
             attrs={"placeholder": "Runway SWY", "class": "form-control"}
         )
     )
-    airport_id = forms.ModelChoiceField(
-        queryset=Airport.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Airport ID", "class": "form-control"}
-        ),
-    )
 
     class Meta:
         model = Runway
@@ -161,7 +155,6 @@ class CreatRunway(forms.ModelForm):
             "LDA",
             "CWY",
             "SWY",
-            "airport_id",
         ]
 
 

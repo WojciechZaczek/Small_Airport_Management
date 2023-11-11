@@ -1,112 +1,70 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} New Vehicle {% endblock %}
-
+{% block title %}New Vehicle{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
     <div class="content">
-
-
-            <div class="row">
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header text-center py-4">
-                            <h4 class="title">
-                                New Vehicle
-                            </h4>
-                            <h6 class="card-category">
-                                {% if msg %}
-                                    <span class="text-danger">{{ msg | safe }}</span>
-                                {% else %}
-                                    <span>
-                                        Add property details
-                                    </span>
-                                {% endif %}
-                            </h6>
-
-                        </div>
-
-                        {% if success %}
-
-
-
-                        {% else %}
-
-                            <form role="form" method="post" action="">
-
-                                {% csrf_token %}
-
-                                <div class="card-body px-5 py-3">
-
-
-                                    <div class="row">
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Vehicle Type</label>
-                                                {{ form.type }}
-
-                                            </div>
-                                            <span class="text-danger">{{ form.type.errors }}</span>
+        <div class="row">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header text-center py-4">
+                        <h4 class="title">New Vehicle</h4>
+                        <h6 class="card-category">
+                            {% if msg %}
+                                <span class="text-danger">{{ msg | safe }}</span>
+                            {% else %}
+                                <span>Add property details</span>
+                            {% endif %}
+                        </h6>
+                    </div>
+                    {% if success %}
+                    {% else %}
+                        <form role="form" method="post" action="">
+                            {% csrf_token %}
+                            <div class="card-body px-5 py-3">
+                                <div class="row">
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Vehicle Type</label>
+                                            {{ form.type }}
                                         </div>
-
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Vehicle Registration no</label>
-                                                {{ form.registration_no }}
-
-                                            </div>
-                                            <span class="text-danger">{{ form.registration_no.errors }}</span>
+                                        <span class="text-danger">{{ form.type.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Vehicle Registration no</label>
+                                            {{ form.registration_no }}
                                         </div>
-
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Vehicle Department</label>
-                                                {{ form.department }}
-                                            </div>
-                                            <span class="text-danger">{{ form.department.errors }}</span>
+                                        <span class="text-danger">{{ form.registration_no.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Vehicle Department</label>
+                                            {{ form.department }}
                                         </div>
-
-
-                                        <div class="col-md-12 px-md-1">
-                                            <div class="form-group">
-                                                <label>Vehicle description</label>
-
-                                                {{ form.description }}
-
-
-                                            </div>
-                                            <span class="text-danger">{{ form.description.errors }}</span>
+                                        <span class="text-danger">{{ form.department.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label>Vehicle description</label>
+                                            {{ form.description }}
                                         </div>
-                                        <div class="col-md-12 px-md-1">
-
-
-
-                                </div>
-                                <div class="card-footer text-center">
-                                    <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
-
-
-                                </div>
+                                        <span class="text-danger">{{ form.description.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1"></div>
+                                    <div class="card-footer text-center">
+                                        <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
                                     </div>
                                 </div>
-                            </form>
-
-
-
-                        {% endif %}
-
-                    </div>
+                            </div>
+                        </form>
+                    {% endif %}
                 </div>
-
             </div>
         </div>
-
-
-
-
+    </div>
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

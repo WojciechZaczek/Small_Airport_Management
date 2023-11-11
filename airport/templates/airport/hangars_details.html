@@ -1,113 +1,101 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Hangar {{ object.name }} details {% endblock %}
-
+{% block title %}Hangar {{ object.name }} details{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
     <div class="content">
-    <h3 class="card-title">Hangar {{ object.name }} details:</h3>
-    <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Basic information:</h3>
-                  <br>
-                        <h4 class="card-text"> Number:  {{ object.id }}</h4>
-                      <h4 class="card-text"> Height:  {{ object.hangar_height }} meters</h4>
-                      <h4 class="card-text"> Width:  {{ object.hangar_wight }} meters</h4>
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-    <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Doors:</h3>
-                  <br>
-                  <h4 class="card-text"> Doors height : {{ object.doors_height}} </h4>
-                  <h4 class="card-text"> Doors wight: {{ object.doors_wight }}</h4>
-
-              </div>
-            </div>
-            </div>
-    </div>
-
-            <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Stands in hangar:</h3>
-                  <br>
-                  <h4 class="card-text"> Small stands total : {{ object.small_stands_no}} </h4>
-                  <h4 class="card-text"> Small stands: {{ object.small_stands_taken}}</h4>
-
-              </div>
-            </div>
-            </div>
-    </div>
-
-
-
-
-            <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Aircrafts hangared::</h3>
-
-                      <table class="table">
-    <thead>
-        <tr>
-
-            <th>Manufacture</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Client</th>
-
-        </tr>
-    </thead>
-
-    <tbody>
-   {% for aircraft in aircrafts %}
-                    {% if aircraft.hangar_id.name == object.name %}
-        <tr>
-
-            <td>{{ aircraft.aircraft_id.manufacture }}</td>
-            <td>{{ aircraft.aircraft_id.name}}</td>
-            <td>{{ aircraft.aircraft_id.type}}</td>
-            <td>{{ aircraft.client_id.name }}</td>
-
-        </tr>
-   {% endif %}
-
-                  {% endfor %}
-    </tbody>
-</table>
-
-              </div>
-            </div>
-                </div>
-            </div>
-
-
+        <h3 class="card-title">Hangar {{ object.name }} details:</h3>
         <div class="row">
             <div class="col-6">
-            <div class="text-right">
-          <a href="{% url 'aircraft_stands'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Back</a>
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Basic information:</h3>
+                        <br>
+                        <h4 class="card-text">Number:  {{ object.id }}</h4>
+                        <h4 class="card-text">Height:  {{ object.hangar_height }} meters</h4>
+                        <h4 class="card-text">Width:  {{ object.hangar_wight }} meters</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Doors:</h3>
+                        <br>
+                        <h4 class="card-text">Doors height : {{ object.doors_height }}</h4>
+                        <h4 class="card-text">Doors wight: {{ object.doors_wight }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Stands in hangar:</h3>
+                        <br>
+                        <h4 class="card-text">Small stands total: {{ object.small_stands_no }}</h4>
+                        <h4 class="card-text">Small stands taken: {{ object.small_stands_taken }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Aircrafts hangared:</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Manufacture</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Client</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for aircraft in aircrafts %}
+                                    {% if aircraft.hangar.name == object.name %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'aircrafts_details' aircraft.aircraft.pk %}">{{ aircraft.aircraft.manufacture }}</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{% url 'aircrafts_details' aircraft.aircraft.pk %}">{{ aircraft.aircraft.name }}</a>
+                                            </td>
+                                            <td class="text-center">{{ aircraft.aircraft.get_type_display }}</td>
+                                            <td class="text-center">
+                                                {% if aircraft.client.name %}
+                                                    <a href="{% url 'clients_detail' aircraft.client.pk %}">{{ aircraft.client.name }} {{ aircraft.client.last_name }}</a>
+                                                {% else %}
+                                                    Airport property
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="text-right">
+                    <a href="{% url 'aircraft_stands' %}"
+                       class="btn btn-primary  "
+                       role="button"
+                       aria-pressed="true">Back</a>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-
-
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

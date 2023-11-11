@@ -11,18 +11,19 @@ from airport.models import Airport
 from .forms import CreatDepartment, CreatCompany, CreatWorker
 
 
+@login_required()
 def company(request):
     return render(
         request,
         "organization/organization.html",
         {
             "organization": Company.objects.filter(name=request.user.company),
-            "department": Department.objects.filter(company_id=request.user.company),
+            "department": Department.objects.filter(company=request.user.company),
         },
     )
 
 
-class CompanyUpdateView(UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "organization/company_form.html"
 
@@ -30,7 +31,7 @@ class CompanyUpdateView(UpdateView):
     success_url = reverse_lazy("organization")
 
 
-class DepartmentCreateView(CreateView):
+class DepartmentCreateView(LoginRequiredMixin, CreateView):
     model = Department
     template_name = "organization/department_form.html"
 
@@ -38,7 +39,7 @@ class DepartmentCreateView(CreateView):
     success_url = reverse_lazy("organization")
 
 
-class DepartmentUpdateView(UpdateView):
+class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
     model = Department
     template_name = "organization/department_form.html"
 
@@ -46,7 +47,7 @@ class DepartmentUpdateView(UpdateView):
     success_url = reverse_lazy("organization")
 
 
-class DepartmentDeleteView(DeleteView):
+class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
     model = Department
     template_name = "organization/department_delete.html"
     success_url = reverse_lazy("organization")
@@ -85,6 +86,11 @@ class WorkerUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "organization/workers_form.html"
 
     form_class = CreatWorker
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class WorkerDeleteView(LoginRequiredMixin, DeleteView):

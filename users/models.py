@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from organization.models import Department, Company
+from django.urls import reverse
 
 
 class CustomUser(AbstractUser):
@@ -16,8 +17,13 @@ class CustomUser(AbstractUser):
     )
 
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, help_text="Company ID"
+        Company,
+        on_delete=models.CASCADE,
+        help_text="Company ID",
     )
+
+    def get_absolute_url(self):
+        return reverse("users_details", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.username

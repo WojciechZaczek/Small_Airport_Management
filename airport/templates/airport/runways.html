@@ -1,77 +1,70 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Runways {% endblock %}
-
+{% block title %}Runways{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
-
-  <div class="content">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card ">
-          <div class="card-header">
-            <h3 class="card-title"> Runways at your airport:</h3>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                  <tr><th class="text-center">#</th>
-                    <th>Name</th>
-                    <th>Length</th>
-                    <th>Width</th>
-                    <th class="text-center">Surface</th>
-                    <th class="text-center">Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                {% for runway in runways  %}
-
-                    <tr>
-
-                        <td class="text-center" >{{ runway.id }}</td>
-                        <td>{{ runway.name }} </td>
-                        <td>{{ runway.length }} meters</td>
-                        <td>{{ runway.width }} meters</td>
-                        <td class="text-center">{{ runway.surface }}</td>
-                        <td class="text-center">
-                            <a href="{% url 'runways_detail' runway.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Details</a>
-                            <a href="{% url 'runways_update' runway.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Edit</a>
-                            <a href="{% url 'runways_delete' runway.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Delete</a>
-
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">Runways at your airport:</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter " id="">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Length</th>
+                                        <th>Width</th>
+                                        <th class="text-center">Surface</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for runway in runways %}
+                                        <tr>
+                                            <td>{{ runway.name }}</td>
+                                            <td>{{ runway.length }} meters</td>
+                                            <td>{{ runway.width }} meters</td>
+                                            <td class="text-center">{{ runway.get_surface_display }}</td>
+                                            <td class="text-center">
+                                                <a href="{% url 'runways_detail' runway.id %}"
+                                                   class="btn btn-success animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Details</a>
+                                                <a href="{% url 'runways_update' runway.id %}"
+                                                   class="btn btn-info animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Edit</a>
+                                                <a href="{% url 'runways_delete' runway.id %}"
+                                                   class="btn btn-danger animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-
-    </div>
-      <div class="row">
-                      <div class="col-12">
-            <div class="text-right">
-          <a href="{% url 'runways_add'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Add new Runway</a>
+        <div class="row">
+            <div class="col-10">
+                <div class="text-right">
+                    <a href="{% url 'runways_add' %}"
+                       class="btn btn-primary  "
+                       role="button"
+                       aria-pressed="true">Add new Runway</a>
+                </div>
             </div>
-
-      </div>
-
-
-  </div>
-  </div>
-
-
-
+        </div>
+    </div>
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

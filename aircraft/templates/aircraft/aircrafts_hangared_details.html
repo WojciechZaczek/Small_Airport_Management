@@ -1,80 +1,77 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Aircraft Hangared {{ object.aircraft_id.manufacture }} {{ object.aircraft_id.name }} details {% endblock %}
-
+{% block title %}Aircraft Hangared {{ object.aircraft.manufacture }} {{ object.aircraft.name }} details{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
     <div class="content">
-    <h3 class="card-title">Aircraft {{ object.aircraft_id.manufacture }} {{ object.aircraft_id.name }} details:</h3>
-    <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Basic information:</h3>
-                  <br>
-                        <h4 class="card-text"> Type:  {{ object.aircraft_id.type }}</h4>
-                      <h4 class="card-text"> Registration No.  {{ object.aircraft_registration_no }}</h4>
-
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-    <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Property:</h3>
-                  <br>
-                  {% if object.airport_property %}
-                  <h4 class="card-text"> Aircraft belongs to airport </h4>
-                  {% else %}
-                  {% if object.client_id.corporate_client %}
-                  <h4 class="card-text"> Client:  {{ object.client_id.company_name }}</h4>
-                  {% else %}
-                  <h4 class="card-text"> Client:  {{ object.client_id.name }} {{ object.client_id.last_name }}</h4>
-                  {% endif %}
-                    {% endif %}
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-
-        <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Aircraft stationed spot:</h3>
-                  <br>
-                  {% if object.hangar_id %}
-                  <h4 class="card-text"> Hangar:  {{ object.hangar_id.name }}</h4>
-                  {% else %}
-                  <h4 class="card-text"> Outside standing spot:  {{ object.outside_stand_id.name }}</h4>
-                  {%  endif %}
-
-              </div>
-            </div>
-            </div>
-    </div>
+        <h3 class="card-title">Aircraft {{ object.aircraft.manufacture }} {{ object.aircraft.name }} details:</h3>
         <div class="row">
             <div class="col-6">
-            <div class="text-right">
-          <a href="{% url 'aircrafts'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Back</a>
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Basic information:</h3>
+                        <br>
+                        <h4 class="card-text">Type: {{ object.aircraft.get_type_display }}</h4>
+                        <h4 class="card-text">Registration No.  {{ object.aircraft_registration_no }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Property:</h3>
+                        <br>
+                        {% if object.airport_property %}
+                            <h4 class="card-text">Aircraft belongs to airport</h4>
+                        {% else %}
+                            {% if object.client_id.corporate_client %}
+                                <a href="{% url 'clients_detail' object.client.pk %}">
+                                    <h4 class="card-text">Client:  {{ object.client.company_name }}</h4>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'clients_detail' object.client.pk %}">
+                                    <h4 class="card-text">Client:  {{ object.client.name }} {{ object.client.last_name }}</h4>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Aircraft stationed spot:</h3>
+                        <br>
+                        {% if object.hangar %}
+                            <a href="{% url 'hangars_details' object.hangar.pk %}">
+                                <h4 class="card-text">Hangar:  {{ object.hangar.name }}</h4>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'outside_stands_details' object.outside_stand.pk %}">
+                                <h4 class="card-text">Outside standing spot:  {{ object.outside_stand.name }}</h4>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="text-right">
+                    <a href="{% url 'aircrafts' %}"
+                       class="btn btn-primary  "
+                       role="button"
+                       aria-pressed="true">Back</a>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-
-
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

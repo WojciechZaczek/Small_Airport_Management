@@ -86,11 +86,11 @@ class CreatAircraft(forms.ModelForm):
 
 
 class CreatAircraftHangared(forms.ModelForm):
-    aircraft_id = forms.ModelChoiceField(
+    aircraft = forms.ModelChoiceField(
         queryset=Aircraft.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Aircraft ID", "class": "form-control"}
-        ),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Aircraft",
+        to_field_name="name",
     )
 
     aircraft_registration_no = forms.CharField(
@@ -101,37 +101,47 @@ class CreatAircraftHangared(forms.ModelForm):
 
     airport_property = forms.BooleanField(required=False)
 
-    hangar_id = forms.ModelChoiceField(
+    hangar = forms.ModelChoiceField(
         required=False,
-        queryset=Hangar.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Aircraft ID", "class": "form-control"}
-        ),
+        queryset=Hangar.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Hangar",
     )
 
-    outside_stand_id = forms.ModelChoiceField(
+    outside_stand = forms.ModelChoiceField(
         required=False,
-        queryset=OutsideAircraftStand.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Aircraft ID", "class": "form-control"}
-        ),
+        queryset=OutsideAircraftStand.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Outside Stand",
     )
 
-    client_id = forms.ModelChoiceField(
+    client = forms.ModelChoiceField(
         required=False,
-        queryset=Client.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Aircraft ID", "class": "form-control"}
-        ),
+        queryset=Client.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Client",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreatAircraftHangared, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["hangar"].queryset = Hangar.objects.filter(
+                airport__in=user.company.airports.all()
+            )
+            self.fields["outside_stand"].queryset = OutsideAircraftStand.objects.filter(
+                airport__in=user.company.airports.all()
+            )
+            self.fields["client"].queryset = Client.objects.filter(company=user.company)
 
     class Meta:
         model = AircraftHangared
         fields = [
-            "aircraft_id",
+            "aircraft",
             "aircraft_registration_no",
             "airport_property",
-            "hangar_id",
-            "outside_stand_id",
-            "client_id",
+            "hangar",
+            "outside_stand",
+            "client",
         ]

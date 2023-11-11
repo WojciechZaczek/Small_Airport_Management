@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+{% block title %} User {{ object.first_name }}  {{ object.last_name }} details{% endblock %}
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="content">
+        <h3 class="card-title">{{ object.first_name }} {{ object.last_name }} details:</h3>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+
+                        <h3 class="card-title">Information:</h3>
+                        <br>
+                        <h4 class="card-text">Name: {{ object.first_name }}</h4>
+                        <h4 class="card-text">Last Name: {{ object.last_name }}</h4>
+                        <h4 class="card-text">Department: {{ object.get_department_display }}</h4>
+                        <h4 class="card-text">Job Position: {{ object.get_job_position_display }}</h4>
+                        <h4 class="card-text">Joined: {{ object.date_joined }}</h4>
+                        <h4 class="card-text">Last Login: {{ object.last_login }}</h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="text-right">
+                    <a href="{% url 'users' %}"
+                       class="btn btn-primary  "
+                       role="button"
+                       aria-pressed="true">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

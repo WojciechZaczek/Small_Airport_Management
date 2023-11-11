@@ -1,84 +1,72 @@
 {% extends "dashboard/base.html" %}
-
-
-
-{% block title %} Airport {% endblock %}
-
+{% block title %}Airport{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
-
-{% for a in airport %}
-    <div class="content">
-    <h3 class="card-title"> Airport {{ a.name }} details:</h3>
-    <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Basic information:</h3>
-                  <br>
-                  <h4 class="card-text"> Company:  {{ a.company_id }}</h4>
-                        <h4 class="card-text"> City:  {{ a.city }}</h4>
-                      <h4 class="card-text"> Address:  {{ a.address }} meters</h4>
-                      <h4 class="card-text"> Contact:  {{ a.contact }} meters</h4>
-                      <h4 class="card-text"> Description:  {{ a.description }}</h4>
-
-              </div>
+    {% for a in airport %}
+        <div class="content">
+            <h3 class="card-title">Airport {{ a.name }} details:</h3>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Basic information:</h3>
+                            <br>
+                            <h4 class="card-text">Company:  {{ a.company_id }}</h4>
+                            <h4 class="card-text">City:  {{ a.city }}</h4>
+                            <h4 class="card-text">Address:  {{ a.address }} meters</h4>
+                            <h4 class="card-text">Contact:  {{ a.contact }} meters</h4>
+                            <h4 class="card-text">Description:  {{ a.description }}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Air traffic:</h3>
+                            <br>
+                            <h4 class="card-text">Type of traffic permission:  {{ a.types_of_traffic_permitted }}</h4>
+                            <h4 class="card-text">Radio:  {{ a.radio }}</h4>
+                            <h4 class="card-text">Coordinates:  {{ a.co_ordinates }}</h4>
+                            <h4 class="card-text">API:  {{ a.AIP }}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
-    </div>
-    <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Air traffic:</h3>
-                  <br>
-                  <h4 class="card-text"> Type of traffic permission:  {{ a.types_of_traffic_permitted }}</h4>
-                  <h4 class="card-text"> Radio:  {{ a.radio }}</h4>
-                  <h4 class="card-text"> Coordinates:  {{ a.co_ordinates }}</h4>
-                  <h4 class="card-text"> API:  {{ a.AIP }}</h4>
-
-              </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Airport position:</h3>
+                            <br>
+                            <h4 class="card-text">Elevation:  {{ a.elevation }} ft</h4>
+                            <h4 class="card-text">Length:  {{ a.length }} meters</h4>
+                            <h4 class="card-text">Width:  {{ a.width }} meters</h4>
+                            <h4 class="card-text">Space:  {{ a.square_meters }} square meters</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-    </div>
-
-        <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Airport position:</h3>
-                  <br>
-                  <h4 class="card-text"> Elevation:  {{ a.elevation }} ft</h4>
-                  <h4 class="card-text"> Length:  {{ a.length }} meters</h4>
-                  <h4 class="card-text"> Width:  {{ a.width }} meters</h4>
-                  <h4 class="card-text"> Space:  {{ a.square_meters }} square meters</h4>
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-        <div class="row">
-            <div class="col-6">
-            <div class="text-right">
-                <a href="{% url 'home'  %}"  class="btn btn-primary animation-on-hover" role="button"
-                               aria-pressed="true">Back</a>
-
-                <a href="{% url 'airports_update' a.id %}"  class="btn btn-info animation-on-hover  " role="button"
-                               aria-pressed="true">Edit</a>
+            <div class="row">
+                <div class="col-6">
+                    <div class="text-right">
+                        <a href="{% url 'home' %}"
+                           class="btn btn-primary animation-on-hover"
+                           role="button"
+                           aria-pressed="true">Back</a>
+                        <a href="{% url 'airports_update' a.id %}"
+                           class="btn btn-info animation-on-hover  "
+                           role="button"
+                           aria-pressed="true">Edit</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
-
-
-{% endfor %}
+    {% endfor %}
 {% endblock content %}
-
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

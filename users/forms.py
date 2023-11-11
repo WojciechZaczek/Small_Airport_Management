@@ -57,28 +57,17 @@ class UserRegisterForm(UserCreationForm):
         )
     )
 
-    department = (
-        forms.ChoiceField(
-            choices=Department.DEPARTAMENT,
-            widget=forms.Select(
-                attrs={"placeholder": "Department", "class": "form-control"}
-            ),
+    department = forms.ChoiceField(
+        choices=Department.DEPARTAMENT,
+        widget=forms.Select(
+            attrs={"placeholder": "Workers department", "class": "form-control"}
         ),
     )
 
-    job_position = (
-        forms.ChoiceField(
-            choices=Department.JOB_TITLES,
-            widget=forms.Select(
-                attrs={"placeholder": "Job Position", "class": "form-control"}
-            ),
-        ),
-    )
-
-    company_id = forms.ModelChoiceField(
-        queryset=Company.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Company ID", "class": "form-control"}
+    job_position = forms.ChoiceField(
+        choices=Department.JOB_TITLES,
+        widget=forms.Select(
+            attrs={"placeholder": "Workers job position", "class": "form-control"}
         ),
     )
 
@@ -93,5 +82,37 @@ class UserRegisterForm(UserCreationForm):
             "last_name",
             "department",
             "job_position",
-            "company_id",
+            "company",
         ]
+
+
+class CreateUser(forms.ModelForm):
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "First name", "class": "form-control"}
+        )
+    )
+
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"placeholder": "Last name", "class": "form-control"}
+        )
+    )
+
+    department = forms.ChoiceField(
+        choices=Department.DEPARTAMENT,
+        widget=forms.Select(
+            attrs={"placeholder": "Workers department", "class": "form-control"}
+        ),
+    )
+
+    job_position = forms.ChoiceField(
+        choices=Department.JOB_TITLES,
+        widget=forms.Select(
+            attrs={"placeholder": "Workers job position", "class": "form-control"}
+        ),
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ["first_name", "last_name", "department", "job_position"]

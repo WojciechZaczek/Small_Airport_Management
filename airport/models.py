@@ -33,12 +33,15 @@ class Airport(models.Model):
         null=True,
     )
 
-    company_id = models.ForeignKey(
-        Company, on_delete=models.CASCADE, help_text="Company ID"
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        help_text="Company ID",
+        related_name="airports",
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.name} in {self.city}"
 
 
 class Runway(models.Model):
@@ -56,7 +59,7 @@ class Runway(models.Model):
     LDA = models.FloatField(help_text="Landing distance available in meters")
     CWY = models.FloatField(help_text="Clearway in meters")
     SWY = models.FloatField(help_text="Stopway in meters")
-    airport_id = models.ForeignKey(
+    airport = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
 
@@ -92,7 +95,7 @@ class OutsideAircraftStand(models.Model):
     )
     taken = models.BooleanField(help_text="Information if this stand is taken")
 
-    airport_id = models.ForeignKey(
+    airport = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
 
@@ -116,7 +119,7 @@ class Hangar(models.Model):
         help_text="How many small stands are in Hangar are taken"
     )
 
-    airport_id = models.ForeignKey(
+    airport = models.ForeignKey(
         Airport, on_delete=models.CASCADE, help_text="Airport ID"
     )
 

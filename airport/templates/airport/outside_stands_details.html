@@ -1,85 +1,86 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Outside Aircraft Stand {{ object.name }} details {% endblock %}
-
+{% block title %}Outside Aircraft Stand {{ object.name }} details{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
     <div class="content">
-    <h3 class="card-title">Outside Aircraft Stand {{ object.name }} details:</h3>
-    <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Basic information:</h3>
-                  <br>
-                        <h4 class="card-text"> Number:  {{ object.id }}</h4>
-                      <h4 class="card-text"> Surface:  {{ object.get_surface_display }} </h4>
-                      <h4 class="card-text"> Size:  {{ object.get_size_display }} </h4>
-                      <h4 class="card-text"> Stand is taken:  {% if object.taken %} Yes {% else %} NO {% endif %}</h4>
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-{%  if object.taken %}
-                <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Aircraft on stand::</h3>
-
-                      <table class="table">
-    <thead>
-        <tr>
-
-            <th>Manufacture</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Client</th>
-
-        </tr>
-    </thead>
-
-    <tbody>
-   {% for aircraft in aircrafts %}
-                    {% if aircraft.outside_stand_id.name == object.name %}
-        <tr>
-
-            <td>{{ aircraft.aircraft_id.manufacture }}</td>
-            <td>{{ aircraft.aircraft_id.name}}</td>
-            <td>{{ aircraft.aircraft_id.type}}</td>
-            <td>{{ aircraft.client_id.name }}</td>
-
-        </tr>
-   {% endif %}
-
-                  {% endfor %}
-    </tbody>
-</table>
-
-              </div>
-            </div>
-                </div>
-            </div>
-
-{% endif %}
-
+        <h3 class="card-title">Outside Aircraft Stand {{ object.name }} details:</h3>
         <div class="row">
             <div class="col-6">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h3 class="card-title">Basic information:</h3>
+                        <br>
+                        <h4 class="card-text">Number:  {{ object.id }}</h4>
+                        <h4 class="card-text">Surface:  {{ object.get_surface_display }}</h4>
+                        <h4 class="card-text">Size:  {{ object.get_size_display }}</h4>
+                        <h4 class="card-text">
+                            Stand is taken:
+                            {% if object.taken %}
+                                Yes
+                            {% else %}
+                                NO
+                            {% endif %}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if object.taken %}
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Aircraft on stand:</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Manufacture</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Type</th>
+                                        <th class="text-center">Client</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for aircraft in aircrafts %}
+                                        {% if aircraft.outside_stand.name == object.name %}
+                                            <td>
+                                                <a href="{% url 'aircrafts_details' aircraft.aircraft.pk %}">{{ aircraft.aircraft.manufacture }}</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{% url 'aircrafts_details' aircraft.aircraft.pk %}">{{ aircraft.aircraft.name }}</a>
+                                            </td>
+                                            <td class="text-center">{{ aircraft.aircraft.get_type_display }}</td>
+                                            <td class="text-center">
+                                                {% if aircraft.client.name %}
+                                                    <a href="{% url 'clients_detail' aircraft.client.pk %}">{{ aircraft.client.name }} {{ aircraft.client.last_name }}</a>
+                                                {% else %}
+                                                    Airport property
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-6">
             <div class="text-right">
-          <a href="{% url 'aircraft_stands'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Back</a>
+                <a href="{% url 'aircraft_stands' %}"
+                   class="btn btn-primary  "
+                   role="button"
+                   aria-pressed="true">Back</a>
             </div>
         </div>
     </div>
-    </div>
-
-
+</div>
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

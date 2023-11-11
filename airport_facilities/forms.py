@@ -18,11 +18,19 @@ class CreateBuilding(forms.ModelForm):
     )
 
     department = forms.ModelChoiceField(
-        queryset=Department.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Department ID", "class": "form-control"}
-        ),
+        queryset=Department.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose a Department",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateBuilding, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["department"].queryset = Department.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Building
@@ -49,11 +57,19 @@ class CreateVehicle(forms.ModelForm):
     )
 
     department = forms.ModelChoiceField(
-        queryset=Department.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Department ID", "class": "form-control"}
-        ),
+        queryset=Department.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose a Department",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateVehicle, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["department"].queryset = Department.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Vehicle
@@ -74,11 +90,19 @@ class CreateProperty(forms.ModelForm):
     )
 
     department = forms.ModelChoiceField(
-        queryset=Department.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Property ID", "class": "form-control"}
-        ),
+        queryset=Department.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose a Department",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateProperty, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["department"].queryset = Department.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Property
@@ -99,11 +123,19 @@ class CreateOthers(forms.ModelForm):
     )
 
     department = forms.ModelChoiceField(
-        queryset=Department.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Department ID", "class": "form-control"}
-        ),
+        queryset=Department.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose a Department",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateOthers, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["department"].queryset = Department.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Others

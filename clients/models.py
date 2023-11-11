@@ -26,9 +26,9 @@ class Client(models.Model):
         help_text="If client is a company, NIP of company", null=True, blank=True
     )
     email = models.CharField(
-        max_length=20, help_text="Email of client", null=True, blank=True
+        max_length=50, help_text="Email of client", null=True, blank=True
     )
-    address = models.CharField(max_length=200, help_text="Address of client")
+
     phone_no = models.IntegerField(help_text="Phone no. of client")
     training = models.ManyToManyField(
         Training,
@@ -41,25 +41,26 @@ class Client(models.Model):
     aeroclub_meber = models.BooleanField(
         help_text="Information if client is a Aeroclub member"
     )
-    company_id = models.ForeignKey(
+    company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE,
         help_text="Company ID - information which organization client is it",
+        related_name="clients",
     )
 
     def clean(self):
-        if self.corporate_client and not self.company_name:
-            raise ValidationError("Corporate name must must be provided")
-        if self.corporate_client and not self.nip:
-            raise ValidationError("Nip name must must be provided")
-        if not self.corporate_client and not self.name:
-            raise ValidationError("Name must must be provided")
-
-        if not self.corporate_client and not self.last_name:
-            raise ValidationError("Last name must must be provided")
-
-        if not self.corporate_client and not self.pesel:
-            raise ValidationError("Pesel must must be provided")
+        if self.corporate_client:
+            if not self.company_name:
+                raise ValidationError("Corporate name must be provided")
+            if not self.nip:
+                raise ValidationError("NIP must be provided")
+        else:
+            if not self.corporate_client and not self.name:
+                raise ValidationError("Name must be provided")
+            if not self.corporate_client and not self.last_name:
+                raise ValidationError("Last name must be provided")
+            if not self.corporate_client and not self.pesel:
+                raise ValidationError("Pesel must be provided")
 
         super().clean()
 
@@ -69,3 +70,9 @@ class Client(models.Model):
 
     def get_absolute_url(self):
         return reverse("clients_detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        if not self.corporate_client:
+            return f"{self.name} {self.last_name}"
+        else:
+            return f"{self.company_name}"

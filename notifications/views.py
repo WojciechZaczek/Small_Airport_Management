@@ -15,7 +15,7 @@ from .forms import CreateNotification
 
 @login_required()
 def notifications(request):
-    users_airport = Airport.objects.filter(company_id=request.user.company).first()
+    users_airport = Airport.objects.filter(company=request.user.company).first()
     all_notifications = Notification.objects.filter(airport=users_airport).order_by(
         "view_date"
     )
@@ -50,7 +50,7 @@ class NotificationsCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         author = user
         form.instance.author = author
         if airports.exists():

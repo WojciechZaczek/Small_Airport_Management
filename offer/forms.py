@@ -29,11 +29,17 @@ class CreateTraining(forms.ModelForm):
     )
 
     worker = forms.ModelChoiceField(
-        queryset=Worker.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Worker ID", "class": "form-control"}
-        ),
+        queryset=Worker.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Worker",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateTraining, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["worker"].queryset = Worker.objects.filter(company=user.company)
 
     class Meta:
         model = Training

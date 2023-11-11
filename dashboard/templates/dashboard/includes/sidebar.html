@@ -90,6 +90,12 @@
                         <p>Notifications</p>
                     </a>
                 </li>
+                <li class="{% if 'users' in segment %} active {% endif %}">
+                    <a href="{% url 'users' %}">
+                        <i class="tim-icons icon-user-run"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
                 <li class="{% if 'logout' in segment %} active {% endif %}">
                     <a href="{% url 'logout' %}">
                         <i class="tim-icons icon-button-power"></i>

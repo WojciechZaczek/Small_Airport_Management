@@ -47,9 +47,12 @@ class Department(models.Model):
     description = models.TextField(
         max_length=200, help_text="information about department"
     )
-    company_id = models.ForeignKey(
+    company = models.ForeignKey(
         Company, on_delete=models.CASCADE, help_text="Company ID"
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Worker(models.Model):
@@ -78,3 +81,6 @@ class Worker(models.Model):
 
     def get_absolute_url(self):
         return reverse("workers_details", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

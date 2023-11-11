@@ -15,6 +15,9 @@ class Offer(models.Model):
     def get_absolute_url(self):
         return reverse("offers_details", kwargs={"pk": self.pk})
 
+    def __str__(self):
+        return self.name
+
 
 class Training(models.Model):
     name = models.CharField(max_length=50, help_text="Name of training")
@@ -30,3 +33,6 @@ class Training(models.Model):
 
     def get_absolute_url(self):
         return reverse("trainings_detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.name

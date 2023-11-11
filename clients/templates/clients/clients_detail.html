@@ -1,156 +1,163 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Client {{ object.name }} {{ object.last_name }} details {% endblock %}
-
+{% block title %}Client {{ object.name }} {{ object.last_name }} details{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
     <div class="content">
-    <h3 class="card-title">Client {{ object.name }} {{ object.last_name }} details:</h3>
-    <div class="row">
-        {% if object.company_name %}
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Basic information:</h3>
-                  <br>
-                        <h4 class="card-text"> Company name:  {{ object.company_name }}</h4>
-                      <h4 class="card-text"> NIP:  {{ object.nip }} </h4>
-                      <h4 class="card-text"> Address  {{ object.address }} meters</h4>
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-    <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Contact:</h3>
-                  <br>
-                        <h4 class="card-text"> Phone no.:  {{ object.phone_no }}</h4>
-                      <h4 class="card-text"> Email:  {{ object.email }} </h4>
-
-
-              </div>
-            </div>
-            </div>
-    </div>
-
+        <h3 class="card-title">Client {{ object.name }} {{ object.last_name }} details:</h3>
         <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Areoclub :</h3>
-                  <br>
-                  <h4 class="card-text"> Areoclub member:  {% if object.aeroclub_meber %} YES {% else %} NO {% endif %}</h4>
-                  <h4 class="card-text"> Services used by the customer:
-                {% if not object.offer.all %}
-                    No services
-                {% else %}
-                    {% for offer in object.offer.all %}
-                        {{ offer.name }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                {% endif %}</h4>
-                  <h4 class="card-text"> Client's trainings: {% if not object.offer.all %}
-                    No services
-                {% else %}
-                    {% for offer in object.offer.all %}
-                        {{ offer.name }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                {% endif %}</h4>
-   </div>
-    </div>
-        <div class="row">
-            <div class="col-12">
-            <div class="text-right">
-          <a href="{% url 'clients'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Back</a>
+            {% if object.company_name %}
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Basic information:</h3>
+                            <br>
+                            <h4 class="card-text">Company name:  {{ object.company_name }}</h4>
+                            <h4 class="card-text">NIP:  {{ object.nip }}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-              </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Contact:</h3>
+                            <br>
+                            <h4 class="card-text">Phone no.:  {{ object.phone_no }}</h4>
+                            <h4 class="card-text">Email:  {{ object.email }}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Areoclub :</h3>
+                            <br>
+                            <h4 class="card-text">
+                                Areoclub member:
+                                {% if object.aeroclub_meber %}
+                                    YES
+                                {% else %}
+                                    NO
+                                {% endif %}
+                            </h4>
+                            <h4 class="card-text">
+                                Services used by the customer:
+                                {% if not object.offer.all %}
+                                    No services
+                                {% else %}
+                                    {% for offer in object.offer.all %}
+                                        {{ offer.name }}
+                                        {% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </h4>
+                            <h4 class="card-text">
+                                Client's trainings:
+                                {% if not object.offer.all %}
+                                    No services
+                                {% else %}
+                                    {% for offer in object.offer.all %}
+                                        {{ offer.name }}
+                                        {% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-right">
+                                <a href="{% url 'clients' %}"
+                                   class="btn btn-primary  "
+                                   role="button"
+                                   aria-pressed="true">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-
-               <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Basic information:</h3>
-                  <br>
-                        <h4 class="card-text"> Name:  {{ object.name }}</h4>
-                      <h4 class="card-text"> Last name:  {{ object.last_name }}</h4>
-                  <h4 class="card-text"> Pesel:  {{ object.pesel }}</h4>
-
-
-
-              </div>
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Basic information:</h3>
+                            <br>
+                            <h4 class="card-text">Name:  {{ object.name }}</h4>
+                            <h4 class="card-text">Last name:  {{ object.last_name }}</h4>
+                            <h4 class="card-text">Pesel:  {{ object.pesel }}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Contact:</h3>
+                            <br>
+                            <h4 class="card-text">Phone no.:  {{ object.phone_no }}</h4>
+                            <h4 class="card-text">Email:  {{ object.email }}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
-    </div>
-    <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Contact:</h3>
-                  <br>
-                        <h4 class="card-text"> Phone no.:  {{ object.phone_no }}</h4>
-                      <h4 class="card-text"> Email:  {{ object.email }} </h4>
-                      <h4 class="card-text"> Address:  {{ object.address }}</h4>
-
-
-              </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-nav-tabs">
+                        <div class="card-body">
+                            <h3 class="card-title">Areoclub :</h3>
+                            <br>
+                            <h4 class="card-text">
+                                Areoclub member:
+                                {% if object.aeroclub_meber %}
+                                    YES
+                                {% else %}
+                                    NO
+                                {% endif %}
+                            </h4>
+                            <h4 class="card-text">
+                                Services used by the customer:
+                                {% if not object.offer.all %}
+                                    No services
+                                {% else %}
+                                    {% for offer in object.offer.all %}
+                                        {{ offer.name }}
+                                        {% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </h4>
+                            <h4 class="card-text">
+                                Client's trainings:
+                                {% if not object.training.all %}
+                                    No trainings
+                                {% else %}
+                                    {% for offer in object.training.all %}
+                                        {{ offer.name }}
+                                        {% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-right">
+                                <a href="{% url 'clients' %}"
+                                   class="btn btn-primary  "
+                                   role="button"
+                                   aria-pressed="true">Back</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            </div>
-    </div>
-
-        <div class="row">
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-              <div class="card-body">
-                  <h3 class="card-title">Areoclub :</h3>
-                  <br>
-                  <h4 class="card-text"> Areoclub member:  {% if object.aeroclub_meber %} YES {% else %} NO {% endif %}</h4>
-                  <h4 class="card-text"> Services used by the customer:  {% if not object.offer.all %}
-                    No services
-                {% else %}
-                    {% for offer in object.offer.all %}
-                        {{ offer.name }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                {% endif %}</h4>
-                  <h4 class="card-text"> Client's trainings: {% if not object.training.all %}
-                    No trainings
-                {% else %}
-                    {% for offer in object.training.all %}
-                        {{ offer.name }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                {% endif %}</h4>
-
-               </div>
-    </div>
-        <div class="row">
-            <div class="col-12">
-            <div class="text-right">
-          <a href="{% url 'clients'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Back</a>
-            </div>
-
-            {% endif %}
         </div>
-
     </div>
-
-
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

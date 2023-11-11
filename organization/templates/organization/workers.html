@@ -1,78 +1,70 @@
 {% extends "dashboard/base.html" %}
-
-{% block title %} Workers {% endblock %}
-
+{% block title %}Workers{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
+{% block stylesheets %}
+{% endblock stylesheets %}
 {% block content %}
-
-  <div class="content">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card ">
-          <div class="card-header">
-            <h3 class="card-title"> Workers:</h3>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                    <tr><th>Name</th>
-                    <th>Last Name</th>
-                    <th>Department</th>
-                    <th class="text-center">Job Position</th>
-                    <th class="text-center">Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                {% for worker in workers  %}
-
-                    <tr>
-
-
-                        <td>{{ worker.first_name }}</td>
-                        <td>{{ worker.last_name }} </td>
-                        <td>{{ worker.get_department_display }} </td>
-
-                        <td class="text-center">{{ worker.get_job_position_display }}</td>
-
-                        <td class="text-center">
-                            <a href="{% url 'workers_details' worker.id %}"  class="btn btn-success animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Details</a>
-                            <a href="{% url 'workers_update' worker.id %}"  class="btn btn-info animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Edit</a>
-                            <a href="{% url 'workers_delete' worker.id %}"  class="btn btn-danger animation-on-hover btn-sm" role="button"
-                               aria-pressed="true">Delete</a>
-
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">Workers:</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter " id="">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Last Name</th>
+                                        <th>Department</th>
+                                        <th class="text-center">Job Position</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for worker in workers %}
+                                        <tr>
+                                            <td>{{ worker.first_name }}</td>
+                                            <td>{{ worker.last_name }}</td>
+                                            <td>{{ worker.get_department_display }}</td>
+                                            <td class="text-center">{{ worker.get_job_position_display }}</td>
+                                            <td class="text-center">
+                                                <a href="{% url 'workers_details' worker.id %}"
+                                                   class="btn btn-success animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Details</a>
+                                                <a href="{% url 'workers_update' worker.id %}"
+                                                   class="btn btn-info animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Edit</a>
+                                                <a href="{% url 'workers_delete' worker.id %}"
+                                                   class="btn btn-danger animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-
-    </div>
-      <div class="row">
-                      <div class="col-8">
-            <div class="text-right">
-          <a href="{% url 'workers_add'  %}"  class="btn btn-primary  " role="button"
-                               aria-pressed="true">Add new Worker</a>
+        <div class="row">
+            <div class="col-8">
+                <div class="text-right">
+                    <a href="{% url 'workers_add' %}"
+                       class="btn btn-primary  "
+                       role="button"
+                       aria-pressed="true">Add new Worker</a>
+                </div>
             </div>
-
-      </div>
-
-
-  </div>
-  </div>
-
-
-
+        </div>
+    </div>
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

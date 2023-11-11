@@ -1,19 +1,15 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-from .models import Runway, Airport, Hangar, OutsideAircraftStand
 from aircraft.models import AircraftHangared
+from .models import Runway, Airport, Hangar, OutsideAircraftStand
 from .forms import CreatRunway, CreatAirport, CreatHangar, CreatOutsideStand
 
 
-# @method_decorator(login_required, name='dispatch')
 class AirportListView(LoginRequiredMixin, ListView):
     model = Airport
     template_name = "airport/airport.html"
@@ -21,7 +17,7 @@ class AirportListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
+        airports = Airport.objects.filter(company=user.company)
         return airports
 
 
@@ -39,8 +35,8 @@ class RunwaysListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        airports = Airport.objects.filter(company_id=user.company)
-        runways = Runway.objects.filter(airport_id__in=airports)
+        airports = Airport.objects.filter(company=user.company)
+        runways = Runway.objects.filter(airport__in=airports)
 
         return runways
 
@@ -56,6 +52,17 @@ class RunwaysCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreatRunway
 
+    def form_valid(self, form):
+        user = self.request.user
+        user_company = user.company
+        try:
+            airport = Airport.objects.get(company=user_company)
+        except Airport.DoesNotExist:
+            pass
+        else:
+            form.instance.airport = airport
+        return super().form_valid(form)
+
 
 class RunwaysUpdateView(LoginRequiredMixin, UpdateView):
     model = Runway
@@ -64,7 +71,7 @@ class RunwaysUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CreatRunway
 
 
-class RunwaysDeleteView(DeleteView):
+class RunwaysDeleteView(LoginRequiredMixin, DeleteView):
     model = Runway
     template_name = "airport/runways_delete.html"
     success_url = reverse_lazy("runways")
@@ -73,16 +80,14 @@ class RunwaysDeleteView(DeleteView):
 @login_required()
 def aircraft_stands(request):
     user = request.user
-    airports = Airport.objects.filter(company_id=user.company)
+    airports = Airport.objects.filter(company=user.company)
     return render(
         request,
         "airport/aircraft_stands.html",
         {
             "title": "Aircraft stands",
-            "hangars": Hangar.objects.filter(airport_id__in=airports),
-            "outside_stands": OutsideAircraftStand.objects.filter(
-                airport_id__in=airports
-            ),
+            "hangars": Hangar.objects.filter(airport__in=airports),
+            "outside_stands": OutsideAircraftStand.objects.filter(airport__in=airports),
         },
     )
 
@@ -101,13 +106,13 @@ class HangarsCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        user_company = user.company_id
+        user_company = user.company
         try:
-            airport = Airport.objects.get(company_id=user_company)
+            airport = Airport.objects.get(company=user_company)
         except Airport.DoesNotExist:
             pass
         else:
-            form.instance.airport_id = airport
+            form.instance.airport = airport
         return super().form_valid(form)
 
 
@@ -138,13 +143,13 @@ class OutsideStandsCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user = self.request.user
-        user_company = user.company_id
+        user_company = user.company
         try:
-            airport = Airport.objects.get(company_id=user_company)
+            airport = Airport.objects.get(company=user_company)
         except Airport.DoesNotExist:
             pass
         else:
-            form.instance.airport_id = airport
+            form.instance.airport = airport
         return super().form_valid(form)
 
 
