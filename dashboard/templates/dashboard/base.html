@@ -42,6 +42,8 @@
     {% block stylesheets %}{% endblock stylesheets %}
 
 </head>
+
+
 <body class="">
 
     <div class="wrapper">
@@ -52,11 +54,21 @@
 
             {% include 'dashboard/includes/navigation.html' %}
 
+                             {% if messages %}
+                    {% for message in messages %}
+                        <div class = "alert alert-{{ message.tags }} ">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
             {% block content %}{% endblock content %}
 
 
 
         </div>
+
+
     </div>
 
     {% include 'dashboard/includes/fixed-plugin.html' %}
@@ -66,5 +78,8 @@
     <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}
 
+
+
 </body>
+
 </html>

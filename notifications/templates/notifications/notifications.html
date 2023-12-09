@@ -34,14 +34,18 @@
                                                        class="btn btn-success animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Details</a>
+                                                    {% if perms.notifications.change_notification %}
                                                     <a href="{% url 'notifications_update' notification.id %}"
                                                        class="btn btn-info animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Edit</a>
+                                                    {% endif %}
+                                                    {% if perms.notifications.delete_notification %}
                                                     <a href="{% url 'notifications_delete' notification.id %}"
                                                        class="btn btn-danger animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Delete</a>
+                                                    {% endif %}
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
@@ -81,14 +85,18 @@
                                                        class="btn btn-success animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Details</a>
+                                                    {% if perms.notifications.change_notification %}
                                                     <a href="{% url 'notifications_update' past_notification.id %}"
                                                        class="btn btn-info animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Edit</a>
+                                                    {% endif %}
+                                                    {% if perms.notifications.delete_notification %}
                                                     <a href="{% url 'notifications_delete' past_notification.id %}"
                                                        class="btn btn-danger animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Delete</a>
+                                                    {% endif %}
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
@@ -128,14 +136,18 @@
                                                            class="btn btn-success animation-on-hover btn-sm"
                                                            role="button"
                                                            aria-pressed="true">Details</a>
+                                                        {% if perms.notifications.change_notification %}
                                                         <a href="{% url 'notifications_update' future_notification.id %}"
                                                            class="btn btn-info animation-on-hover btn-sm"
                                                            role="button"
                                                            aria-pressed="true">Edit</a>
+                                                        {% endif %}
+                                                        {% if perms.notifications.delete_notification %}
                                                         <a href="{% url 'notifications_delete' future_notification.id %}"
                                                            class="btn btn-danger animation-on-hover btn-sm"
                                                            role="button"
                                                            aria-pressed="true">Delete</a>
+                                                        {% endif %}
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -149,10 +161,12 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="text-right">
+                                {% if perms.notifications.add_notification %}
                                 <a href="{% url 'notifications_add' %}"
                                    class="btn btn-primary  "
                                    role="button"
                                    aria-pressed="true">Add notification</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

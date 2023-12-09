@@ -29,18 +29,23 @@
                                             <td class="text-center">{{ hangar.hangar_height }} meters</td>
                                             <td class="text-center">{{ hangar.hangar_wight }} meters</td>
                                             <td class="text-center">
+
                                                 <a href="{% url 'hangars_details' hangar.id %}"
                                                    class="btn btn-success animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Details</a>
+                                                {% if perms.airport.change_hangar %}
                                                 <a href="{% url 'hangars_update' hangar.id %}"
                                                    class="btn btn-info animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                                {% if perms.airport.delete_hangar %}
                                                 <a href="{% url 'hangars_delete' hangar.id %}"
                                                    class="btn btn-danger animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Delete</a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -54,10 +59,12 @@
         <div class="row">
             <div class="col-10">
                 <div class="text-right">
+                    {% if perms.airport.add_hangar %}
                     <a href="{% url 'hangars_add' %}"
                        class="btn btn-primary  "
                        role="button"
                        aria-pressed="true">Add new Hangar</a>
+                    {% endif %}
                 </div>
                 <br>
             </div>
@@ -90,14 +97,18 @@
                                                    class="btn btn-success animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Details</a>
+                                                {% if perms.airport.change_outsideaircraftstand %}
                                                 <a href="{% url 'outside_stands_update' outside_stand.id %}"
                                                    class="btn btn-info animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                                {% if perms.airport.delete_outsideaircraftstand %}
                                                 <a href="{% url 'outside_stands_delete' outside_stand.id %}"
                                                    class="btn btn-danger animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Delete</a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -111,10 +122,12 @@
         <div class="row">
             <div class="col-10">
                 <div class="text-right">
+                    {% if perms.airport.add_outsideaircraftstand %}
                     <a href="{% url 'outside_stands_add' %}"
                        class="btn btn-primary  "
                        role="button"
                        aria-pressed="true">Add new Outside Stands</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

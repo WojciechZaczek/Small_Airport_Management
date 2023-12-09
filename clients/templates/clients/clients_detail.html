@@ -58,11 +58,11 @@
                             </h4>
                             <h4 class="card-text">
                                 Client's trainings:
-                                {% if not object.offer.all %}
+                                {% if not object.training.all %}
                                     No services
                                 {% else %}
-                                    {% for offer in object.offer.all %}
-                                        {{ offer.name }}
+                                    {% for training in object.training.all %}
+                                        {{ training.name }}
                                         {% if not forloop.last %},{% endif %}
                                     {% endfor %}
                                 {% endif %}

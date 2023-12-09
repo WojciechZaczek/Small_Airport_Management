@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.views import LogoutView
+
 from django.contrib.auth import views as auth_views
 from .views import (
     register,
-    login_view,
+    CustomLoginView,
     UserListView,
     UserDeleteView,
     UserDetailView,
@@ -13,7 +13,7 @@ from .views import (
 
 
 urlpatterns = [
-    path("login/", login_view, name="login"),
+    path("login/", CustomLoginView.as_view(), name="login"),
     path("register/", register, name="register"),
     path(
         "logout/",
@@ -22,6 +22,8 @@ urlpatterns = [
     ),
     path("users/", UserListView.as_view(), name="users"),
     path("users/<int:pk>/", UserDetailView.as_view(), name="users_details"),
-    path("users/update/<int:pk>/", UserUpdateView.as_view(), name="users_update"),
+    path(
+        "users/update/<int:pk>/", UserUpdateView.as_view(), name="users_update"
+    ),  # users/<int:pk>/update # users/<int:pk>/profiles/<profile:pk>, users/profiles/<int:pk>/<profile:pk> -> users/profiles/1/3
     path("users/delete/<int:pk>/", UserDeleteView.as_view(), name="users_delete"),
 ]

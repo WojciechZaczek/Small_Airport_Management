@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from organization.models import Department, Company
 from django.urls import reverse
+from django.db.models.signals import post_migrate
 
 
 class CustomUser(AbstractUser):
@@ -13,6 +14,7 @@ class CustomUser(AbstractUser):
     job_position = models.CharField(
         max_length=20,
         choices=Department.JOB_TITLES,
+        default="none",
         help_text="Users work job title, model worker in organization app",
     )
 

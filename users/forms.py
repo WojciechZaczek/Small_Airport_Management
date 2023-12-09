@@ -3,13 +3,18 @@ from django.contrib.auth.forms import (
     UserChangeForm,
     AuthenticationForm,
 )
+from django.contrib.auth.models import Group
 from django import forms
 from .models import CustomUser
 from organization.models import Company
 from organization.models import Department
 
 
-class UserLoginForm(forms.Form):
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={"placeholder": "Username", "class": "form-control"}
@@ -64,11 +69,9 @@ class UserRegisterForm(UserCreationForm):
         ),
     )
 
-    job_position = forms.ChoiceField(
-        choices=Department.JOB_TITLES,
-        widget=forms.Select(
-            attrs={"placeholder": "Workers job position", "class": "form-control"}
-        ),
+    company = forms.ModelChoiceField(
+        queryset=Company.objects.all(),
+        widget=forms.Select(attrs={"placeholder": "Company", "class": "form-control"}),
     )
 
     class Meta:
@@ -81,7 +84,6 @@ class UserRegisterForm(UserCreationForm):
             "first_name",
             "last_name",
             "department",
-            "job_position",
             "company",
         ]
 
@@ -116,3 +118,21 @@ class CreateUser(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ["first_name", "last_name", "department", "job_position"]
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.save()
+        self.update_user_group(user)
+
+        return user
+
+    def update_user_group(self, user):
+        group_name = self.cleaned_data.get("job_position")
+        try:
+            group = Group.objects.get(name=group_name)
+        except Group.DoesNotExist:
+            group = None
+
+        if group and group not in user.groups.all():
+            user.groups.clear()
+            user.groups.add(group)

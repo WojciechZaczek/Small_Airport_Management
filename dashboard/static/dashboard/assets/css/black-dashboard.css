@@ -3648,15 +3648,16 @@ input[type="button"].btn-block {
 	height: auto;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 }
 
   .card-time-container h2{
 	padding: 22px;
 	font-size: 20px;
+
 }
 
-  .card-time-container h2 small{ font-size: 14px; }
+  .card-time-container h2 small{ font-size: 14px;}
 
 .card-columns .card {
   margin-bottom: 1.25rem; }

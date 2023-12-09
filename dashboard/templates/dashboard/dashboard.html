@@ -1,164 +1,153 @@
 {% extends "dashboard/base.html" %}
 {% load static %}
-
-{% block title %} Home {% endblock %}
-
+{% block title %}Home{% endblock %}
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}
 {% endblock stylesheets %}
-
 {% block content %}
-
-    <div class="content" xmlns="http://www.w3.org/1999/html">
+    <div class="content" >
         <div class="row">
             <div class="col-12">
-            <div class="card card-nav-tabs">
-              <div class="card-header card-header-warning">
-                  World Clock
+                <div class="card card-nav-tabs">
+                    <div class="card-header card-header-warning">
+                        <h3>World Clock</h3>
                         <div class="row">
                             <div class="card-body">
-                                    <div class="card-time-container">
-	                                        <h2 data-locale="Warsaw" data-offset="+2">
-		                                        <p></p>
-                                                <img src="{% static 'dashboard/assets/img/pl.svg' %}" alt="..." style="max-width: 25px; max-height: 25px;">
-		                                        Warsaw <small>(PL)</small>
-	                                        </h2>
-	                                        <h2 data-locale="New York" data-offset="-4">
-		                                        <p></p>
-                                                <img src="{% static 'dashboard/assets/img/us.svg' %}" style="max-width: 25px; max-height: 25px;">
-		                                        New York<small>(USA)</small>
-	                                        </h2>
-	                                        <h2 data-locale="London" data-offset="+1">
-                                                <p></p>
-                                                <img src="{% static 'dashboard/assets/img/gb.svg' %}" alt="..." style="max-width: 25px; max-height: 25px;">
-		                                        London <small>(UK)</small>
-	                                        </h2>
-	                                        <h2 data-locale="Tokyo" data-offset="+9">
-                                                <p></p>
-                                                <img src="{% static 'dashboard/assets/img/jp.svg' %}" alt="..." style="max-width: 25px; max-height: 25px;">
-		                                        Tokyo <small>(JP)</small>
-	                                        </h2>
-                                    </div>
+                                <div class="card-time-container">
+                                    <h2 data-locale="Warsaw" data-offset="+2">
+                                        <p></p>
+                                        <img src="{% static 'dashboard/assets/img/pl.svg' %}"
+                                             alt="..."
+                                             style="max-width: 25px;
+                                                    max-height: 25px">
+                                        Warsaw <small>(PL)</small>
+                                    </h2>
+                                    <h2 data-locale="New York" data-offset="-4">
+                                        <p></p>
+                                        <img src="{% static 'dashboard/assets/img/us.svg' %}"
+                                             style="max-width: 25px;
+                                                    max-height: 25px">
+                                        New York<small>(USA)</small>
+                                    </h2>
+                                    <h2 data-locale="London" data-offset="+1">
+                                        <p></p>
+                                        <img src="{% static 'dashboard/assets/img/gb.svg' %}"
+                                             alt="..."
+                                             style="max-width: 25px;
+                                                    max-height: 25px">
+                                        London <small>(UK)</small>
+                                    </h2>
+                                    <h2 data-locale="Tokyo" data-offset="+9">
+                                        <p></p>
+                                        <img src="{% static 'dashboard/assets/img/jp.svg' %}"
+                                             alt="..."
+                                             style="max-width: 25px;
+                                                    max-height: 25px">
+                                        Tokyo <small>(JP)</small>
+                                    </h2>
                                 </div>
-                        </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-            <div class="card card-nav-tabs">
-                {% for airport in airports %}
-
-              <div class="card-body">
-                <h4 class="card-title">Weather in {{ airport.city }}</h4>
-
-              <h4>23.08.2023 12:00</h4>
-
             </div>
-
-            <div class="d-flex flex-column text-center mt-5 mb-4">
-              <h3 class= card-text> 13°C </h3>
-              <h4 class="card-text">Stormy</h4>
-            </div>
-
-
-              <div class="flex-grow-1" style="font-size: 1rem;">
-                <div><p><i class="fas fa-wind fa-fw"></i>  40 km/h
-                </p></div>
-                  <div><p><i class="fas fa-tint fa-fw"></i>  84% </p>
-                </div>
-                  <div><p><i class="fas fa-sun fa-fw"></i>  0.2h </p>
-                </div>
-              </div>
-
-            </div>
-            {% endfor  %}
-            </div>
-
-            <div class="col-lg-6">
-                <div class="card card-nav-tabs">
-                  <div class="card-body">
-                    <h4 class="card-title">Today's notifications: </h4>
-                      {% if  not notifications %}
-                    <p class="card-text">No notifications for today</p>
-                          {% else %}
-                              {% for notification in notifications %}
-                          <h4 class="card-text">Title: {{ notification.title}}</h4>
-                          <p class="card-text">{{ notification.content}}</p>
-
-
-                    {%endfor  %}
-                  {% endif  %}
-                  </div>
-                </div>
-            </div>
-
         </div>
         <div class="row">
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-
-              <div class="card-body">
-                  {% for airport in airports %}
-                  <h4 class="card-title">Your Airport:  {{ airport.name }}</h4>
-                      <p class="card-text"> Address: {{ airport.address }}</p>
-                      <p class="card-text"> Radio: {{ airport.radio }}</p>
-                      <p class="card-text"> Contact: {{ airport.contact }}</p>
-                      <p class="card-text"> About: {{ airport.description }}</p>
-                  {% endfor %}
-              </div>
-            </div>
-                </div>
-
-            <div class="col-6">
-            <div class="card card-nav-tabs">
-
-              <div class="card-body">
-                  <h4 class="card-title">Runways at your airport:</h4>
-
-                      <table class="table">
-    <thead>
-        <tr>
-            <th class="text-center">#</th>
-            <th>Name</th>
-            <th>Length</th>
-            <th>Width</th>
-            <th>Surface</th>
-
-        </tr>
-    </thead>
-
-    <tbody>
-    {% for runway in runways  %}
-        <tr>
-            <td class="text-center"> {{ runway.id }}</td>
-            <td>{{ runway.name }}</td>
-            <td>{{ runway.length }}</td>
-            <td>{{ runway.width }}</td>
-            <td>{{ runway.surface }}</td>
-
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-              </div>
-            </div>
+            <div class="col-lg-6 d-flex align-items-stretch">
+                <div class="card card-nav-tabs">
+                    {% for airport in airports %}
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-left">Weather in {{ airport.city }}</h4>
+                            <h6 class="card-subtitle text-left">{{ last_update }}</h6>
+                            <div class="weather-info mt-4">
+                                <h3 class="card-text">{{ weather_temperature }}°C</h3>
+                                <img src="{{ weather_icon }}" alt="Weather Icon">
+                                <h4 class="card-text">{{ weather_description }}</h4>
+                            </div>
+                            <div class="weather-details mt-4 text-left" style="font-size: 1rem;">
+                                <p>
+                                    <i class="fas fa-flag fa-fw"></i> {{ weather_wind }} km/h
+                                </p>
+                                <p>
+                                    <i class="fas fa-tint fa-fw"></i> {{ weather_humidity }} %
+                                </p>
+                                <p>
+                                    <i class="fas fa-cloud fa-fw"></i> {{weather_clouds}} %
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-
+            <div class="col-lg-6 d-flex align-items-stretch">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h4 class="card-title">Today's notifications:</h4>
+                        {% if not notifications %}
+                            <p class="card-text">No notifications for today</p>
+                        {% else %}
+                            {% for notification in notifications %}
+                                <div class="notification-item">
+                                    <h4 class="card-text">Title: {{ notification.title }}</h4>
+                                    <p class="card-text">{{ notification.content }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 d-flex align-items-stretch">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        {% for airport in airports %}
+                            <h4 class="card-title">Your Airport:  {{ airport.name }}</h4>
+                            <p>Address: {{ airport.address }}</p>
+                            <p class="card-text">Radio: {{ airport.radio }}</p>
+                            <p class="card-text">Contact: {{ airport.contact }}</p>
+                            <p class="card-text">About: {{ airport.description }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-stretch">
+                <div class="card card-nav-tabs">
+                    <div class="card-body">
+                        <h4 class="card-title">Runways at your airport:</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th>Name</th>
+                                    <th>Length</th>
+                                    <th>Width</th>
+                                    <th>Surface</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for runway in runways %}
+                                    <tr>
+                                        <td class="text-center">{{ runway.id }}</td>
+                                        <td>{{ runway.name }}</td>
+                                        <td>{{ runway.length }}</td>
+                                        <td>{{ runway.width }}</td>
+                                        <td>{{ runway.surface }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-        </div>
-
+</div>
+</div>
 {% endblock content %}
-
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
-<script>
+    <script>
     $(document).ready(function () {
         // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
@@ -188,5 +177,5 @@ function calcTime(timezone) {
 }
 
 searchClocks();
-</script>
+    </script>
 {% endblock javascripts %}

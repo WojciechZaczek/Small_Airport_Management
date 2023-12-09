@@ -19,7 +19,7 @@ class Aircraft(models.Model):
     manufacture = models.CharField(max_length=50, help_text="Name op aircraft producer")
     name = models.CharField(max_length=50, help_text="Aircraft name or no")
     type = models.CharField(
-        choices=AIRCRAFT_TYPES, max_length=50, help_text="Type of Aircraft, from list"
+        choices=AIRCRAFT_TYPES, max_length=3, help_text="Type of Aircraft, from list"
     )
     take_off_ground = models.IntegerField(
         help_text="Take off first part, where aircraft is on the ground in meters"
@@ -87,7 +87,9 @@ class AircraftHangared(models.Model):
             )
 
         if self.hangar and self.outside_stand:
-            raise ValidationError("Only on o hangar_id or outside_stand_id can be set")
+            raise ValidationError(
+                "Only one of hangar_id or outside_stand_id can be set"
+            )
 
         if not self.client and not self.airport_property:
             raise ValidationError(

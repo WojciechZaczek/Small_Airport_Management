@@ -33,14 +33,19 @@
                                                    class="btn btn-success animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Details</a>
+                                                {% if perms.airport_facilities.change_building%}
                                                 <a href="{% url 'buildings_update' building.id %}"
                                                    class="btn btn-info animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                                {% if perms.airport_facilities.delete_building %}
                                                 <a href="{% url 'buildings_delete' building.id %}"
                                                    class="btn btn-danger animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Delete</a>
+                                                {% endif %}
+
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -54,10 +59,12 @@
         <div class="row">
             <div class="col-10">
                 <div class="text-right">
+                    {% if perms.airport_facilities.add_building %}
                     <a href="{% url 'buildings_add' %}"
                        class="btn btn-primary  "
                        role="button"
                        aria-pressed="true">Add new Building</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

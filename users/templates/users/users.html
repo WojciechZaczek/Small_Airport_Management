@@ -31,18 +31,23 @@
                                             <td>{{ user.get_department_display }}</td>
                                             <td class="text-center">{{ user.get_job_position_display }}</td>
                                             <td class="text-center">
+
                                                 <a href="{% url 'users_details' user.id %}"
                                                    class="btn btn-success animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Details</a>
+                                                {% if perms.users.change_customuser %}
                                                 <a href="{% url 'users_update' user.id %}"
                                                    class="btn btn-info animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                                {% if perms.users.delete_customuser %}
                                                 <a href="{% url 'users_delete' user.id %}"
                                                    class="btn btn-danger animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Delete</a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

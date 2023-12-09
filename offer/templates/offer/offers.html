@@ -31,14 +31,18 @@
                                                    class="btn btn-success animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Details</a>
+                                                {% if perms.offer.change_offer %}
                                                 <a href="{% url 'offers_update' offer.id %}"
                                                    class="btn btn-info animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Edit</a>
+                                                    {% endif %}
+                                                {% if perms.offer.delete_offer %}
                                                 <a href="{% url 'offers_delete' offer.id %}"
                                                    class="btn btn-danger animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Delete</a>
+                                                    {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -52,10 +56,12 @@
         <div class="row">
             <div class="col-8">
                 <div class="text-right">
+                    {% if perms.offer.add_offer %}
                     <a href="{% url 'offers_add' %}"
                        class="btn btn-primary  "
                        role="button"
                        aria-pressed="true">Add new Offer</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

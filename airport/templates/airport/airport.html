@@ -57,10 +57,12 @@
                            class="btn btn-primary animation-on-hover"
                            role="button"
                            aria-pressed="true">Back</a>
+                        {% if perms.airport.change_airport %}
                         <a href="{% url 'airports_update' a.id %}"
                            class="btn btn-info animation-on-hover  "
                            role="button"
                            aria-pressed="true">Edit</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

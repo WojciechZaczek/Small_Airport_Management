@@ -33,14 +33,18 @@
                                                    class="btn btn-success animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Details</a>
+                                                {% if perms.offer.change_training %}
                                                 <a href="{% url 'trainings_update' training.id %}"
                                                    class="btn btn-info animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                                {% if perms.offer.delete_training %}
                                                 <a href="{% url 'trainings_delete' training.id %}"
                                                    class="btn btn-danger animation-on-hover btn-sm"
                                                    role="button"
                                                    aria-pressed="true">Delete</a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -54,10 +58,12 @@
         <div class="row">
             <div class="col-10">
                 <div class="text-right">
+                    {% if perms.offer.add_training %}
                     <a href="{% url 'trainings_add' %}"
                        class="btn btn-primary  "
                        role="button"
                        aria-pressed="true">Add new Training</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

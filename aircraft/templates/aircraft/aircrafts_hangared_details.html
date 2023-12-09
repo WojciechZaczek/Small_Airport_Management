@@ -28,13 +28,21 @@
                             <h4 class="card-text">Aircraft belongs to airport</h4>
                         {% else %}
                             {% if object.client_id.corporate_client %}
+                        {% if perms.clients.view_client %}
                                 <a href="{% url 'clients_detail' object.client.pk %}">
                                     <h4 class="card-text">Client:  {{ object.client.company_name }}</h4>
                                 </a>
                             {% else %}
+                        Client:  {{ object.client.company_name }}
+                        {% endif %}
+                        {% else %}
+                        {% if perms.clients.view_client %}
                                 <a href="{% url 'clients_detail' object.client.pk %}">
                                     <h4 class="card-text">Client:  {{ object.client.name }} {{ object.client.last_name }}</h4>
                                 </a>
+                        {% else %}
+                        <h4 class="card-text">Client:  {{ object.client.name }} {{ object.client.last_name }}</h4>
+                        {% endif %}
                             {% endif %}
                         {% endif %}
                     </div>
@@ -48,13 +56,21 @@
                         <h3 class="card-title">Aircraft stationed spot:</h3>
                         <br>
                         {% if object.hangar %}
+                        {% if perms.airport.view_hangar %}
                             <a href="{% url 'hangars_details' object.hangar.pk %}">
                                 <h4 class="card-text">Hangar:  {{ object.hangar.name }}</h4>
                             </a>
                         {% else %}
+                        <h4 class="card-text">Hangar:  {{ object.hangar.name }}</h4>
+                        {% endif %}
+                        {% else %}
+                        {% if perms.airport.outsideaircraftstand %}
                             <a href="{% url 'outside_stands_details' object.outside_stand.pk %}">
                                 <h4 class="card-text">Outside standing spot:  {{ object.outside_stand.name }}</h4>
                             </a>
+                        {% else %}
+                        <h4 class="card-text">Outside standing spot:  {{ object.outside_stand.name }}</h4>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>

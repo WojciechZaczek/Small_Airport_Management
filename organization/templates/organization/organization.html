@@ -113,10 +113,12 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="text-right">
+                                                    {% if perms.organization.change_company%}
                                                     <a href="{% url 'company_update' org.id %}"
                                                        class="btn btn-info animation-on-hover btn-sm btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Edit</a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -173,15 +175,18 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="text-right">
+                                                {% if perms.organization.change_department %}
                                                 <a href="{% url 'department_update' dep.id %}"
-                                                   rel="tooltip"
-                                                   class="btn btn-info animation-on-hover btn-icon"
-                                                   role="button"
-                                                   aria-pressed="true"><i class="tim-icons icon-settings"></i></a>
+                                                       class="btn btn-info animation-on-hover btn-sm btn-sm"
+                                                       role="button"
+                                                       aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                                {% if perms.organization.delete_department %}
                                                 <a href="{% url 'department_delete' dep.id %}"
-                                                   class="btn btn-danger animation-on-hover btn-icon"
-                                                   role="button"
-                                                   aria-pressed="true"><i class="tim-icons icon-simple-remove"></i></a>
+                                                       class="btn btn-danger animation-on-hover btn-sm btn-sm"
+                                                       role="button"
+                                                       aria-pressed="true">Delete</a>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -190,10 +195,12 @@
                         </div>
                     {% endfor %}
                     <div class="text-right">
+                        {% if perms.organization.add_department %}
                         <a href="{% url 'department_add' %}"
                            class="btn btn-primary "
                            role="button"
                            aria-pressed="true">Add new department</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

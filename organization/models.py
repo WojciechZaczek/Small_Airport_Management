@@ -26,8 +26,9 @@ class Department(models.Model):
         ("control", "Flight control"),
         ("mechanic", "Aircraft machinery"),
         ("cleaning", "Aircraft cleaning department"),
-        ("air", "aircraft Crew"),
+        ("air", "Aircraft Crew"),
         ("IT", "IT department"),
+        ("external", "External Company"),
     ]
 
     JOB_TITLES = [
@@ -35,10 +36,9 @@ class Department(models.Model):
         ("manager", "Manager"),
         ("worker", "Worker"),
         ("specialist", "Specialist"),
-        (
-            "pilot",
-            "Aircraft pilot",
-        ),
+        ("pilot", "Aircraft pilot"),
+        ("none", "None"),
+        ("admin", "Administrator IT"),
     ]
 
     name = models.CharField(
