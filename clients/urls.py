@@ -11,22 +11,22 @@ from .views import (
 
 urlpatterns = [
     path("clients/", ClientsListView.as_view(), name="clients"),
-    path("clients/<int:pk>/", ClientsDetailView.as_view(), name="clients_detail"),
-    path("clients/new/", views.new_client, name="client_add"),
+    path("clients/<int:pk>/", ClientsDetailView.as_view(), name="clients_details"),
+    path("clients/new/", views.new_client, name="clients_add"),
     path(
         "clients/new/private",
         ClientsPrivateCreateView.as_view(),
-        name="client_add_private",
+        name="clients_add_private",
     ),
     path(
         "clients/new/corporate",
         ClientsCorporateCreateView.as_view(),
-        name="client_add_corporate",
+        name="clients_add_corporate",
     ),
     path(
-        "clients/update/<int:pk>/", ClientsUpdateView.as_view(), name="clients_update"
+        "clients/<int:pk>/update/", ClientsUpdateView.as_view(), name="clients_update"
     ),
     path(
-        "clients/delete/<int:pk>/", ClientsDeleteView.as_view(), name="clients_delete"
+        "clients/<int:pk>/delete/", ClientsDeleteView.as_view(), name="clients_delete"
     ),
 ]

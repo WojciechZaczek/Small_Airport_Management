@@ -20,12 +20,12 @@ urlpatterns = [
         name="notifications_add",
     ),
     path(
-        "notifications/update/<int:pk>/",
+        "notifications/<int:pk>/update/",
         NotificationsUpdateView.as_view(),
         name="notifications_update",
     ),
     path(
-        "notifications/delete/<int:pk>/",
+        "notifications/<int:pk>/delete/",
         NotificationsDeleteView.as_view(),
         name="notifications_delete",
     ),

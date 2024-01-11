@@ -29,7 +29,7 @@
                         {% else %}
                             {% if object.client_id.corporate_client %}
                         {% if perms.clients.view_client %}
-                                <a href="{% url 'clients_detail' object.client.pk %}">
+                                <a href="{% url 'clients_details' object.client.pk %}">
                                     <h4 class="card-text">Client:  {{ object.client.company_name }}</h4>
                                 </a>
                             {% else %}
@@ -37,7 +37,7 @@
                         {% endif %}
                         {% else %}
                         {% if perms.clients.view_client %}
-                                <a href="{% url 'clients_detail' object.client.pk %}">
+                                <a href="{% url 'clients_details' object.client.pk %}">
                                     <h4 class="card-text">Client:  {{ object.client.name }} {{ object.client.last_name }}</h4>
                                 </a>
                         {% else %}

@@ -8,17 +8,14 @@ class GroupFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Group
 
-    name = factory.Faker(
-        "random_element",
-        elements=("none", "ceo", "manager", "worker", "specialist", "pilot", "admin"),
-    )
+    name = factory.Faker("word")
 
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = CustomUser
 
-    username = factory.Faker("word")
+    username = factory.Sequence(lambda n: f"user{n}")
     password = factory.Faker("word")
     first_name = factory.Faker("word")
     last_name = factory.Faker("word")
@@ -30,7 +27,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     )
     job_position = factory.Faker(
         "random_element",
-        elements=("none", "ceo", "manager", "worker", "specialist", "pilot", "admin"),
+        elements=("ceo", "manager", "worker", "specialist", "pilot", "admin"),
     )
     company = factory.SubFactory(CompanyFactory)
 

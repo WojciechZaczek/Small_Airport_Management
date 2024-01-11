@@ -21,7 +21,7 @@ class AirportFactory(factory.django.DjangoModelFactory):
     length = factory.Faker("pyint")
     width = factory.Faker("pyint")
     square_meters = factory.Faker("pyint")
-    AIP = factory.django.FileField(filename="test_api.pdf", data=b"fake_binary_data")
+    AIP = None  # factory.django.FileField(filename="test_api.pdf", data=b"fake_binary_data")
     company = factory.SubFactory(CompanyFactory)
 
 
@@ -62,6 +62,6 @@ class HangarFactory(factory.django.DjangoModelFactory):
     hangar_wight = factory.Faker("pyfloat", positive=True)
     doors_height = factory.Faker("pyfloat", positive=True)
     doors_wight = factory.Faker("pyfloat", positive=True)
-    small_stands_no = factory.Faker("pyint")
-    small_stands_taken = factory.Faker("pyint")
+    small_stands_no = 10
+    small_stands_taken = 0
     airport = factory.SubFactory(AirportFactory)

@@ -28,29 +28,29 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "organization/company_form.html"
 
     form_class = CreatCompany
-    success_url = reverse_lazy("organization")
+    success_url = reverse_lazy("organizations")
 
 
 class DepartmentCreateView(LoginRequiredMixin, CreateView):
     model = Department
-    template_name = "organization/department_form.html"
+    template_name = "organization/departments_form.html"
 
     form_class = CreatDepartment
-    success_url = reverse_lazy("organization")
+    success_url = reverse_lazy("organizations")
 
 
 class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
     model = Department
-    template_name = "organization/department_form.html"
+    template_name = "organization/departments_form.html"
 
     form_class = CreatDepartment
-    success_url = reverse_lazy("organization")
+    success_url = reverse_lazy("organizations")
 
 
 class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
     model = Department
-    template_name = "organization/department_delete.html"
-    success_url = reverse_lazy("organization")
+    template_name = "organization/departments_delete.html"
+    success_url = reverse_lazy("organizations")
 
 
 class WorkerListView(LoginRequiredMixin, ListView):
@@ -86,11 +86,6 @@ class WorkerUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "organization/workers_form.html"
 
     form_class = CreatWorker
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["user"] = self.request.user
-        return kwargs
 
 
 class WorkerDeleteView(LoginRequiredMixin, DeleteView):

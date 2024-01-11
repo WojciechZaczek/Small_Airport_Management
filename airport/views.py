@@ -43,7 +43,7 @@ class RunwaysListView(LoginRequiredMixin, ListView):
 
 class RunwaysDetailView(LoginRequiredMixin, DetailView):
     model = Runway
-    template_name = "airport/runways_detail.html"
+    template_name = "airport/runways_details.html"
 
 
 class RunwaysCreateView(LoginRequiredMixin, CreateView):

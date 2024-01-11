@@ -176,13 +176,13 @@
                                         <div class="col-12">
                                             <div class="text-right">
                                                 {% if perms.organization.change_department %}
-                                                <a href="{% url 'department_update' dep.id %}"
+                                                <a href="{% url 'departments_update' dep.id %}"
                                                        class="btn btn-info animation-on-hover btn-sm btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Edit</a>
                                                 {% endif %}
                                                 {% if perms.organization.delete_department %}
-                                                <a href="{% url 'department_delete' dep.id %}"
+                                                <a href="{% url 'departments_delete' dep.id %}"
                                                        class="btn btn-danger animation-on-hover btn-sm btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Delete</a>
@@ -196,7 +196,7 @@
                     {% endfor %}
                     <div class="text-right">
                         {% if perms.organization.add_department %}
-                        <a href="{% url 'department_add' %}"
+                        <a href="{% url 'departments_add' %}"
                            class="btn btn-primary "
                            role="button"
                            aria-pressed="true">Add new department</a>

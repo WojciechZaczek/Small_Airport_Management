@@ -18,32 +18,32 @@ urlpatterns = [
     ),
     path("aircrafts/new/", AircraftsCreateView.as_view(), name="aircrafts_add"),
     path(
-        "aircrafts/update/<int:pk>/",
+        "aircrafts/<int:pk>/update/",  # aircrafts/<int:pk>/update/
         AircraftsUpdateView.as_view(),
         name="aircrafts_update",
     ),
     path(
-        "aircrafts/delete/<int:pk>/",
+        "aircrafts/<int:pk>/delete/",
         AircraftsDeleteView.as_view(),
         name="aircrafts_delete",
     ),
     path(
-        "aircrafts_hangared/<int:pk>/",
+        "aircrafts-hangared/<int:pk>/",  # -
         AircraftsHangaredDetailView.as_view(),
         name="aircrafts_hangared_details",
     ),
     path(
-        "aircrafts_hangared/new/",
+        "aircrafts-hangared/new/",
         AircraftsHangaredCreateView.as_view(),
         name="aircrafts_hangared_add",
     ),
     path(
-        "aircrafts_hangared/update/<int:pk>/",
+        "aircrafts-hangared/<int:pk>/update/",
         AircraftsHangaredUpdateView.as_view(),
         name="aircrafts_hangared_update",
     ),
     path(
-        "aircrafts_hangared/delete/<int:pk>/",
+        "aircrafts-hangared/<int:pk>/delete/",
         AircraftsHangaredDeleteView.as_view(),
         name="aircrafts_hangared_delete",
     ),

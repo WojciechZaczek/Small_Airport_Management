@@ -13,7 +13,7 @@ class CompanyFactory(factory.django.DjangoModelFactory):
     description = factory.Faker("sentence")
 
 
-class DepartmentFactory(factory.Factory):
+class DepartmentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Department
 

@@ -97,7 +97,7 @@ class AircraftHangared(models.Model):
             )
 
         if self.client and self.airport_property:
-            raise ValidationError("Only on o client_id or airport_property can be set")
+            raise ValidationError("Only on of client_id or airport_property can be set")
 
         super().clean()
 

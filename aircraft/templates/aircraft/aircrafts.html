@@ -102,25 +102,21 @@
                                                 <td class="text-center">{{ aircraft_hangared.aircraft.get_type_display }}</td>
                                                 <td class="text-center">
                                                     {% if aircraft_hangared.hangar %}
-                                                        {% if perms.airport.view_hangar %}
+
                                                             <a href="{% url 'hangars_details' aircraft_hangared.hangar.pk %}">{{ aircraft_hangared.hangar.name }}</a>
-                                                        {% else %}
-                                                            {{ aircraft_hangared.hangar.name }}
-                                                        {% endif %}
+
                                                     {% else %}
-                                                        {% if perms.airport.view_outsideaircraftstand %}
+
                                                             <a href="{% url 'outside_stands_details' aircraft_hangared.outside_stand.pk %}">
                                                                 {{ aircraft_hangared.outside_stand.name }}
                                                             </a>
-                                                        {% else %}
-                                                            {{ aircraft_hangared.outside_stand.name }}
-                                                        {% endif %}
+
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-center">
                                                     {% if aircraft_hangared.client %}
                                                         {% if perms.clients.view_client %}
-                                                            <a href="{% url 'clients_detail' aircraft_hangared.client.pk %}">
+                                                            <a href="{% url 'clients_details' aircraft_hangared.client.pk %}">
                                                                 {{ aircraft_hangared.client.name }} {{ aircraft_hangared.client.last_name }}
                                                             </a>
                                                         {% else %}

@@ -36,12 +36,11 @@
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="{% url 'clients_detail' client.id %}"
+                                                    <a href="{% url 'clients_details' client.id %}"
                                                        class="btn btn-success animation-on-hover btn-sm"
                                                        role="button"
                                                        aria-pressed="true">Details</a>
                                                     {% if perms.clients.change_client %}
-
                                                     <a href="{% url 'clients_update' client.id %}"
                                                        class="btn btn-info animation-on-hover btn-sm"
                                                        role="button"
@@ -94,7 +93,7 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-center">
-                                                        <a href="{% url 'clients_detail' client.id %}"
+                                                        <a href="{% url 'clients_details' client.id %}"
                                                            class="btn btn-success animation-on-hover btn-sm"
                                                            role="button"
                                                            aria-pressed="true">Details</a>
@@ -125,7 +124,7 @@
                 <div class="col-10">
                     <div class="text-right">
                         {% if perms.clients.add_client %}
-                        <a href="{% url 'client_add' %}"
+                        <a href="{% url 'clients_add' %}"
                            class="btn btn-primary  "
                            role="button"
                            aria-pressed="true">Add new Client</a>

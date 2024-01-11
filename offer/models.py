@@ -32,7 +32,7 @@ class Training(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse("trainings_detail", kwargs={"pk": self.pk})
+        return reverse("trainings_details", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.name

@@ -1,7 +1,7 @@
 from .models import Aircraft, AircraftHangared
 import factory
 from airport.factories import HangarFactory, OutsideAircraftStandFactory
-from clients.factories import ClientFactory
+from clients.factories import ClientPrivateFactory, ClientCorporateFactory
 
 
 class AircraftFactory(factory.django.DjangoModelFactory):
@@ -32,4 +32,4 @@ class AircraftHangaredFactory(factory.django.DjangoModelFactory):
     airport_property = factory.Faker("boolean")
     hangar = factory.SubFactory(HangarFactory)
     outside_stand = factory.SubFactory(OutsideAircraftStandFactory)
-    client = factory.SubFactory(ClientFactory)
+    client = factory.SubFactory(ClientPrivateFactory)

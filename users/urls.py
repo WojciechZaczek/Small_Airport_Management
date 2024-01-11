@@ -22,8 +22,6 @@ urlpatterns = [
     ),
     path("users/", UserListView.as_view(), name="users"),
     path("users/<int:pk>/", UserDetailView.as_view(), name="users_details"),
-    path(
-        "users/update/<int:pk>/", UserUpdateView.as_view(), name="users_update"
-    ),  # users/<int:pk>/update # users/<int:pk>/profiles/<profile:pk>, users/profiles/<int:pk>/<profile:pk> -> users/profiles/1/3
-    path("users/delete/<int:pk>/", UserDeleteView.as_view(), name="users_delete"),
+    path("users/<int:pk>/update/", UserUpdateView.as_view(), name="users_update"),
+    path("users/<int:pk>/delete/", UserDeleteView.as_view(), name="users_delete"),
 ]

@@ -17,31 +17,31 @@
                         <p>Home</p>
                     </a>
                 </li>
-                {% if perms.organization.view_company %}
+
                 <li class="{% if 'organiztions' in segment %} active {% endif %} ">
                     <a href="{% url 'organizations' %}">
                         <i class="tim-icons icon-bank"></i>
                         <p>Company</p>
                     </a>
                 </li>
-                {% endif %}
-                {% if perms.airport.view_airport %}
+
+
                 <li class="{% if 'airports' in segment %} active {% endif %} ">
                     <a href="{% url 'airports' %}">
                         <i class="tim-icons icon-square-pin"></i>
                         <p>Airport</p>
                     </a>
                 </li>
-                {% endif %}
-                {% if perms.airport.view_runway %}
+
+
                 <li class="{% if 'runways' in segment %} active {% endif %}">
                     <a href="{% url 'runways' %}">
                         <i class="tim-icons icon-simple-delete"></i>
                         <p>Runways</p>
                     </a>
                 </li>
-                {% endif %}
-                {% if perms.aircraft.view_aircraft and perms.aircraft.view_aircrafthangared %}
+
+
 
                 <li class="{% if 'aircrafts' in segment %} active {% endif %}">
                     <a href="{% url 'aircrafts' %}">
@@ -49,15 +49,15 @@
                         <p>Aircraft</p>
                     </a>
                 </li>
-                {% endif %}
-                {% if perms.airport.view_outsideaircraftstand and perms.airport.view_hangar  %}
+
+
                 <li class="{% if 'aircraft_stands' in segment %} active {% endif %}">
                     <a href="{% url 'aircraft_stands' %}">
                         <i class="tim-icons icon-tablet-2"></i>
                         <p>Aircraft Stands</p>
                     </a>
                 </li>
-                {% endif %}
+
                 {% if perms.clients.view_client %}
                 <li class="{% if 'clients' in segment %} active {% endif %}">
                     <a href="{% url 'clients' %}">
@@ -72,14 +72,14 @@
                         <p>Trainings</p>
                     </a>
                 </li>
-                {% if perms.offer.view_training %}
+
                 <li class="{% if 'offers' in segment %} active {% endif %}">
                     <a href="{% url 'offers' %}">
                         <i class="tim-icons icon-wallet-43"></i>
                         <p>Offer</p>
                     </a>
                 </li>
-                {% endif %}
+
                 {% if perms.organization.view_worker %}
                 <li class="{% if 'workers' in segment %} active {% endif %}">
                     <a href="{% url 'workers' %}">
@@ -96,7 +96,7 @@
                     </a>
                 </li>
                 {% endif %}
-                {% if perms.airport_facilities.view_vehicle and perms.airport_facilities.view_property and perms.airport_facilities.view_others %}
+
                 <li class="{% if 'other_facilities' in segment %} active {% endif %}">
                     <a href="{% url 'other_facilities' %}">
                         <i class="tim-icons icon-bus-front-12"></i>
@@ -104,15 +104,15 @@
                     </a>
 
                 </li>
-                  {% endif %}
-                {% if perms.notifications.view_notification %}
+
+
                 <li class="{% if 'notifications' in segment %} active {% endif %}">
                     <a href="{% url 'notifications' %}">
                         <i class="tim-icons icon-time-alarm"></i>
                         <p>Notifications</p>
                     </a>
                 </li>
-                {% endif %}
+
                 {% if perms.users.view_customuser %}
                 <li class="{% if 'users' in segment %} active {% endif %}">
                     <a href="{% url 'users' %}">

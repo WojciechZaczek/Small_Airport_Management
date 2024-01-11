@@ -80,7 +80,7 @@ class Runway(
             return self.TORA + self.SWY
 
     def get_absolute_url(self):
-        return reverse("runways_detail", kwargs={"pk": self.pk})
+        return reverse("runways_details", kwargs={"pk": self.pk})
 
 
 class OutsideAircraftStand(models.Model):

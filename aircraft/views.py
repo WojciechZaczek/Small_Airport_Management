@@ -37,11 +37,10 @@ class AircraftsDetailView(LoginRequiredMixin, DetailView):
     template_name = "aircraft/aircrafts_details.html"
 
 
-class AircraftsUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class AircraftsUpdateView(LoginRequiredMixin, UpdateView):
     model = Aircraft
     template_name = "aircraft/aircrafts_form.html"
     form_class = CreatAircraft
-    permission_required = ("aircraft.view_aircraft", "aircraft.change_aircraft")
 
 
 class AircraftsCreateView(LoginRequiredMixin, CreateView):

@@ -69,7 +69,7 @@ class Client(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("clients_detail", kwargs={"pk": self.pk})
+        return reverse("clients_details", kwargs={"pk": self.pk})
 
     def __str__(self):
         if not self.corporate_client:

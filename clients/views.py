@@ -24,7 +24,7 @@ class ClientsListView(LoginRequiredMixin, ListView):
 
 class ClientsDetailView(LoginRequiredMixin, DetailView):
     model = Client
-    template_name = "clients/clients_detail.html"
+    template_name = "clients/clients_details.html"
 
 
 @login_required()

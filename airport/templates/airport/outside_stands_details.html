@@ -47,25 +47,21 @@
                                         {% if aircraft.outside_stand.name == object.name %}
                                    <tr>
                                             <td>
-                                                {% if perms.aircraft.view_aircraft %}
+
                                                 <a href="{% url 'aircrafts_details' aircraft.aircraft.pk %}">{{ aircraft.aircraft.manufacture }}</a>
-                                                {% else %}}
-                                                {{ aircraft.aircraft.manufacture }}
-                                                {% endif %}
+
 
                                             </td>
                                             <td class="text-center">
-                                                {% if perms.aircraft.view_aircraft %}
+
                                                 <a href="{% url 'aircrafts_details' aircraft.aircraft.pk %}">{{ aircraft.aircraft.name }}</a>
-                                                {% else %}}
-                                                {{ aircraft.aircraft.name }}
-                                                {% endif %}
+
                                             </td>
                                             <td class="text-center">{{ aircraft.aircraft.get_type_display }}</td>
                                             <td class="text-center">
                                                 {% if aircraft.client.name %}
                                                 {% if perms.clients.view_client %}
-                                                    <a href="{% url 'clients_detail' aircraft.client.pk %}">{{ aircraft.client.name }} {{ aircraft.client.last_name }}</a>
+                                                    <a href="{% url 'clients_details' aircraft.client.pk %}">{{ aircraft.client.name }} {{ aircraft.client.last_name }}</a>
                                                 {% else %}
                                                 {{ aircraft.client.name }} {{ aircraft.client.last_name }}
                                                 {% endif %}
