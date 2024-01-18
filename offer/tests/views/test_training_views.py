@@ -1,0 +1,150 @@
+from django.test import TestCase
+from django.urls import reverse
+from users.factories import UserFactory
+from offer.factories import TrainingFactory
+from airport.factories import AirportFactory
+
+
+class TrainingsViewTest(TestCase):
+    def setUp(self) -> None:
+        self.user = UserFactory.create()
+        self.airport = AirportFactory.create(company=self.user.company)
+        self.training = TrainingFactory.create(
+            name="Training one", airport=self.airport
+        )
+
+    def test_view_trainings_uses_correct_template(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("trainings"))
+        self.assertTemplateUsed(response, "offer/trainings.html")
+
+    def test_view_trainings_login_required_should_redirect_to_login(self):
+        response = self.client.get(reverse("trainings"))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/login/?next=/trainings/")
+
+    def test_view_trainings_returns_correct_offer_name_content(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("trainings"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Training one")
+
+    def test_trainings_view_displayed_offer_price(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("trainings"))
+        self.assertContains(response, self.training.price)
+
+
+class TrainingsDetailViewTest(TestCase):
+    def setUp(self) -> None:
+        self.user = UserFactory.create()
+        self.airport = AirportFactory.create(company=self.user.company)
+        self.training = TrainingFactory.create(airport=self.airport)
+
+    def test_view_trainings_details_uses_correct_template(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertTemplateUsed(response, "offer/trainings_details.html")
+
+    def test_view_trainings_details_login_required_should_redirect_to_login(self):
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/login/?next=/trainings/1/")
+
+    def test_trainings_details_name_content_displayed(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertContains(response, self.training.name)
+
+    def test_trainings_details_price_content_displayed(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertContains(response, self.training.price)
+
+    def test_trainings_details_description_content_displayed(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertContains(response, self.training.description)
+
+    def test_trainings_details_worker_content_displayed(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertContains(response, self.training.worker)
+
+    def test_trainings_details_hours_content_displayed(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_details", kwargs={"pk": self.training.pk})
+        )
+        self.assertContains(response, self.training.hours)
+
+
+class TrainingsCreateViewTest(TestCase):
+    def setUp(self) -> None:
+        self.user = UserFactory.create()
+        self.airport = AirportFactory.create(company=self.user.company)
+        self.training = TrainingFactory.create(airport=self.airport)
+
+    def test_view_trainings_create_uses_correct_template(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("trainings_add"))
+        self.assertTemplateUsed(response, "offer/trainings_form.html")
+
+    def test_view_trainings_create_login_required_should_redirect_to_login(self):
+        response = self.client.get(reverse("trainings_add"))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/login/?next=/trainings/new/")
+
+
+class TrainingsUpdateViewTest(TestCase):
+    def setUp(self) -> None:
+        self.user = UserFactory.create()
+        self.airport = AirportFactory.create(company=self.user.company)
+        self.training = TrainingFactory.create(airport=self.airport)
+
+    def test_view_trainings_update_uses_correct_template(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_update", kwargs={"pk": self.training.pk})
+        )
+        self.assertTemplateUsed(response, "offer/trainings_form.html")
+
+    def test_view_trainings_update_login_required_should_redirect_to_login(self):
+        response = self.client.get(
+            reverse("trainings_update", kwargs={"pk": self.training.pk})
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/login/?next=/trainings/1/update/")
+
+
+class TrainingsDeleteViewTest(TestCase):
+    def setUp(self) -> None:
+        self.user = UserFactory.create()
+        self.airport = AirportFactory.create(company=self.user.company)
+        self.training = TrainingFactory.create(airport=self.airport)
+
+    def test_view_trainings_delete_uses_correct_template(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("trainings_delete", kwargs={"pk": self.training.pk})
+        )
+        self.assertTemplateUsed(response, "offer/trainings_delete.html")
+
+    def test_view_trainings_delete_login_required_should_redirect_to_login(self):
+        response = self.client.get(
+            reverse("trainings_delete", kwargs={"pk": self.training.pk})
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/login/?next=/trainings/1/delete/")

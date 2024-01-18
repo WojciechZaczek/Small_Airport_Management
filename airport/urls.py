@@ -33,7 +33,7 @@ urlpatterns = [
     path(
         "runways/<int:pk>/delete/", RunwaysDeleteView.as_view(), name="runways_delete"
     ),
-    path("aircraft_stands/", views.aircraft_stands, name="aircraft_stands"),
+    path("aircraft-stands/", views.aircraft_stands, name="aircraft_stands"),
     path("hangars/<int:pk>/", HangarsDetailView.as_view(), name="hangars_details"),
     path("hangars/new/", HangarsCreateView.as_view(), name="hangars_add"),
     path(

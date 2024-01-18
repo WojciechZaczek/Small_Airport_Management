@@ -30,7 +30,7 @@ urlpatterns = [
         name="departments_delete",
     ),
     path(
-        "organizations/companies/<int:pk>/update",
+        "organizations/companies/<int:pk>/update/",
         CompanyUpdateView.as_view(),
         name="company_update",
     ),

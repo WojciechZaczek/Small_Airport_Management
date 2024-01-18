@@ -14,12 +14,12 @@ urlpatterns = [
     path("clients/<int:pk>/", ClientsDetailView.as_view(), name="clients_details"),
     path("clients/new/", views.new_client, name="clients_add"),
     path(
-        "clients/new/private",
+        "clients/new/private/",
         ClientsPrivateCreateView.as_view(),
         name="clients_add_private",
     ),
     path(
-        "clients/new/corporate",
+        "clients/new/corporate/",
         ClientsCorporateCreateView.as_view(),
         name="clients_add_corporate",
     ),
