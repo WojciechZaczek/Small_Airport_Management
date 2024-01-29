@@ -15,24 +15,40 @@ from .forms import CreateNotification
 
 @login_required()
 def notifications(request):
-    users_airport = Airport.objects.filter(company=request.user.company).first()
-    all_notifications = Notification.objects.filter(airport=users_airport).order_by(
+    user_airports = Airport.objects.filter(company=request.user.company)
+    all_notifications = Notification.objects.filter(airport__in=user_airports).order_by(
         "view_date"
     )
 
     today = timezone.localdate()
-    todays_notifications = [n for n in all_notifications if n.view_date == today]
-    past_notifications = [n for n in all_notifications if n.view_date < today]
-    future_notifications = [n for n in all_notifications if n.view_date > today]
+
+    notifications_by_airport = {}
+
+    for airport in user_airports:
+        todays_notifications = [
+            n
+            for n in all_notifications
+            if n.airport == airport and n.view_date == today
+        ]
+        past_notifications = [
+            n for n in all_notifications if n.airport == airport and n.view_date < today
+        ]
+        future_notifications = [
+            n for n in all_notifications if n.airport == airport and n.view_date > today
+        ]
+
+        notifications_by_airport[airport] = {
+            "todays_notifications": todays_notifications,
+            "past_notifications": past_notifications,
+            "future_notifications": future_notifications,
+        }
 
     return render(
         request,
         "notifications/notifications.html",
         {
             "title": "Notifications",
-            "todays_notifications": todays_notifications,
-            "past_notifications": past_notifications,
-            "future_notifications": future_notifications,
+            "notifications_by_airport": notifications_by_airport,
         },
     )
 
@@ -48,13 +64,15 @@ class NotificationsCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreateNotification
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
         author = user
         form.instance.author = author
-        if airports.exists():
-            form.instance.airport = airports.first()
         return super().form_valid(form)
 
 
@@ -63,6 +81,17 @@ class NotificationsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "notifications/notifications_form.html"
 
     form_class = CreateNotification
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        user = self.request.user
+        author = user
+        form.instance.author = author
+        return super().form_valid(form)
 
 
 class NotificationsDeleteView(LoginRequiredMixin, DeleteView):

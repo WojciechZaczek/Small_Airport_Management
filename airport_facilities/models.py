@@ -22,7 +22,7 @@ class Building(models.Model):
 
 
 class Vehicle(models.Model):
-    type = models.CharField(max_length=50, help_text="Building name or no.")
+    type = models.CharField(max_length=50, help_text="Vehicle type")
     registration_no = models.CharField(
         max_length=50, help_text="Registration no.", null=True, blank=True
     )

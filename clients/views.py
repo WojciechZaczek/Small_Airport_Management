@@ -8,7 +8,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Client
 from .forms import CreatClients
-from django.contrib import messages
 
 
 class ClientsListView(LoginRequiredMixin, ListView):
@@ -42,14 +41,6 @@ class ClientsCorporateCreateView(LoginRequiredMixin, CreateView):
         form.instance.company = company
         form.instance.corporate_client = True
         return super().form_valid(form)
-
-    # def form_invalid(self, form):
-    #     xyz = super().form_invalid(form)
-    #     print('INVALID')
-    #     for field, error in form.errors.items():
-    #         messages.error(self.request, f'{field}: {error}')
-    #
-    #     return xyz
 
 
 class ClientsPrivateCreateView(LoginRequiredMixin, CreateView):

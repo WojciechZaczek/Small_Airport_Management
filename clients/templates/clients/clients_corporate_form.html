@@ -74,10 +74,10 @@
                                         <span class="text-danger">{{ form.aeroclub_meber.errors }}</span>
                                     </div>
                                 </div>
-                                <div class="form-group"></div>
-                            </div>
+                            <input type="hidden" id="custId" name="corporate_client" value="True">
                             <div class="card-footer text-center">
                                 <button type="submit" name="add" class="btn btn-fill btn-primary">Save</button>
+                            </div>
                             </div>
                         </form>
                     {% endif %}
@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-</div>
+
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}

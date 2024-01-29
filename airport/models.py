@@ -40,13 +40,14 @@ class Airport(models.Model):
         related_name="airports",
     )
 
+    def get_absolute_url(self):
+        return reverse("airports")
+
     def __str__(self):
         return f"{self.name} in {self.city}"
 
 
-class Runway(
-    models.Model
-):  # RunwayFactory.objects.create(LDA=25), y = RunwayFactory.objects.create_batch(10)
+class Runway(models.Model):
     name = models.CharField(max_length=30, help_text="Name of the Runway")
     length = models.FloatField(help_text="Runway length in meters")
     width = models.FloatField(help_text="Runway width in meters")

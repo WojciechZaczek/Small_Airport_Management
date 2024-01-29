@@ -27,6 +27,7 @@ def aircraft(request):
         {
             "title": "Aircrafts",
             "aircrafts": aircrafts,
+            "airports": airports,
             "aircrafts_hangared": AircraftHangared.objects.filter(airport__in=airports),
         },
     )
@@ -81,17 +82,6 @@ class AircraftsHangaredCreateView(LoginRequiredMixin, CreateView):
     template_name = "aircraft/aircrafts_hangared_form.html"
 
     form_class = CreatAircraftHangared
-
-    def form_valid(self, form):
-        user = self.request.user
-        user_company = user.company
-        try:
-            airport = Airport.objects.get(company=user_company)
-        except Airport.DoesNotExist:
-            pass
-        else:
-            form.instance.airport = airport
-        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

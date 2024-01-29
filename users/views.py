@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+
 from django.contrib.auth.views import LoginView
 
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -16,6 +16,13 @@ from .forms import CreateUser
 class CustomLoginView(LoginView):
     form_class = UserLoginForm
     template_name = "users/login.html"
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request,
+            "Invalid username or password.",
+        )
+        return super().form_invalid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

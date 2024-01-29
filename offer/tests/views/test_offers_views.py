@@ -1,8 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
+from http import HTTPStatus
 from users.factories import UserFactory
 from offer.factories import OfferFactory
 from airport.factories import AirportFactory
+from offer.models import Offer
 
 
 class OffersViewTest(TestCase):
@@ -18,13 +20,13 @@ class OffersViewTest(TestCase):
 
     def test_view_offers_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("offers"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/offers/")
 
     def test_view_offers_returns_correct_offer_name_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("offers"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "Offer one")
 
     def test_offers_view_displayed_offer_price(self):
@@ -50,7 +52,7 @@ class OffersDetailViewTest(TestCase):
         response = self.client.get(
             reverse("offers_details", kwargs={"pk": self.offer.pk})
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/offers/1/")
 
     def test_offers_details_name_content_displayed(self):
@@ -79,7 +81,12 @@ class OffersCreateViewTest(TestCase):
     def setUp(self) -> None:
         self.user = UserFactory.create()
         self.airport = AirportFactory.create(company=self.user.company)
-        self.offer = OfferFactory.create(airport=self.airport)
+        self.new_offer_data = {
+            "name": "Alfa Offer",
+            "price": 110.00,
+            "description": "Test description",
+            "airport": self.airport.pk,
+        }
 
     def test_view_offers_create_uses_correct_template(self):
         self.client.force_login(self.user)
@@ -88,8 +95,22 @@ class OffersCreateViewTest(TestCase):
 
     def test_view_offers_create_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("offers_add"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/offers/new/")
+
+    def test_view_offers_create_creates_new_offer_object(self):
+        self.client.force_login(self.user)
+        self.assertEqual(Offer.objects.count(), 0)
+        response = self.client.post(reverse("offers_add"), self.new_offer_data)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(Offer.objects.count(), 1)
+
+    def test_view_offers_create_creates_new_offer_object_with_correct_content(self):
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("offers_add"), self.new_offer_data)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        new_offer = Offer.objects.first()
+        self.assertEqual(new_offer.name, "Alfa Offer")
 
 
 class OffersUpdateViewTest(TestCase):
@@ -109,8 +130,23 @@ class OffersUpdateViewTest(TestCase):
         response = self.client.get(
             reverse("offers_update", kwargs={"pk": self.offer.pk})
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/offers/1/update/")
+
+    def test_view_offer_update_changes_object_content(self):
+        self.client.force_login(self.user)
+        update = {
+            "name": "Alfa Offer",
+            "price": self.offer.price,
+            "description": self.offer.description,
+            "airport": self.airport.pk,
+        }
+        response = self.client.post(
+            reverse("offers_update", kwargs={"pk": self.offer.pk}), data=update
+        )
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.offer.refresh_from_db()
+        self.assertEqual(self.offer.name, update["name"])
 
 
 class TrainingsDeleteViewTest(TestCase):
@@ -130,5 +166,5 @@ class TrainingsDeleteViewTest(TestCase):
         response = self.client.get(
             reverse("offers_delete", kwargs={"pk": self.offer.pk})
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/offers/1/delete/")

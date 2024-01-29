@@ -8,6 +8,8 @@ from .views import (
     RunwaysDeleteView,
     AirportListView,
     AirportUpdateView,
+    AirportCreateView,
+    AirportDeleteView,
     HangarsDetailView,
     HangarsCreateView,
     HangarsUpdateView,
@@ -23,6 +25,10 @@ urlpatterns = [
     path("airports/", AirportListView.as_view(), name="airports"),
     path(
         "airports/<int:pk>/update/", AirportUpdateView.as_view(), name="airports_update"
+    ),
+    path("airports/new/", AirportCreateView.as_view(), name="airports_add"),
+    path(
+        "airports/<int:pk>/delete/", AirportDeleteView.as_view(), name="airports_delete"
     ),
     path("runways/", RunwaysListView.as_view(), name="runways"),
     path("runways/<int:pk>/", RunwaysDetailView.as_view(), name="runways_details"),

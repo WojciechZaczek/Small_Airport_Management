@@ -15,6 +15,12 @@ class TrainingsListView(LoginRequiredMixin, ListView):
     template_name = "offer/trainings.html"
     context_object_name = "trainings"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_company = self.request.user.company
+        context["airports"] = Airport.objects.filter(company=user_company)
+        return context
+
     def get_queryset(self):
         user = self.request.user
         airports = Airport.objects.filter(company=user.company)
@@ -33,13 +39,6 @@ class TrainingsCreateView(LoginRequiredMixin, CreateView):
     template_name = "offer/trainings_form.html"
 
     form_class = CreateTraining
-
-    def form_valid(self, form):
-        user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
-        if airports.exists():
-            form.instance.airport = airports.first()
-        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -70,6 +69,12 @@ class OffersListView(LoginRequiredMixin, ListView):
     template_name = "offer/offers.html"
     context_object_name = "offers"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_company = self.request.user.company
+        context["airports"] = Airport.objects.filter(company=user_company)
+        return context
+
     def get_queryset(self):
         user = self.request.user
         airports = Airport.objects.filter(company=user.company)
@@ -89,12 +94,10 @@ class OffersCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreateOffer
 
-    def form_valid(self, form):
-        user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
-        if airports.exists():
-            form.instance.airport = airports.first()
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class OffersUpdateView(LoginRequiredMixin, UpdateView):
@@ -102,6 +105,11 @@ class OffersUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "offer/offers_form.html"
 
     form_class = CreateOffer
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class OffersDeleteView(LoginRequiredMixin, DeleteView):

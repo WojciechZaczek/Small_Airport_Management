@@ -5,121 +5,19 @@
 {% endblock stylesheets %}
 {% block content %}
     <div class="content">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card ">
-                    <div class="card-header">
-                        <h4 class="card-title">Todays Notifications</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table tablesorter " id="">
-                                {% if not todays_notifications %}
-                                    <h4 class="card-text"> There is no todays notifications</h4>
-                                {% else %}
-                                    <thead class=" text-primary">
-                                        <tr>
-                                            <th>Title</th>
-                                            <th class="text-center">Author</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for notification in todays_notifications %}
-                                            <tr>
-                                                <td>{{ notification.title }}</td>
-                                                <td class="text-center">{{ notification.author }}</td>
-                                                <td class="text-center">
-                                                    <a href="{% url 'notifications_details' notification.id %}"
-                                                       class="btn btn-success animation-on-hover btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Details</a>
-                                                    {% if perms.notifications.change_notification %}
-                                                    <a href="{% url 'notifications_update' notification.id %}"
-                                                       class="btn btn-info animation-on-hover btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Edit</a>
-                                                    {% endif %}
-                                                    {% if perms.notifications.delete_notification %}
-                                                    <a href="{% url 'notifications_delete' notification.id %}"
-                                                       class="btn btn-danger animation-on-hover btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Delete</a>
-                                                    {% endif %}
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    {% endif %}
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% for airport, notifications in notifications_by_airport.items %}
             <div class="row">
                 <div class="col-md-8">
+                <h3>Notifications for {{ airport.name }} Airport:</h3>
                     <div class="card ">
                         <div class="card-header">
-                            <h4 class="card-title">Past Notifications</h4>
+                            <h4 class="card-title">Todays Notifications:</h4>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table tablesorter " id="">
-
-                                    <h4 class="card-text"> There is no past notifications</h4>
-
-                                    <thead class=" text-primary">
-                                        <tr>
-                                            <th>Title</th>
-                                            <th class="text-center">Author</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for past_notification in past_notifications %}
-                                            <tr>
-                                                <td>{{ past_notification.title }}</td>
-                                                <td class="text-center">{{ past_notification.author }}</td>
-                                                <td class="text-center">
-                                                    <a href="{% url 'notifications_details' past_notification.id %}"
-                                                       class="btn btn-success animation-on-hover btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Details</a>
-                                                    {% if perms.notifications.change_notification %}
-                                                    <a href="{% url 'notifications_update' past_notification.id %}"
-                                                       class="btn btn-info animation-on-hover btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Edit</a>
-                                                    {% endif %}
-                                                    {% if perms.notifications.delete_notification %}
-                                                    <a href="{% url 'notifications_delete' past_notification.id %}"
-                                                       class="btn btn-danger animation-on-hover btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Delete</a>
-                                                    {% endif %}
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h4 class="card-title">Future Notifications</h4>
-                            </div>
-                            <div class="card-body">
+                            {% if notifications.todays_notifications %}
                                 <div class="table-responsive">
-                                    <table class="table tablesorter " id="">
-                                         {% if not future_notifications %}
-                                    <h4 class="card-text"> There is no future notifications</h4>
-                                    {% else %}
-                                        <thead class=" text-primary">
+                                    <table class="table tablesorter">
+                                        <thead class="text-primary">
                                             <tr>
                                                 <th>Title</th>
                                                 <th class="text-center">Author</th>
@@ -127,37 +25,146 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for future_notification in future_notifications %}
+                                            {% for notification in notifications.todays_notifications %}
                                                 <tr>
-                                                    <td>{{ future_notification.title }}</td>
-                                                    <td class="text-center">{{ future_notification.author }}</td>
+                                                    <td>{{ notification.title }}</td>
+                                                    <td class="text-center">{{ notification.author }}</td>
                                                     <td class="text-center">
-                                                        <a href="{% url 'notifications_details' future_notification.id %}"
+                                                        <a href="{% url 'notifications_details' notification.id %}"
                                                            class="btn btn-success animation-on-hover btn-sm"
                                                            role="button"
                                                            aria-pressed="true">Details</a>
                                                         {% if perms.notifications.change_notification %}
-                                                        <a href="{% url 'notifications_update' future_notification.id %}"
-                                                           class="btn btn-info animation-on-hover btn-sm"
-                                                           role="button"
-                                                           aria-pressed="true">Edit</a>
+                                                            <a href="{% url 'notifications_update' notification.id %}"
+                                                               class="btn btn-info animation-on-hover btn-sm"
+                                                               role="button"
+                                                               aria-pressed="true">Edit</a>
                                                         {% endif %}
                                                         {% if perms.notifications.delete_notification %}
-                                                        <a href="{% url 'notifications_delete' future_notification.id %}"
-                                                           class="btn btn-danger animation-on-hover btn-sm"
-                                                           role="button"
-                                                           aria-pressed="true">Delete</a>
+                                                            <a href="{% url 'notifications_delete' notification.id %}"
+                                                               class="btn btn-danger animation-on-hover btn-sm"
+                                                               role="button"
+                                                               aria-pressed="true">Delete</a>
                                                         {% endif %}
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        {% endif %}
-                                        </table>
-                                    </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>
+                            {% else %}
+                                <p class="card-text">There are no today's notifications</p>
+                            {% endif %}
                         </div>
                     </div>
+                </div>
+            </div>
+
+
+                <div class="row">
+                <div class="col-md-8">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4 class="card-title">Past Notifications:</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if notifications.past_notifications %}
+                                <div class="table-responsive">
+                                    <table class="table tablesorter">
+                                        <thead class="text-primary">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th class="text-center">Author</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for notification in notifications.past_notifications %}
+                                                <tr>
+                                                    <td>{{ notification.title }}</td>
+                                                    <td class="text-center">{{ notification.author }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{% url 'notifications_details' notification.id %}"
+                                                           class="btn btn-success animation-on-hover btn-sm"
+                                                           role="button"
+                                                           aria-pressed="true">Details</a>
+                                                        {% if perms.notifications.change_notification %}
+                                                            <a href="{% url 'notifications_update' notification.id %}"
+                                                               class="btn btn-info animation-on-hover btn-sm"
+                                                               role="button"
+                                                               aria-pressed="true">Edit</a>
+                                                        {% endif %}
+                                                        {% if perms.notifications.delete_notification %}
+                                                            <a href="{% url 'notifications_delete' notification.id %}"
+                                                               class="btn btn-danger animation-on-hover btn-sm"
+                                                               role="button"
+                                                               aria-pressed="true">Delete</a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="card-text">There are no past notifications</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="row">
+                <div class="col-md-8">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4 class="card-title">Future Notifications:</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if notifications.future_notifications %}
+                                <div class="table-responsive">
+                                    <table class="table tablesorter">
+                                        <thead class="text-primary">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th class="text-center">Author</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for notification in notifications.future_notifications %}
+                                                <tr>
+                                                    <td>{{ notification.title }}</td>
+                                                    <td class="text-center">{{ notification.author }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{% url 'notifications_details' notification.id %}"
+                                                           class="btn btn-success animation-on-hover btn-sm"
+                                                           role="button"
+                                                           aria-pressed="true">Details</a>
+                                                        {% if perms.notifications.change_notification %}
+                                                            <a href="{% url 'notifications_update' notification.id %}"
+                                                               class="btn btn-info animation-on-hover btn-sm"
+                                                               role="button"
+                                                               aria-pressed="true">Edit</a>
+                                                        {% endif %}
+                                                        {% if perms.notifications.delete_notification %}
+                                                            <a href="{% url 'notifications_delete' notification.id %}"
+                                                               class="btn btn-danger animation-on-hover btn-sm"
+                                                               role="button"
+                                                               aria-pressed="true">Delete</a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="card-text">There are no future notifications</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
                     <div class="row">
                         <div class="col-8">
                             <div class="text-right">
@@ -170,6 +177,8 @@
                             </div>
                         </div>
                     </div>
+                <br><br>
+    {% endfor %}
                 </div>
             {% endblock content %}
             <!-- Specific Page JS goes HERE  -->

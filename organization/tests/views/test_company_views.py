@@ -1,8 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
+from http import HTTPStatus
 from users.factories import UserFactory
 from organization.factories import CompanyFactory, DepartmentFactory
 from airport.factories import AirportFactory
+from organization.models import Company
 
 
 class CompanyViewTest(TestCase):
@@ -19,13 +21,13 @@ class CompanyViewTest(TestCase):
 
     def test_view_company_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("organizations"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/organizations/")
 
     def test_view_company_returns_correct_offer_name_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("organizations"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "Test company")
 
     def test_company_view_displayed_offer_price(self):
@@ -55,3 +57,19 @@ class CompanyUpdateViewTest(TestCase):
         self.assertRedirects(
             response, "/login/?next=/organizations/companies/1/update/"
         )
+
+    def test_view_company_update_changes_object_content(self):
+        self.client.force_login(self.user)
+        update = {
+            "name": "Alfa Company",
+            "address": self.company.address,
+            "telephone": self.company.telephone,
+            "email_domain": self.company.email_domain,
+            "description": self.company.description,
+        }
+        response = self.client.post(
+            reverse("company_update", kwargs={"pk": self.company.pk}), data=update
+        )
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.company.refresh_from_db()
+        self.assertEqual(self.company.name, update["name"])

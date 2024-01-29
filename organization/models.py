@@ -47,6 +47,7 @@ class Department(models.Model):
     description = models.TextField(
         max_length=200, help_text="information about department"
     )
+
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, help_text="Company ID"
     )
@@ -57,7 +58,7 @@ class Department(models.Model):
 
 class Worker(models.Model):
     first_name = models.CharField(max_length=50, help_text="Name of worker")
-    last_name = models.CharField(max_length=50, help_text="Name of worker")
+    last_name = models.CharField(max_length=50, help_text="Last name of worker")
     department = models.CharField(
         max_length=50,
         choices=Department.DEPARTAMENT,

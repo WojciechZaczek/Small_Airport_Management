@@ -5,11 +5,12 @@
 {% endblock stylesheets %}
 {% block content %}
     <div class="content">
+        {% for airport in airports %}
         <div class="row">
             <div class="col-md-10">
                 <div class="card ">
                     <div class="card-header">
-                        <h3 class="card-title">Buildings:</h3>
+                        <h4 class="card-title">Buildings at {{ airport.name }} airport:</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -24,6 +25,7 @@
                                 </thead>
                                 <tbody>
                                     {% for building in buildings %}
+                                        {% if building.airport == airport %}
                                         <tr>
                                             <td>{{ building.name }}</td>
                                             <td class="text-center">{{ building.description }}</td>
@@ -48,6 +50,7 @@
 
                                             </td>
                                         </tr>
+                                        {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -68,6 +71,8 @@
                 </div>
             </div>
         </div>
+<br><br>
+    {% endfor %}
     </div>
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->

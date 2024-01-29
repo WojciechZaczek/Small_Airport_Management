@@ -24,14 +24,41 @@ class AirportListView(LoginRequiredMixin, ListView):
 class AirportUpdateView(LoginRequiredMixin, UpdateView):
     model = Airport
     template_name = "airport/airport_form.html"
-
     form_class = CreatAirport
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+
+class AirportCreateView(LoginRequiredMixin, CreateView):
+    model = Airport
+    template_name = "airport/airport_form.html"
+    form_class = CreatAirport
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+
+class AirportDeleteView(LoginRequiredMixin, DeleteView):
+    model = Airport
+    template_name = "airport/airport_delete.html"
+    success_url = reverse_lazy("airports")
 
 
 class RunwaysListView(LoginRequiredMixin, ListView):
     model = Runway
     template_name = "airport/runways.html"
     context_object_name = "runways"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_company = self.request.user.company
+        context["airports"] = Airport.objects.filter(company=user_company)
+        return context
 
     def get_queryset(self):
         user = self.request.user
@@ -52,23 +79,21 @@ class RunwaysCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreatRunway
 
-    def form_valid(self, form):
-        user = self.request.user
-        user_company = user.company
-        try:
-            airport = Airport.objects.get(company=user_company)
-        except Airport.DoesNotExist:
-            pass
-        else:
-            form.instance.airport = airport
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class RunwaysUpdateView(LoginRequiredMixin, UpdateView):
     model = Runway
     template_name = "airport/runways_form.html"
-
     form_class = CreatRunway
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class RunwaysDeleteView(LoginRequiredMixin, DeleteView):
@@ -88,6 +113,7 @@ def aircraft_stands(request):
             "title": "Aircraft stands",
             "hangars": Hangar.objects.filter(airport__in=airports),
             "outside_stands": OutsideAircraftStand.objects.filter(airport__in=airports),
+            "airports": airports,
         },
     )
 
@@ -104,16 +130,10 @@ class HangarsCreateView(LoginRequiredMixin, CreateView):
     template_name = "airport/hangars_form.html"
     form_class = CreatHangar
 
-    def form_valid(self, form):
-        user = self.request.user
-        user_company = user.company
-        try:
-            airport = Airport.objects.get(company=user_company)
-        except Airport.DoesNotExist:
-            pass
-        else:
-            form.instance.airport = airport
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class HangarsUpdateView(LoginRequiredMixin, UpdateView):
@@ -121,6 +141,11 @@ class HangarsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "airport/hangars_form.html"
 
     form_class = CreatHangar
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class HangarsDeleteView(LoginRequiredMixin, DeleteView):
@@ -141,16 +166,10 @@ class OutsideStandsCreateView(LoginRequiredMixin, CreateView):
     template_name = "airport/outside_stands_form.html"
     form_class = CreatOutsideStand
 
-    def form_valid(self, form):
-        user = self.request.user
-        user_company = user.company
-        try:
-            airport = Airport.objects.get(company=user_company)
-        except Airport.DoesNotExist:
-            pass
-        else:
-            form.instance.airport = airport
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class OutsideStandsUpdateView(LoginRequiredMixin, UpdateView):
@@ -158,6 +177,11 @@ class OutsideStandsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "airport/outside_stands_form.html"
 
     form_class = CreatOutsideStand
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class OutsideStandsDeleteView(LoginRequiredMixin, DeleteView):

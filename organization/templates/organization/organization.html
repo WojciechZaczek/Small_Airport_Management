@@ -5,197 +5,102 @@
 {% endblock stylesheets %}
 {% block content %}
     <div class="content">
+
         <h3>Company Details:</h3>
+    {% for org in organization %}
+
+<div class="row">
+    <div class="col-md-6">
+            <div class="card card-nav-tabs">
+                <div class="card-body">
+                    <h4 class="card-text">Name:  {{ org.name}}</h4>
+                    <h4 class="card-text">Address:  {{ org.address }}</h4>
+                    <h4 class="card-text">Telephone number:  {{ org.telephone }}</h4>
+                    <h4 class="card-text">Email:  {{ org.email_domain }}</h4>
+                    <h4 class="card-text">Description:  {{ org.description }}</h4>
+                    <div class="col">
+                        <div class="text-right">
+                            {% if perms.organization.change_company %}
+                                <a href="{% url 'company_update' org.id %}"
+                                   class="btn btn-info animation-on-hover btn-sm btn-sm"
+                                   role="button"
+                                   aria-pressed="true">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="card card-user">
+            <div class="card-body">
+                <p class="card-text">
+                    <div class="author">
+                        <div class="block block-one"></div>
+                        <div class="block block-two"></div>
+                        <div class="block block-three"></div>
+                        <div class="block block-four"></div>
+                        <h3 class="title">{{ user.first_name }} {{ user.last_name }}</h3>
+                        <h4 class="text">Job position:  {{ user.get_job_position_display }}</h4>
+                        <h4 class="text">Department: {{ user.get_department_display }}</h4>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
         <div class="row">
-            <div class="col-8">
-                <div class="card">
-                    {% for org in organization %}
-                        <p>{{ org.name }}</p>
-                        <div id="according"
-                             role="tablist"
-                             aria-multiselectable="true"
-                             class="card-collapse">
-                            <div class="card card-plain">
-                                <div class="card-header" role="tab">
-                                    <a data-toggle="collapse"
-                                       data-parent="#accordion"
-                                       href="#company_name"
-                                       aria-expanded="true"
-                                       aria-controls="collapseOne">
-                                        Name
-                                        <i class="tim-icons icon-minimal-down"></i>
-                                    </a>
-                                </div>
-                                <div id="company_name"
-                                     class="collapse show"
-                                     role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <div class="card-body">
-                                        <p>{{ org.name }}</p>
-                                    </div>
-                                </div>
-                                <div class="card card-plain">
-                                    <div class="card-header" role="tab" id="headingOne">
-                                        <a data-toggle="collapse"
-                                           data-parent="#accordion"
-                                           href="#company_address"
-                                           aria-expanded="true"
-                                           aria-controls="collapseOne">
-                                            Address
-                                            <i class="tim-icons icon-minimal-down"></i>
-                                        </a>
-                                    </div>
-                                    <div id="company_address"
-                                         class="collapse show"
-                                         role="tabpanel"
-                                         aria-labelledby="headingOne">
-                                        <div class="card-body">
-                                            <p>{{ org.address }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="card card-plain">
-                                        <div class="card-header" role="tab" id="headingOne">
-                                            <a data-toggle="collapse"
-                                               data-parent="#accordion"
-                                               href="#company_telephone"
-                                               aria-expanded="true"
-                                               aria-controls="collapseOne">
-                                                Telephone number
-                                                <i class="tim-icons icon-minimal-down"></i>
-                                            </a>
-                                        </div>
-                                        <div id="company_telephone"
-                                             class="collapse show"
-                                             role="tabpanel"
-                                             aria-labelledby="headingOne">
-                                            <div class="card-body">
-                                                <p>{{ org.telephone }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="card card-plain">
-                                            <div class="card-header" role="tab" id="headingOne">
-                                                <a data-toggle="collapse"
-                                                   data-parent="#accordion"
-                                                   href="#company_email"
-                                                   aria-expanded="true"
-                                                   aria-controls="collapseOne">
-                                                    Email
-                                                    <i class="tim-icons icon-minimal-down"></i>
-                                                </a>
-                                            </div>
-                                            <div id="company_email"
-                                                 class="collapse show"
-                                                 role="tabpanel"
-                                                 aria-labelledby="headingOne">
-                                                <div class="card-body">
-                                                    <p>{{ org.email_domain }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="card card-plain">
-                                                <div class="card-header" role="tab" id="headingOne">
-                                                    <a data-toggle="collapse"
-                                                       data-parent="#accordion"
-                                                       href="#company_description"
-                                                       aria-expanded="true"
-                                                       aria-controls="collapseOne">
-                                                        Description
-                                                        <i class="tim-icons icon-minimal-down"></i>
-                                                    </a>
-                                                </div>
-                                                <div id="company_description"
-                                                     class="collapse show"
-                                                     role="tabpanel"
-                                                     aria-labelledby="headingOne">
-                                                    <div class="card-body">
-                                                        <p>{{ org.description }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="text-right">
-                                                    {% if perms.organization.change_company%}
-                                                    <a href="{% url 'company_update' org.id %}"
-                                                       class="btn btn-info animation-on-hover btn-sm btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Edit</a>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-md-10">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">Departments in {{ org.name }}:</h3>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-user">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <div class="author">
-                                    <div class="block block-one"></div>
-                                    <div class="block block-two"></div>
-                                    <div class="block block-three"></div>
-                                    <div class="block block-four"></div>
-                                    <h3 class="title">{{ user.first_name }} {{ user.last_name }}</h3>
-                                    <h4 class="text">Job position:  {{ user.get_job_position_display }}</h4>
-                                    <h4 class="text">Department: {{ user.get_department_display }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h3>Departments in the {{ org.name }}:</h3>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            {% for dep in department %}
-                                <div id="accordion"
-                                     role="tablist"
-                                     aria-multiselectable="true"
-                                     class="card-collapse">
-                                    <div class="card card-plain">
-                                        <div class="card-header" role="tab" id="headingOne">
-                                            <a data-toggle="collapse"
-                                               data-parent="#accordion"
-                                               href="#department"
-                                               aria-expanded="true"
-                                               aria-controls="collapseOne">
-                                                {{ dep.name }}
-                                                <i class="tim-icons icon-minimal-down"></i>
-                                            </a>
-                                        </div>
-                                        <div id="department"
-                                             class="collapse show"
-                                             role="tabpanel"
-                                             aria-labelledby="headingOne">
-                                            <div class="card-body">
-                                                <p>{{ dep.description }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="text-right">
-                                                {% if perms.organization.change_department %}
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter " id="">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dep in department %}
+                                        <tr>
+                                            <td>{{ dep.get_name_display }}</td>
+                                            <td style="word-wrap: break-word; max-width: 700px;">{{ dep.description }}</td>
+                                            <td>
+                                            {% if perms.organization.change_department %}
                                                 <a href="{% url 'departments_update' dep.id %}"
-                                                       class="btn btn-info animation-on-hover btn-sm btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Edit</a>
+                                                   class="btn btn-info animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Edit</a>
                                                 {% endif %}
                                                 {% if perms.organization.delete_department %}
                                                 <a href="{% url 'departments_delete' dep.id %}"
-                                                       class="btn btn-danger animation-on-hover btn-sm btn-sm"
-                                                       role="button"
-                                                       aria-pressed="true">Delete</a>
+                                                   class="btn btn-danger animation-on-hover btn-sm"
+                                                   role="button"
+                                                   aria-pressed="true">Delete</a>
                                                 {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<div class="row">
+    <div class="col-10">
+        {% if perms.organization.add_department %}
                     <div class="text-right">
-                        {% if perms.organization.add_department %}
                         <a href="{% url 'departments_add' %}"
                            class="btn btn-primary "
                            role="button"
@@ -204,6 +109,7 @@
                     </div>
                 </div>
             </div>
+{% endfor %}
         </div>
     {% endblock content %}
     <!-- Specific Page JS goes HERE  -->

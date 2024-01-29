@@ -17,9 +17,9 @@ class CreatAirport(forms.ModelForm):
         )
     )
 
-    address = forms.FloatField(
+    address = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "Runway Address", "class": "form-control"}
+            attrs={"placeholder": "Airport Address", "class": "form-control"}
         )
     )
 
@@ -67,15 +67,24 @@ class CreatAirport(forms.ModelForm):
     )
 
     API = forms.FileField(
-        widget=forms.FileInput(attrs={"placeholder": "API", "class": "form-control"})
+        required=False,
+        widget=forms.FileInput(attrs={"placeholder": "API", "class": "form-control"}),
     )
 
-    company_id = forms.ModelChoiceField(
-        queryset=Company.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Company ID", "class": "form-control"}
-        ),
+    company = forms.ModelChoiceField(
+        queryset=Company.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Company",
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreatAirport, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["company"].queryset = Company.objects.filter(
+                name=user.company.name
+            )
 
     class Meta:
         model = Airport
@@ -92,6 +101,7 @@ class CreatAirport(forms.ModelForm):
             "width",
             "square_meters",
             "API",
+            "company",
         ]
 
 
@@ -141,6 +151,20 @@ class CreatRunway(forms.ModelForm):
             attrs={"placeholder": "Runway SWY", "class": "form-control"}
         )
     )
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreatRunway, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Runway
@@ -155,6 +179,7 @@ class CreatRunway(forms.ModelForm):
             "LDA",
             "CWY",
             "SWY",
+            "airport",
         ]
 
 
@@ -200,6 +225,20 @@ class CreatHangar(forms.ModelForm):
             attrs={"placeholder": "Hangar small stands taken", "class": "form-control"}
         )
     )
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreatHangar, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Hangar
@@ -211,6 +250,7 @@ class CreatHangar(forms.ModelForm):
             "doors_wight",
             "small_stands_no",
             "small_stands_taken",
+            "airport",
         ]
 
 
@@ -243,7 +283,21 @@ class CreatOutsideStand(forms.ModelForm):
         ),
     )
     taken = forms.BooleanField(required=False)
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreatOutsideStand, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = OutsideAircraftStand
-        fields = ["name", "surface", "size", "taken"]
+        fields = ["name", "surface", "size", "taken", "airport"]

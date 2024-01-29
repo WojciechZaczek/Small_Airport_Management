@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Building, Vehicle, Others, Property
 from organization.models import Department
+from airport.models import Airport
 
 
 class CreateBuilding(forms.ModelForm):
@@ -23,6 +24,12 @@ class CreateBuilding(forms.ModelForm):
         empty_label="Choose a Department",
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super(CreateBuilding, self).__init__(*args, **kwargs)
@@ -31,10 +38,13 @@ class CreateBuilding(forms.ModelForm):
             self.fields["department"].queryset = Department.objects.filter(
                 company=user.company
             )
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Building
-        fields = ["name", "department", "description"]
+        fields = ["name", "department", "description", "airport"]
 
 
 class CreateVehicle(forms.ModelForm):
@@ -46,7 +56,7 @@ class CreateVehicle(forms.ModelForm):
 
     registration_no = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "Vehicle Name", "class": "form-control"}
+            attrs={"placeholder": "Vehicle Registration No", "class": "form-control"}
         )
     )
 
@@ -62,6 +72,12 @@ class CreateVehicle(forms.ModelForm):
         empty_label="Choose a Department",
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super(CreateVehicle, self).__init__(*args, **kwargs)
@@ -70,10 +86,13 @@ class CreateVehicle(forms.ModelForm):
             self.fields["department"].queryset = Department.objects.filter(
                 company=user.company
             )
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Vehicle
-        fields = ["type", "registration_no", "department", "description"]
+        fields = ["type", "registration_no", "department", "description", "airport"]
 
 
 class CreateProperty(forms.ModelForm):
@@ -95,6 +114,12 @@ class CreateProperty(forms.ModelForm):
         empty_label="Choose a Department",
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super(CreateProperty, self).__init__(*args, **kwargs)
@@ -103,10 +128,13 @@ class CreateProperty(forms.ModelForm):
             self.fields["department"].queryset = Department.objects.filter(
                 company=user.company
             )
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Property
-        fields = ["name", "department", "description"]
+        fields = ["name", "department", "description", "airport"]
 
 
 class CreateOthers(forms.ModelForm):
@@ -128,6 +156,12 @@ class CreateOthers(forms.ModelForm):
         empty_label="Choose a Department",
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super(CreateOthers, self).__init__(*args, **kwargs)
@@ -136,7 +170,10 @@ class CreateOthers(forms.ModelForm):
             self.fields["department"].queryset = Department.objects.filter(
                 company=user.company
             )
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Others
-        fields = ["name", "department", "description"]
+        fields = ["name", "department", "description", "airport"]

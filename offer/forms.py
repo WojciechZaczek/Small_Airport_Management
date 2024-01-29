@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Training, Offer
 from organization.models import Worker
+from airport.models import Airport
 
 
 class CreateTraining(forms.ModelForm):
@@ -33,6 +34,11 @@ class CreateTraining(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-control"}),
         empty_label="Choose an Worker",
     )
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
@@ -40,16 +46,13 @@ class CreateTraining(forms.ModelForm):
 
         if user:
             self.fields["worker"].queryset = Worker.objects.filter(company=user.company)
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = Training
-        fields = [
-            "name",
-            "price",
-            "description",
-            "hours",
-            "worker",
-        ]
+        fields = ["name", "price", "description", "hours", "worker", "airport"]
 
 
 class CreateOffer(forms.ModelForm):
@@ -71,6 +74,21 @@ class CreateOffer(forms.ModelForm):
         )
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateOffer, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
+
     class Meta:
         model = Offer
-        fields = ["name", "price", "description"]
+        fields = ["name", "price", "description", "airport"]

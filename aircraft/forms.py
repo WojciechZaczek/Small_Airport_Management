@@ -1,7 +1,7 @@
 from django import forms
 from .models import Aircraft, AircraftHangared
 from airport.constants import SURFACE
-from airport.models import Hangar, OutsideAircraftStand
+from airport.models import Hangar, OutsideAircraftStand, Airport
 from clients.models import Client
 
 
@@ -90,7 +90,6 @@ class CreatAircraftHangared(forms.ModelForm):
         queryset=Aircraft.objects.all(),
         widget=forms.Select(attrs={"class": "form-control"}),
         empty_label="Choose an Aircraft",
-        to_field_name="name",
     )
 
     aircraft_registration_no = forms.CharField(
@@ -122,6 +121,12 @@ class CreatAircraftHangared(forms.ModelForm):
         empty_label="Choose an Client",
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super(CreatAircraftHangared, self).__init__(*args, **kwargs)
@@ -134,6 +139,9 @@ class CreatAircraftHangared(forms.ModelForm):
                 airport__in=user.company.airports.all()
             )
             self.fields["client"].queryset = Client.objects.filter(company=user.company)
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
 
     class Meta:
         model = AircraftHangared
@@ -144,4 +152,5 @@ class CreatAircraftHangared(forms.ModelForm):
             "hangar",
             "outside_stand",
             "client",
+            "airport",
         ]

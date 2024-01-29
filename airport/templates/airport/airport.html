@@ -4,71 +4,143 @@
 {% block stylesheets %}
 {% endblock stylesheets %}
 {% block content %}
-    {% for a in airport %}
-        <div class="content">
-            <h3 class="card-title">Airport {{ a.name }} details:</h3>
+    <div class="content">
+        {% for a in airport %}
+            <h3>Airport {{ a.name }} details:</h3>
             <div class="row">
-                <div class="col-6">
-                    <div class="card card-nav-tabs">
-                        <div class="card-body">
-                            <h3 class="card-title">Basic information:</h3>
-                            <br>
-                            <h4 class="card-text">Company:  {{ a.company }}</h4>
-                            <h4 class="card-text">City:  {{ a.city }}</h4>
-                            <h4 class="card-text">Address:  {{ a.address }} meters</h4>
-                            <h4 class="card-text">Contact:  {{ a.contact }} meters</h4>
-                            <h4 class="card-text">Description:  {{ a.description }}</h4>
+                <div class="col-md-10">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4 class="card-title">Basic information:</h4>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table tablesorter " id="">
+                                        <thead class=" text-primary">
+                                            <tr>
+                                                <th>Company</th>
+                                                <th>City</th>
+                                                <th>Address</th>
+                                                <th>Contact</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ a.company }}</td>
+                                                <td>{{ a.city }}</td>
+                                                <td>{{ a.address }}</td>
+                                                <td>{{ a.contact }}</td>
+                                                <td>{{ a.description }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="card card-nav-tabs">
-                        <div class="card-body">
-                            <h3 class="card-title">Air traffic:</h3>
-                            <br>
-                            <h4 class="card-text">Type of traffic permission:  {{ a.types_of_traffic_permitted }}</h4>
-                            <h4 class="card-text">Radio:  {{ a.radio }}</h4>
-                            <h4 class="card-text">Coordinates:  {{ a.co_ordinates }}</h4>
-                            <h4 class="card-text">API:  {{ a.AIP }}</h4>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="card ">
+                                <div class="card-header">
+                                    <h4 class="card-title">Air traffic:</h4>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table tablesorter " id="">
+                                                <thead class=" text-primary">
+                                                    <tr>
+
+                                                        <th>Type of traffic permission</th>
+                                                        <th class="text-left" >Radio</th>
+                                                        <th class="text-left">Coordinates</th>
+                                                        <th class="text-left">API</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{ a.types_of_traffic_permitted }}</td>
+                                                        <td class="text-left">{{ a.radio }}</td>
+                                                        <td class="text-left">{{ a.co_ordinates }}</td>
+                                                        <td class="text-left">{{ a.AIP }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="card card-nav-tabs">
-                        <div class="card-body">
-                            <h3 class="card-title">Airport position:</h3>
-                            <br>
-                            <h4 class="card-text">Elevation:  {{ a.elevation }} ft</h4>
-                            <h4 class="card-text">Length:  {{ a.length }} meters</h4>
-                            <h4 class="card-text">Width:  {{ a.width }} meters</h4>
-                            <h4 class="card-text">Space:  {{ a.square_meters }} square meters</h4>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="card ">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Airport position:</h4>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table tablesorter " id="">
+                                                        <thead class=" text-primary">
+                                                            <tr>
+                                                                <th>Elevation</th>
+                                                                <th>Length</th>
+                                                                <th>Width</th>
+                                                                <th>Space</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>{{ a.elevation }} ft</td>
+                                                                <td>{{ a.length }} meters</td>
+                                                                <td>{{ a.width }} meters</td>
+                                                                <td>{{ a.square_meters }} square meters</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="text-right">
+                                                <a href="{% url 'home' %}"
+                                                   class="btn btn-primary animation-on-hover"
+                                                   role="button"
+                                                   aria-pressed="true">Back</a>
+                                                {% if perms.airport.change_airport %}
+                                                    <a href="{% url 'airports_update' a.id %}"
+                                                       class="btn btn-info animation-on-hover  "
+                                                       role="button"
+                                                       aria-pressed="true">Edit</a>
+                                                {% endif %}
+                                              {% if perms.airport.delete_runway %}
+                                                <a href="{% url 'airports_delete' a.id %}"
+                                                   class="btn btn-danger animation-on-hover"
+                                                   role="button"
+                                                   aria-pressed="true">Delete</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="text-right">
+                                                {% if perms.airport.add_airport %}
+                                                    <a href="{% url 'airports_add' %}"
+                                                       class="btn btn-primary  "
+                                                       role="button"
+                                                       aria-pressed="true">Add new Airport</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            {% endfor %}
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="text-right">
-                        <a href="{% url 'home' %}"
-                           class="btn btn-primary animation-on-hover"
-                           role="button"
-                           aria-pressed="true">Back</a>
-                        {% if perms.airport.change_airport %}
-                        <a href="{% url 'airports_update' a.id %}"
-                           class="btn btn-info animation-on-hover  "
-                           role="button"
-                           aria-pressed="true">Edit</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock content %}
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-{% endblock javascripts %}
+                    {% endblock content %}
+                    <!-- Specific Page JS goes HERE  -->
+                    {% block javascripts %}
+                    {% endblock javascripts %}

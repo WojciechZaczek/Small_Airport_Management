@@ -38,6 +38,17 @@ class DepartmentCreateView(LoginRequiredMixin, CreateView):
     form_class = CreatDepartment
     success_url = reverse_lazy("organizations")
 
+    def form_valid(self, form):
+        user = self.request.user
+        user_company = user.company
+        try:
+            company = user_company
+        except Airport.DoesNotExist:
+            pass
+        else:
+            form.instance.company = company
+        return super().form_valid(form)
+
 
 class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
     model = Department

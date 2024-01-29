@@ -45,8 +45,7 @@ class APIWeather:
             "last_update": last_update,
         }
 
-    def get_weather_data(self, user):
-        city_name = Airport.objects.filter(company=user.company).first().city
+    def get_weather_data(self, city_name):
         response = self.fetch_data(city_name).json()
         data = self.parse_data(response)
         return data
@@ -58,7 +57,13 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         api_weather_client = APIWeather()
-        context.update(api_weather_client.get_weather_data(user=self.request.user))
+
+        weather_data = {}
+        for airport in self.get_airport_data()["airports"]:
+            city_name = airport.city
+            weather_data[city_name] = api_weather_client.get_weather_data(city_name)
+
+        context["weather_data"] = weather_data
         context.update(self.get_airport_data())
         return context
 
@@ -67,8 +72,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             view_date=timezone.localdate()
         )
         users_airport = Airport.objects.filter(company=self.request.user.company)
-        airport = users_airport.values_list("id", flat=True)
-        runways = Runway.objects.filter(airport__in=airport)
+
+        runways = Runway.objects.filter(airport__in=users_airport)
 
         return {
             "title": "Home",

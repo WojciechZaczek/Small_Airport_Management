@@ -1,6 +1,6 @@
 from django import forms
 
-
+from airport.models import Airport
 from .models import Notification
 
 
@@ -23,6 +23,21 @@ class CreateNotification(forms.ModelForm):
         )
     )
 
+    airport = forms.ModelChoiceField(
+        queryset=Airport.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="Choose an Airport",
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(CreateNotification, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields["airport"].queryset = Airport.objects.filter(
+                company=user.company
+            )
+
     class Meta:
         model = Notification
-        fields = ["title", "view_date", "content"]
+        fields = ["title", "view_date", "content", "airport"]

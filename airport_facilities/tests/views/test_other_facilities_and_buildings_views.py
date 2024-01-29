@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from http import HTTPStatus
 from users.factories import UserFactory
 from airport.factories import AirportFactory
 from airport_facilities.factories import (
@@ -8,6 +9,8 @@ from airport_facilities.factories import (
     OthersFactory,
     PropertyFactory,
 )
+from organization.factories import DepartmentFactory
+from airport_facilities.models import Building
 
 
 class OtherFacilitiesViewTest(TestCase):
@@ -30,7 +33,7 @@ class OtherFacilitiesViewTest(TestCase):
 
     def test_view_other_facilities_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/other-facilities/")
 
     def test_view_other_facilities_returns_correct_vehicle_registration_no_content(
@@ -38,37 +41,37 @@ class OtherFacilitiesViewTest(TestCase):
     ):
         self.client.force_login(self.user)
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "test1234")
 
     def test_view_other_facilities_returns_correct_vehicle_department_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, self.vehicle.department.name)
 
     def test_view_other_facilities_returns_correct_property_name_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "Property one")
 
     def test_view_other_facilities_returns_correct_property_department_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, self.property.department.name)
 
     def test_view_other_facilities_returns_correct_others_name_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "Others one")
 
     def test_view_other_facilities_returns_correct_others_department_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("other_facilities"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, self.others.department.name)
 
 
@@ -87,13 +90,13 @@ class BuildingsListViewTest(TestCase):
 
     def test_view_buildings_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("buildings"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/buildings/")
 
     def test_view_buildings_returns_correct_building_name_content(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("buildings"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "Building one")
 
     def test_buildings_view_displayed_department_length_content(self):
@@ -119,7 +122,7 @@ class BuildingsDetailViewTest(TestCase):
         response = self.client.get(
             reverse("buildings_details", kwargs={"pk": self.building.pk})
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/buildings/1/")
 
     def test_buildings_details_name_content_displayed(self):
@@ -134,7 +137,13 @@ class BuildingsCreateViewTest(TestCase):
     def setUp(self) -> None:
         self.user = UserFactory.create()
         self.airport = AirportFactory.create(company=self.user.company)
-        self.building = BuildingFactory.create(airport=self.airport)
+        self.department = DepartmentFactory(company=self.user.company)
+        self.new_building_data = {
+            "name": "Alfa Building",
+            "description": "test description",
+            "department": self.department.pk,
+            "airport": self.airport.pk,
+        }
 
     def test_view_buildings_create_uses_correct_template(self):
         self.client.force_login(self.user)
@@ -143,14 +152,31 @@ class BuildingsCreateViewTest(TestCase):
 
     def test_view_buildings_create_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("buildings_add"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/buildings/new/")
+
+    def test_view_buildings_create_creates_new_building_object(self):
+        self.client.force_login(self.user)
+        self.assertEqual(Building.objects.count(), 0)
+        response = self.client.post(reverse("buildings_add"), self.new_building_data)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(Building.objects.count(), 1)
+
+    def test_view_buildings_create_creates_new_building_object_with_correct_content(
+        self,
+    ):
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("buildings_add"), self.new_building_data)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        new_building = Building.objects.first()
+        self.assertEqual(new_building.name, "Alfa Building")
 
 
 class BuildingsUpdateViewTest(TestCase):
     def setUp(self) -> None:
         self.user = UserFactory.create()
         self.airport = AirportFactory.create(company=self.user.company)
+        self.department = DepartmentFactory.create(company=self.user.company)
         self.building = BuildingFactory.create(airport=self.airport)
 
     def test_view_buildings_update_uses_correct_template(self):
@@ -164,8 +190,23 @@ class BuildingsUpdateViewTest(TestCase):
         response = self.client.get(
             reverse("buildings_update", kwargs={"pk": self.building.pk})
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/buildings/1/update/")
+
+    def test_view_buildings_update_changes_object_content(self):
+        self.client.force_login(self.user)
+        update = {
+            "name": "Alfa Building",
+            "description": self.building.description,
+            "department": self.department.pk,
+            "airport": self.airport.pk,
+        }
+        response = self.client.post(
+            reverse("buildings_update", kwargs={"pk": self.building.pk}), data=update
+        )
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.building.refresh_from_db()
+        self.assertEqual(self.building.name, update["name"])
 
 
 class BuildingsDeleteViewTest(TestCase):
@@ -185,5 +226,14 @@ class BuildingsDeleteViewTest(TestCase):
         response = self.client.get(
             reverse("buildings_delete", kwargs={"pk": self.building.pk})
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/buildings/1/delete/")
+
+    def test_buildings_delete_view_deletes_building_object(self):
+        self.client.force_login(self.user)
+        self.assertEqual(Building.objects.count(), 1)
+        response = self.client.delete(
+            reverse("buildings_delete", kwargs={"pk": self.building.pk})
+        )
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(Building.objects.count(), 0)

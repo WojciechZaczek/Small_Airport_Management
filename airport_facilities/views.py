@@ -15,12 +15,18 @@ class BuildingsListView(LoginRequiredMixin, ListView):
     template_name = "airport_facilities/buildings.html"
     context_object_name = "buildings"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        user_company = self.request.user.company
+        context["airports"] = Airport.objects.filter(company=user_company)
+        return context
+
     def get_queryset(self):
         user = self.request.user
         airports = Airport.objects.filter(company=user.company)
-        trainings = Building.objects.filter(airport__in=airports)
+        buildings = Building.objects.filter(airport__in=airports)
 
-        return trainings
+        return buildings
 
 
 class BuildingsDetailView(LoginRequiredMixin, DetailView):
@@ -31,14 +37,7 @@ class BuildingsDetailView(LoginRequiredMixin, DetailView):
 class BuildingsCreateView(LoginRequiredMixin, CreateView):
     model = Building
     template_name = "airport_facilities/buildings_form.html"
-
     form_class = CreateBuilding
-
-    def form_valid(self, form):
-        user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
-        form.instance.airport = airports
-        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -72,6 +71,7 @@ def other_facilities(request):
         request,
         "airport_facilities/other_facilities.html",
         {
+            "airports": airports,
             "vehicles": Vehicle.objects.filter(airport__in=airports),
             "properties": Property.objects.filter(airport__in=airports),
             "others": Others.objects.filter(airport__in=airports),
@@ -90,13 +90,6 @@ class VehiclesCreateView(LoginRequiredMixin, CreateView):
 
     form_class = CreateVehicle
 
-    def form_valid(self, form):
-        user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
-        if airports.exists():
-            form.instance.airport = airports.first()
-        return super().form_valid(form)
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
@@ -106,7 +99,6 @@ class VehiclesCreateView(LoginRequiredMixin, CreateView):
 class VehiclesUpdateView(LoginRequiredMixin, UpdateView):
     model = Vehicle
     template_name = "airport_facilities/vehicles_form.html"
-
     form_class = CreateVehicle
 
     def get_form_kwargs(self):
@@ -131,13 +123,6 @@ class PropertiesCreateView(LoginRequiredMixin, CreateView):
     template_name = "airport_facilities/properties_form.html"
 
     form_class = CreateProperty
-
-    def form_valid(self, form):
-        user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
-        if airports.exists():
-            form.instance.airport = airports.first()
-        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -171,15 +156,7 @@ class OthersDetailView(LoginRequiredMixin, DetailView):
 class OthersCreateView(LoginRequiredMixin, CreateView):
     model = Others
     template_name = "airport_facilities/others_form.html"
-
     form_class = CreateOthers
-
-    def form_valid(self, form):
-        user = self.request.user
-        airports = Airport.objects.filter(company=user.company)
-        if airports.exists():
-            form.instance.airport = airports.first()
-        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -190,7 +167,6 @@ class OthersCreateView(LoginRequiredMixin, CreateView):
 class OthersUpdateView(LoginRequiredMixin, UpdateView):
     model = Others
     template_name = "airport_facilities/others_form.html"
-
     form_class = CreateOthers
 
     def get_form_kwargs(self):

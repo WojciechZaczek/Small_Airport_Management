@@ -5,11 +5,13 @@
 {% endblock stylesheets %}
 {% block content %}
     <div class="content">
+        {% for airport in airports %}
+            <h3>Aircraft stands at {{ airport }}:</h3>
         <div class="row">
             <div class="col-md-10">
                 <div class="card ">
                     <div class="card-header">
-                        <h4 class="card-title">Hangars</h4>
+                        <h4 class="card-title">Hangars at {{ airport.name }} airport</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -24,6 +26,7 @@
                                 </thead>
                                 <tbody>
                                     {% for hangar in hangars %}
+                                        {% if hangar.airport == airport %}
                                         <tr>
                                             <td>{{ hangar.name }}</td>
                                             <td class="text-center">{{ hangar.hangar_height }} meters</td>
@@ -48,6 +51,7 @@
                                                 {% endif %}
                                             </td>
                                         </tr>
+                                        {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -73,7 +77,7 @@
             <div class="col-md-10">
                 <div class="card ">
                     <div class="card-header">
-                        <h4 class="card-title">Outside Aircraft Stands</h4>
+                        <h4 class="card-title">Outside Aircraft Stands at {{ airport.name }} airport</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -88,6 +92,7 @@
                                 </thead>
                                 <tbody>
                                     {% for outside_stand in outside_stands %}
+                                        {% if outside_stand.airport == airport  %}
                                         <tr>
                                             <td>{{ outside_stand.name }}</td>
                                             <td class="text-center">{{ outside_stand.get_surface_display }}</td>
@@ -111,6 +116,7 @@
                                                 {% endif %}
                                             </td>
                                         </tr>
+                                        {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -131,6 +137,9 @@
                 </div>
             </div>
         </div>
+            <br>
+            <br>
+    {% endfor %}
     </div>
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->

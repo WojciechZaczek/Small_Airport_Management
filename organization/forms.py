@@ -18,9 +18,9 @@ class CreatCompany(forms.ModelForm):
             attrs={"placeholder": "Company telephone number", "class": "form-control"}
         )
     )
-    email_domina = forms.CharField(
+    email_domain = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "Company email domina", "class": "form-control"}
+            attrs={"placeholder": "Company email domain", "class": "form-control"}
         )
     )
     description = forms.CharField(
@@ -31,7 +31,7 @@ class CreatCompany(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ["name", "address", "telephone", "email_domina", "description"]
+        fields = ["name", "address", "telephone", "email_domain", "description"]
 
 
 class CreatDepartment(forms.ModelForm):
@@ -48,16 +48,9 @@ class CreatDepartment(forms.ModelForm):
         )
     )
 
-    company_id = forms.ModelChoiceField(
-        queryset=Company.objects.all(),
-        widget=forms.TextInput(
-            attrs={"placeholder": "Company ID", "class": "form-control"}
-        ),
-    )
-
     class Meta:
         model = Department
-        fields = ["name", "description", "company_id"]
+        fields = ["name", "description"]
 
 
 class CreatWorker(forms.ModelForm):
