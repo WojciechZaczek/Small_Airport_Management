@@ -3,6 +3,7 @@ import os
 import environ
 
 from .env import env
+from django.contrib import messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -120,3 +121,11 @@ LOGIN_REDIRECT_URL = "home"
 
 # API KEY FOR WEATHER API IN DASHBOARD
 WEATHER_KEY = env("WEATHER_API_KEY")
+
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-info",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
+}

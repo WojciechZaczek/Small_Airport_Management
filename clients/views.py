@@ -55,6 +55,10 @@ class ClientsPrivateCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
+
 
 class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
