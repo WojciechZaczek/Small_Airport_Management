@@ -1,5 +1,5 @@
 # Content of Project
- 
+
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
@@ -21,18 +21,23 @@ Project is created with:
 <li>Django 4.2.2</li>
 <li>Python 3.10</li>
 <li>Pre-commit 3.3.3</li>
+<li>Poetry</li>
 <li> JavaScript</li>
 <li> CSS 3</li>
 <li> HTML 5</li>
 
 ## Setup
 Clone the repo git clone https://github.com/WojciechZaczek/Small_Airport_Management
+Create virtualenv using `python -m venv venv`
+go into venv using `./venv/Scripts/activate` on Windows and `source ./venv/lib/activate` on linux or macos.
+next install all requirements using `pip install -r requirements.txt`
+
 
 ## More detailed information
-This program was build with Django framework. Application is constantly being improved
+This program was build with Django framework.
 
 ## Sources
-The project design is inspired by [Creative Tim Black Dashboard](https://www.creative-tim.com/product/black-dashboard?_ga=2.239557059.1132333344.1707815614-1634334273.1687191777)
+The frontend design of project is inspired by [Creative Tim Black Dashboard](https://www.creative-tim.com/product/black-dashboard?_ga=2.239557059.1132333344.1707815614-1634334273.1687191777)
 
 ## Contact
 Wojciech Zaczek - wojciech.zaczek84@gmail.com
