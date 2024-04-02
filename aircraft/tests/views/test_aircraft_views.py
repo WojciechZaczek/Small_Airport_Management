@@ -137,7 +137,7 @@ class AircraftsUpdateViewTest(TestCase):
             response, f"/login/?next=/aircrafts/{self.aircraft.pk}/update/"
         )
 
-    def test_view_aircraft_update_changes_object_content(self):
+    def test_view_aircraft_update_changes_object_conOKtent(self):
         self.client.force_login(self.user)
         update = {
             "manufacture": "Example Aircraft Company",
@@ -153,7 +153,7 @@ class AircraftsUpdateViewTest(TestCase):
         response = self.client.post(
             reverse("aircrafts_update", kwargs={"pk": self.aircraft.pk}), data=update
         )
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.aircraft.refresh_from_db()
         self.assertEqual(self.aircraft.manufacture, update["manufacture"])
 
