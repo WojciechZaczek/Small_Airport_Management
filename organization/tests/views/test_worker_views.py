@@ -57,7 +57,7 @@ class WorkersDetailViewTest(TestCase):
             reverse("workers_details", kwargs={"pk": self.worker.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/workers/1/")
+        self.assertRedirects(response, f"/login/?next=/workers/{self.worker.pk}/")
 
     def test_workers_details_first_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -164,7 +164,9 @@ class WorkersUpdateViewTest(TestCase):
             reverse("workers_update", kwargs={"pk": self.worker.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/workers/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/workers/{self.worker.pk}/update/"
+        )
 
     def test_view_workers_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -206,7 +208,9 @@ class WorkersDeleteViewTest(TestCase):
             reverse("workers_delete", kwargs={"pk": self.worker.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/workers/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/workers/{self.worker.pk}/delete/"
+        )
 
     def test_workers_delete_view_deletes_worker_object(self):
         self.client.force_login(self.user)

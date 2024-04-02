@@ -56,7 +56,7 @@ class TrainingsDetailViewTest(TestCase):
             reverse("trainings_details", kwargs={"pk": self.training.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/trainings/1/")
+        self.assertRedirects(response, f"/login/?next=/trainings/{self.training.pk}/")
 
     def test_trainings_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -154,7 +154,9 @@ class TrainingsUpdateViewTest(TestCase):
             reverse("trainings_update", kwargs={"pk": self.training.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/trainings/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/trainings/{self.training.pk}/update/"
+        )
 
     def test_view_trainings_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -192,4 +194,6 @@ class TrainingsDeleteViewTest(TestCase):
             reverse("trainings_delete", kwargs={"pk": self.training.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/trainings/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/trainings/{self.training.pk}/delete/"
+        )

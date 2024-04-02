@@ -69,11 +69,6 @@ class UserRegisterForm(UserCreationForm):
         ),
     )
 
-    company = forms.ModelChoiceField(
-        queryset=Company.objects.all(),
-        widget=forms.Select(attrs={"placeholder": "Company", "class": "form-control"}),
-    )
-
     class Meta:
         model = CustomUser
         fields = [
@@ -84,7 +79,6 @@ class UserRegisterForm(UserCreationForm):
             "first_name",
             "last_name",
             "department",
-            "company",
         ]
 
 

@@ -8,7 +8,7 @@ class Company(models.Model):
         max_length=200, help_text="Companies head office address"
     )
     telephone = models.TextField(max_length=100, help_text="Companies contact phone no")
-    email_domain = models.TextField(max_length=50, help_text="Companies email_domina")
+    email_domain = models.TextField(max_length=50, help_text="Companies email_domain")
     description = models.TextField(
         max_length=500,
         null=True,

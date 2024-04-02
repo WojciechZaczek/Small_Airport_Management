@@ -69,7 +69,8 @@ class DepartmentUpdateViewTest(TestCase):
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(
-            response, "/login/?next=/organizations/departments/1/update/"
+            response,
+            f"/login/?next=/organizations/departments/{self.department.pk}/update/",
         )
 
     def test_view_departments_update_changes_object_content(self):
@@ -110,7 +111,8 @@ class DepartmentDeleteViewTest(TestCase):
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(
-            response, "/login/?next=/organizations/departments/1/delete/"
+            response,
+            f"/login/?next=/organizations/departments/{self.department.pk}/delete/",
         )
 
     def test_departments_delete_view_deletes_department_object(self):

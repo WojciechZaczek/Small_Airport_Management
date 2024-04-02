@@ -8,27 +8,25 @@ from users.models import CustomUser
 
 class CustomRegisterViewTest(TestCase):
     def setUp(self) -> None:
-        self.company = CompanyFactory.create()
+        self.company = CompanyFactory.create(email_domain="test.pl")
         self.new_user_data_valid = {
             "username": "test_user",
-            "email": "test@email.com",
+            "email": "test@test.pl",
             "password1": "qwert123!",
             "password2": "qwert123!",
             "first_name": "test_name",
             "last_name": "test_name",
             "department": "IT",
-            "company": self.company.pk,
         }
 
         self.new_user_data_invalid = {
             "username": "test user",
-            "email": "testemailcom",
+            "email": f"testemailcom",
             "password1": "123",
             "password2": "qwert123!",
             "first_name": "test_name",
             "last_name": "test_name",
             "department": "IT",
-            "company": self.company.pk,
         }
 
     def test_view_register_uses_correct_template(self):

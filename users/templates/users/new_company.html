@@ -1,0 +1,33 @@
+{% extends "dashboard/base-fullscreen.html" %}
+{% load widget_tweaks %}
+{% block title %}New Company{% endblock %}
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="container">
+            <div class="row pt-5">
+                <div class="col-md-6 mt-5 offset-md-3 pt-5 mt-5">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                        <h4 class="title">Create new company</h4>
+                        <form role="form" method="post" action="">
+                            {% csrf_token %}
+                            <h5>Unfortunately we haven't found company matching to your email address!</h5>
+                            <h5>Would you like to  register new company??</h5>
+                            <div class="from-group">
+                                <a class="btn btn-success animation-on-hover"
+                                   href="{% url 'new_company_add'  %}">Yes</a>
+                                <a class="btn btn-danger animation-on-hover"
+                                   href="{% url 'register' %}">No</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

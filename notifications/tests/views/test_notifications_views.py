@@ -3,6 +3,7 @@ from django.urls import reverse
 from http import HTTPStatus
 import datetime
 import notifications.views
+from datetime import datetime
 from users.factories import UserFactory
 from notifications.factories import NotificationFactory
 from airport.factories import AirportFactory
@@ -18,7 +19,9 @@ class NotificationsViewTest(TestCase):
         self.airport = AirportFactory.create(company=self.user.company)
 
         self.future_notification = NotificationFactory.create(
-            title="Notification one", airport=self.airport, view_date="2011-1-1"
+            title="Notification one",
+            airport=self.airport,
+            view_date=datetime.datetime(2011, 1, 1, 0, 0, 0),
         )
         self.past_notification = NotificationFactory.create(
             title="Notification two", airport=self.airport, view_date="2009-1-1"
@@ -115,7 +118,9 @@ class NotificationsDetailViewTest(TestCase):
             reverse("notifications_details", kwargs={"pk": self.notification.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/notifications/1/")
+        self.assertRedirects(
+            response, f"/login/?next=/notifications/{self.notification.pk}/"
+        )
 
     def test_notifications_details_title_content_displayed(self):
         self.client.force_login(self.user)
@@ -200,7 +205,9 @@ class NotificationsUpdateViewTest(TestCase):
             reverse("notifications_update", kwargs={"pk": self.notification.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/notifications/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/notifications/{self.notification.pk}/update/"
+        )
 
     def test_view_notifications_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -238,7 +245,9 @@ class NotificationsDeleteViewTest(TestCase):
             reverse("notifications_delete", kwargs={"pk": self.notification.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/notifications/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/notifications/{self.notification.pk}/delete/"
+        )
 
     def test_notifications_delete_view_deletes_notification_object(self):
         self.client.force_login(self.user)

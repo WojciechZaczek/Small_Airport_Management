@@ -90,7 +90,7 @@ class CreatClients(forms.ModelForm):
     def clean(self):
         cleaned_data = super(CreatClients, self).clean()
 
-        if bool(self.data.get("corporate_client")):
+        if self.data.get("corporate_client") in ("True", True, 1):
             if not cleaned_data["company_name"]:
                 raise ValidationError("Corporate name must be provided")
             if not cleaned_data["nip"]:

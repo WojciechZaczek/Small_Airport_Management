@@ -30,7 +30,9 @@ class OutsideAircraftStandDetailViewTest(TestCase):
             reverse("outside_stands_details", kwargs={"pk": self.outside_stand.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/outside-stands/1/")
+        self.assertRedirects(
+            response, f"/login/?next=/outside-stands/{self.outside_stand.pk}/"
+        )
 
     def test_outside_stands_details_id_content_displayed(self):
         self.client.force_login(self.user)
@@ -126,7 +128,9 @@ class OutsideAircraftStandUpdateViewTest(TestCase):
             reverse("outside_stands_update", kwargs={"pk": self.outside_stand.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/outside-stands/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/outside-stands/{self.outside_stand.pk}/update/"
+        )
 
 
 class OutsideAircraftStandDeleteViewTest(TestCase):
@@ -147,7 +151,9 @@ class OutsideAircraftStandDeleteViewTest(TestCase):
             reverse("outside_stands_delete", kwargs={"pk": self.outside_stand.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/outside-stands/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/outside-stands/{self.outside_stand.pk}/delete/"
+        )
 
     def test_outside_stands_view_deletes_outside_stands_object(self):
         self.client.force_login(self.user)

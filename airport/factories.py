@@ -1,16 +1,17 @@
 from .models import Airport, Runway, Hangar, OutsideAircraftStand
 from organization.factories import CompanyFactory
 import factory
+import factory.fuzzy
 
 
 class AirportFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Airport
 
-    name = factory.Faker("word")
-    city = factory.Faker("word")
+    name = factory.fuzzy.FuzzyText(length=10)
+    city = factory.fuzzy.FuzzyText(length=10)
     address = factory.Faker("sentence")
-    contact = factory.Faker("word")
+    contact = factory.fuzzy.FuzzyText(length=10)
     types_of_traffic_permitted = factory.Faker(
         "random_element", elements=("VFR", "IFR")
     )
@@ -29,7 +30,7 @@ class RunwayFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Runway
 
-    name = factory.Faker("word")
+    name = factory.fuzzy.FuzzyText(length=10)
     length = factory.Faker("pyfloat", positive=True)
     width = factory.Faker("pyfloat", positive=True)
     surface = factory.Faker("random_element", elements=("ASP", "GRS", "CON"))
@@ -46,7 +47,7 @@ class OutsideAircraftStandFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = OutsideAircraftStand
 
-    name = factory.Faker("word")
+    name = factory.fuzzy.FuzzyText(length=10)
     surface = factory.Faker("random_element", elements=("ASP", "GRS", "CON"))
     size = factory.Faker("random_element", elements=("S", "M", "L"))
     taken = factory.Faker("boolean")
@@ -57,7 +58,7 @@ class HangarFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Hangar
 
-    name = factory.Faker("word")
+    name = factory.fuzzy.FuzzyText(length=10)
     hangar_height = factory.Faker("pyfloat", positive=True)
     hangar_wight = factory.Faker("pyfloat", positive=True)
     doors_height = factory.Faker("pyfloat", positive=True)

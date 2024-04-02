@@ -32,7 +32,9 @@ class AircraftsHangaredDetailViewTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/aircrafts-hangared/1/")
+        self.assertRedirects(
+            response, f"/login/?next=/aircrafts-hangared/{self.aircraft_hanagared.pk}/"
+        )
 
 
 class AircraftsHangaredUpdateViewTest(TestCase):
@@ -63,7 +65,10 @@ class AircraftsHangaredUpdateViewTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/aircrafts-hangared/1/update/")
+        self.assertRedirects(
+            response,
+            f"/login/?next=/aircrafts-hangared/{self.aircraft_hanagared.pk}/update/",
+        )
 
     def test_view_aircraft_hangared_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -165,7 +170,10 @@ class AircraftsHangaredDeleteViewTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/login/?next=/aircrafts-hangared/1/delete/")
+        self.assertRedirects(
+            response,
+            f"/login/?next=/aircrafts-hangared/{self.aircraft_hanagared.pk}/delete/",
+        )
 
     def test_aircraft_hangared_view_deletes_runway_object(self):
         self.client.force_login(self.user)

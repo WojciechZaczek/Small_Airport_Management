@@ -52,7 +52,7 @@ class UserDetailViewTest(TestCase):
             reverse("users_details", kwargs={"pk": self.user.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/users/1/")
+        self.assertRedirects(response, f"/login/?next=/users/{self.user.pk}/")
 
     def test_users_details_first_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -83,7 +83,7 @@ class UserUpdateViewTest(TestCase):
     def test_view_users_update_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("users_update", kwargs={"pk": self.user.pk}))
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/users/1/update/")
+        self.assertRedirects(response, f"/login/?next=/users/{self.user.pk}/update/")
 
     def test_view_users_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -115,7 +115,7 @@ class UserDeleteViewTest(TestCase):
     def test_view_users_delete_login_required_should_redirect_to_login(self):
         response = self.client.get(reverse("users_delete", kwargs={"pk": self.user.pk}))
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/users/1/delete/")
+        self.assertRedirects(response, f"/login/?next=/users/{self.user.pk}/delete/")
 
     def test_users_delete_view_deletes_user_object(self):
         self.client.force_login(self.user)

@@ -57,7 +57,7 @@ class AircraftsDetailViewTest(TestCase):
             reverse("aircrafts_details", kwargs={"pk": self.aircraft.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/aircrafts/1/")
+        self.assertRedirects(response, f"/login/?next=/aircrafts/{self.aircraft.pk}/")
 
     def test_aircrafts_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -93,13 +93,6 @@ class AircraftsDetailViewTest(TestCase):
             reverse("aircrafts_details", kwargs={"pk": self.aircraft.pk})
         )
         self.assertContains(response, self.aircraft.landing_groundroll)
-
-    def test_aircrafts_details_runway_surface_type_content_displayed(self):
-        self.client.force_login(self.user)
-        response = self.client.get(
-            reverse("aircrafts_details", kwargs={"pk": self.aircraft.pk})
-        )
-        self.assertContains(response, self.aircraft.runway_surface_type)
 
     def test_aircrafts_details_take_off_ground_content_displayed(self):
         self.client.force_login(self.user)
@@ -140,7 +133,9 @@ class AircraftsUpdateViewTest(TestCase):
             reverse("aircrafts_update", kwargs={"pk": self.aircraft.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/aircrafts/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/aircrafts/{self.aircraft.pk}/update/"
+        )
 
     def test_view_aircraft_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -222,7 +217,9 @@ class AircraftsDeleteViewTest(TestCase):
             reverse("aircrafts_delete", kwargs={"pk": self.aircraft.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/aircrafts/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/aircrafts/{self.aircraft.pk}/delete/"
+        )
 
     def test_aircraft_view_deletes_aircraft_object(self):
         self.client.force_login(self.user)

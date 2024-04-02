@@ -1,4 +1,5 @@
 import factory
+import factory.fuzzy
 from .models import Client
 from organization.factories import CompanyFactory
 from offer.factories import TrainingFactory, OfferFactory
@@ -12,9 +13,9 @@ class ClientCorporateFactory(factory.django.DjangoModelFactory):
     name = None
     last_name = None
     pesel = None
-    company_name = factory.Faker("company")
+    company_name = factory.fuzzy.FuzzyText(length=10)
     nip = factory.Faker("pyint")
-    email = factory.Faker("name")
+    email = factory.fuzzy.FuzzyText(length=10)
     phone_no = factory.Faker("pyint")
 
     training = factory.RelatedFactory(TrainingFactory)
@@ -28,12 +29,11 @@ class ClientPrivateFactory(factory.django.DjangoModelFactory):
         model = Client
 
     corporate_client = False
-    name = factory.Faker("name")
-    last_name = factory.Faker("last_name")
+    name = factory.fuzzy.FuzzyText(length=10)
+    last_name = factory.fuzzy.FuzzyText(length=10)
     pesel = factory.Faker("pyint")
-    company_name = None
-    nip = None
-    email = factory.Faker("name")
+
+    email = factory.fuzzy.FuzzyText(length=10)
     phone_no = factory.Faker("pyint")
 
     training = factory.RelatedFactory(TrainingFactory)

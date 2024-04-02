@@ -1,4 +1,4 @@
-import factory
+import factory.fuzzy
 from .models import Notification
 from airport.factories import AirportFactory
 from users.factories import UserFactory

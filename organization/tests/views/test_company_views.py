@@ -55,7 +55,7 @@ class CompanyUpdateViewTest(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(
-            response, "/login/?next=/organizations/companies/1/update/"
+            response, f"/login/?next=/organizations/companies/{self.company.pk}/update/"
         )
 
     def test_view_company_update_changes_object_content(self):

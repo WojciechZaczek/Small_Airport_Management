@@ -7,6 +7,7 @@ from clients.models import Client
 from airport.factories import AirportFactory
 from offer.factories import TrainingFactory, OfferFactory
 from organization.factories import CompanyFactory
+from django.test import tag
 
 
 class ClientListViewTest(TestCase):
@@ -75,7 +76,9 @@ class ClientsPrivateDetailViewTest(TestCase):
             reverse("clients_details", kwargs={"pk": self.client_private.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/clients/1/")
+        self.assertRedirects(
+            response, f"/login/?next=/clients/{self.client_private.pk}/"
+        )
 
     def test_clients_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -132,7 +135,9 @@ class ClientsCorporateDetailViewTest(TestCase):
             reverse("clients_details", kwargs={"pk": self.client_corporate.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/clients/1/")
+        self.assertRedirects(
+            response, f"/login/?next=/clients/{self.client_corporate.pk}/"
+        )
 
     def test_clients_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -259,15 +264,14 @@ class ClientsPrivateCreateViewTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, "/login/?next=/clients/new/private/")
 
+    @tag("x")
     def test_view_client_private_create_creates_new_client_object(self):
         self.client.force_login(self.user)
         self.assertEqual(Client.objects.count(), 0)
         response = self.client.post(
             reverse("clients_add_private"), self.new_private_client_data
         )
-        form = response.context["form"]
-        print(form.is_valid())
-        print(form.errors)
+
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertEqual(Client.objects.count(), 1)
 
@@ -312,7 +316,9 @@ class ClientsUpdateViewTest(TestCase):
             reverse("clients_update", kwargs={"pk": self.client_private.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/clients/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/clients/{self.client_private.pk}/update/"
+        )
 
     def test_view_client_update_changes_private_client_object_content(self):
         self.client.force_login(self.user)
@@ -332,6 +338,7 @@ class ClientsUpdateViewTest(TestCase):
             reverse("clients_update", kwargs={"pk": self.client_private.pk}),
             data=update,
         )
+
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.client_private.refresh_from_db()
         self.assertEqual(self.client_private.name, update["name"])
@@ -376,7 +383,9 @@ class ClientsDeleteViewTest(TestCase):
             reverse("clients_delete", kwargs={"pk": self.client_corporate.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/clients/2/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/clients/{self.client_corporate.pk}/delete/"
+        )
 
     def test_clients_delete_view_deletes_client_private_object(self):
         self.client.force_login(self.user)

@@ -26,7 +26,7 @@ class VehicleDetailViewTest(TestCase):
             reverse("vehicles_details", kwargs={"pk": self.vehicle.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/vehicles/1/")
+        self.assertRedirects(response, f"/login/?next=/vehicles/{self.vehicle.pk}/")
 
     def test_vehicles_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -93,7 +93,9 @@ class VehicleUpdateViewTest(TestCase):
             reverse("vehicles_update", kwargs={"pk": self.vehicle.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/vehicles/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/vehicles/{self.vehicle.pk}/update/"
+        )
 
     def test_view_vehicle_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -130,7 +132,9 @@ class VehicleDeleteViewTest(TestCase):
             reverse("vehicles_delete", kwargs={"pk": self.vehicle.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/vehicles/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/vehicles/{self.vehicle.pk}/delete/"
+        )
 
     def test_vehicles_delete_view_deletes_vehicle_object(self):
         self.client.force_login(self.user)

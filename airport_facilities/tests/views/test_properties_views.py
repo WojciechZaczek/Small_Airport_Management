@@ -26,7 +26,7 @@ class PropertiesDetailViewTest(TestCase):
             reverse("properties_details", kwargs={"pk": self.property.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/properties/1/")
+        self.assertRedirects(response, f"/login/?next=/properties/{self.property.pk}/")
 
     def test_properties_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -94,7 +94,9 @@ class PropertiesUpdateViewTest(TestCase):
             reverse("properties_update", kwargs={"pk": self.property.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/properties/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/properties/{self.property.pk}/update/"
+        )
 
     def test_view_properties_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -130,7 +132,9 @@ class PropertiesDeleteViewTest(TestCase):
             reverse("properties_delete", kwargs={"pk": self.property.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/properties/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/properties/{self.property.pk}/delete/"
+        )
 
     def test_properties_delete_view_deletes_property_object(self):
         self.client.force_login(self.user)

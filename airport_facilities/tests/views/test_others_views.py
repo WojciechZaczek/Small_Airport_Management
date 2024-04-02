@@ -26,7 +26,7 @@ class OthersDetailViewTest(TestCase):
             reverse("others_details", kwargs={"pk": self.other.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/others/1/")
+        self.assertRedirects(response, f"/login/?next=/others/{self.other.pk}/")
 
     def test_others_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -92,7 +92,7 @@ class OthersUpdateViewTest(TestCase):
             reverse("others_update", kwargs={"pk": self.other.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/others/1/update/")
+        self.assertRedirects(response, f"/login/?next=/others/{self.other.pk}/update/")
 
     def test_view_others_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -128,7 +128,7 @@ class OthersDeleteViewTest(TestCase):
             reverse("others_delete", kwargs={"pk": self.other.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/others/1/delete/")
+        self.assertRedirects(response, f"/login/?next=/others/{self.other.pk}/delete/")
 
     def test_others_delete_view_deletes_others_object(self):
         self.client.force_login(self.user)

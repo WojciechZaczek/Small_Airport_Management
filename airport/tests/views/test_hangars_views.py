@@ -74,7 +74,7 @@ class HangarsDetailViewTest(TestCase):
             reverse("hangars_details", kwargs={"pk": self.hangar.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/hangars/1/")
+        self.assertRedirects(response, f"/login/?next=/hangars/{self.hangar.pk}/")
 
     def test_hangar_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -185,7 +185,9 @@ class HangarsUpdateViewTest(TestCase):
             reverse("hangars_update", kwargs={"pk": self.hangar.pk})
         )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/login/?next=/hangars/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/hangars/{self.hangar.pk}/update/"
+        )
 
     def test_view_hangars_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -227,7 +229,9 @@ class HangarsDeleteViewTest(TestCase):
             reverse("hangars_delete", kwargs={"pk": self.hangar.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/hangars/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/hangars/{self.hangar.pk}/delete/"
+        )
 
     def test_hangars_view_deletes_hangar_object(self):
         self.client.force_login(self.user)

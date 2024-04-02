@@ -123,7 +123,7 @@ class BuildingsDetailViewTest(TestCase):
             reverse("buildings_details", kwargs={"pk": self.building.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/buildings/1/")
+        self.assertRedirects(response, f"/login/?next=/buildings/{self.building.pk}/")
 
     def test_buildings_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -191,7 +191,9 @@ class BuildingsUpdateViewTest(TestCase):
             reverse("buildings_update", kwargs={"pk": self.building.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/buildings/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/buildings/{self.building.pk}/update/"
+        )
 
     def test_view_buildings_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -227,7 +229,9 @@ class BuildingsDeleteViewTest(TestCase):
             reverse("buildings_delete", kwargs={"pk": self.building.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/buildings/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/buildings/{self.building.pk}/delete/"
+        )
 
     def test_buildings_delete_view_deletes_building_object(self):
         self.client.force_login(self.user)

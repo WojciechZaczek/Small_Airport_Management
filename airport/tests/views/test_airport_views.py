@@ -111,7 +111,9 @@ class AirportUpdateViewTest(TestCase):
             reverse("airports_update", kwargs={"pk": self.airport.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/airports/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/airports/{self.airport.pk}/update/"
+        )
 
     def test_view_airport_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -201,7 +203,9 @@ class AirportDeleteViewTest(TestCase):
             reverse("airports_delete", kwargs={"pk": self.airport.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/airports/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/airports/{self.airport.pk}/delete/"
+        )
 
     def test_airport_delete_view_deletes_airport_object(self):
         self.client.force_login(self.user)

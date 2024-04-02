@@ -11,6 +11,8 @@ from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import CustomUser
 from .forms import CreateUser
+from organization.models import Company
+from organization.forms import CreatCompany
 
 
 class CustomLoginView(LoginView):
@@ -35,6 +37,18 @@ def register(request):
         form = UserRegisterForm(request.POST)
 
         if form.is_valid():
+            email = form.cleaned_data.get("email")
+            domain = email.split("@")[1]
+            try:
+                company = Company.objects.get(email_domain=domain)
+            except Company.DoesNotExist:
+                messages.error(request, "Your company is not registered")
+
+                return redirect("new_company")
+
+            user = form.save(commit=False)
+            user.company = company
+            user.save()
             form.save()
             username = form.cleaned_data.get("username")
             messages.success(
@@ -45,6 +59,17 @@ def register(request):
         form = UserRegisterForm()
 
     return render(request, "users/register.html", {"form": form})
+
+
+def new_company(request):
+    return render(request, "users/new_company.html", {"title": "New Company"})
+
+
+class NewCompanyCreateView(CreateView):
+    model = Company
+    template_name = "users/new_company_add.html"
+    form_class = CreatCompany
+    success_url = reverse_lazy("register")
 
 
 class UserListView(LoginRequiredMixin, ListView):

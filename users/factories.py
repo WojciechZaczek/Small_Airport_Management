@@ -4,11 +4,11 @@ from organization.factories import CompanyFactory
 from django.contrib.auth.models import Group
 
 
-class GroupFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = Group
-
-    name = factory.Faker("word")
+# class GroupFactory(factory.django.DjangoModelFactory):
+#     class Meta:
+#         model = Group
+#
+#     name = factory.Faker("word")
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -31,13 +31,13 @@ class UserFactory(factory.django.DjangoModelFactory):
     )
     company = factory.SubFactory(CompanyFactory)
 
-    @factory.post_generation
-    def groups(self, create, extracted, **kwargs):
-        if not create:
-            return
-
-        if extracted:
-            self.groups.add(*extracted)
-        else:
-            group = GroupFactory.create()
-            self.groups.add(group)
+    # @factory.post_generation
+    # def groups(self, create, extracted, **kwargs):
+    #     if not create:
+    #         return
+    #
+    #     if extracted:
+    #         self.groups.add(*extracted)
+    #     else:
+    #         group = GroupFactory.create()
+    #         self.groups.add(group)

@@ -55,7 +55,7 @@ class RunwaysDetailViewTest(TestCase):
             reverse("runways_details", kwargs={"pk": self.runway.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/runways/1/")
+        self.assertRedirects(response, f"/login/?next=/runways/{self.runway.pk}/")
 
     def test_runways_details_name_content_displayed(self):
         self.client.force_login(self.user)
@@ -182,7 +182,9 @@ class RunwaysUpdateViewTest(TestCase):
             reverse("runways_update", kwargs={"pk": self.runway.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/runways/1/update/")
+        self.assertRedirects(
+            response, f"/login/?next=/runways/{self.runway.pk}/update/"
+        )
 
     def test_view_runways_update_changes_object_content(self):
         self.client.force_login(self.user)
@@ -225,7 +227,9 @@ class RunwaysDeleteViewTest(TestCase):
             reverse("runways_delete", kwargs={"pk": self.runway.pk})
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, "/login/?next=/runways/1/delete/")
+        self.assertRedirects(
+            response, f"/login/?next=/runways/{self.runway.pk}/delete/"
+        )
 
     def test_runway_view_deletes_runway_object(self):
         self.client.force_login(self.user)
