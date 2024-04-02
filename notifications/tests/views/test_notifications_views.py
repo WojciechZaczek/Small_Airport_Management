@@ -3,12 +3,11 @@ from django.urls import reverse
 from http import HTTPStatus
 import datetime
 import notifications.views
-from datetime import datetime
 from users.factories import UserFactory
 from notifications.factories import NotificationFactory
 from airport.factories import AirportFactory
 from notifications.models import Notification
-from django.utils import timezone
+
 import unittest
 from unittest.mock import patch
 
