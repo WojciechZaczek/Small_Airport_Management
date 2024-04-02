@@ -19,9 +19,7 @@ class NotificationsViewTest(TestCase):
         self.airport = AirportFactory.create(company=self.user.company)
 
         self.future_notification = NotificationFactory.create(
-            title="Notification one",
-            airport=self.airport,
-            view_date=datetime.datetime(2011, 1, 1, 0, 0, 0),
+            title="Notification one", airport=self.airport, view_date="2011-1-1"
         )
         self.past_notification = NotificationFactory.create(
             title="Notification two", airport=self.airport, view_date="2009-1-1"
