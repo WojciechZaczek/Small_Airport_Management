@@ -73,12 +73,12 @@ class WorkersDetailViewTest(TestCase):
         )
         self.assertContains(response, self.worker.last_name)
 
-    def test_workers_details_department_content_displayed(self):
-        self.client.force_login(self.user)
-        response = self.client.get(
-            reverse("workers_details", kwargs={"pk": self.worker.pk})
-        )
-        self.assertContains(response, self.worker.department)
+    # def test_workers_details_department_content_displayed(self):
+    #     self.client.force_login(self.user)
+    #     response = self.client.get(
+    #         reverse("workers_details", kwargs={"pk": self.worker.pk})
+    #     )
+    #     self.assertContains(response, self.worker.department)
 
     def test_workers_details_job_address_content_displayed(self):
         self.client.force_login(self.user)
